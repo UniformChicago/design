@@ -52,11 +52,17 @@ put("vars.css", `${HEADER}:root {\n${vars.join("\n")}\n}\n`);
 put("tokens.css", tokensCss);
 put("design.css", tokensCss + "\n" + readFileSync(join(ROOT, "components/components.css"), "utf8"));
 
-// tokens.ts and tokens.py for code that can't read CSS (canvas, PDF builder)
+// tokens.js/.d.ts and tokens.py for code that can't read CSS (canvas, PDF builder)
 const plain = { color, font: val("font"), radius: val("radius"), space: val("space"), dot: val("dot") };
+// tokens.js plus tokens.d.ts: plain JavaScript with exact literal types, importable from Node,
+// bundlers and TypeScript alike.
 put(
-  "tokens.ts",
-  `// Generated from tokens/tokens.json. Do not edit.\nexport const tokens = ${JSON.stringify(plain, null, 2)} as const;\n`,
+  "tokens.js",
+  `// Generated from tokens/tokens.json. Do not edit.\nexport const tokens = Object.freeze(${JSON.stringify(plain, null, 2)});\n`,
+);
+put(
+  "tokens.d.ts",
+  `// Generated from tokens/tokens.json. Do not edit.\nexport declare const tokens: ${JSON.stringify(plain, null, 2)};\n`,
 );
 put(
   "tokens.py",

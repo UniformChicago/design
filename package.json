@@ -1,17 +1,22 @@
 {
   "name": "@uniform/design",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Uniform design system: tokens, brand assets, waves, CSS components",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",
   "files": [
-    "dist"
+    "dist",
+    "NOTICE",
+    "LICENSE-BRAND"
   ],
   "exports": {
     "./design.css": "./dist/design.css",
     "./tokens.css": "./dist/tokens.css",
     "./vars.css": "./dist/vars.css",
-    "./tokens": "./dist/tokens.ts",
+    "./tokens": {
+      "types": "./dist/tokens.d.ts",
+      "default": "./dist/tokens.js"
+    },
     "./waves": {
       "types": "./dist/waves.d.ts",
       "default": "./dist/waves.js"
@@ -24,9 +29,12 @@
   },
   "scripts": {
     "build": "node build/build.mjs",
-    "check": "prettier --check . && node build/build.mjs --check && node scripts/contrast.mjs && node scripts/forbidden.mjs"
+    "check": "prettier --check . && node build/build.mjs --check && node scripts/contrast.mjs && node scripts/forbidden.mjs && node scripts/svg-colors.mjs && node scripts/waves-guard.mjs",
+    "test:a11y": "playwright test"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.63.0",
     "prettier": "3.9.9"
   }
 }

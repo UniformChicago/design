@@ -1,5 +1,5 @@
 // Generated from tokens/tokens.json. Do not edit.
-export const tokens = {
+export declare const tokens: {
   "color": {
     "ink": "#14212b",
     "paper": "#f3f5f6",
@@ -35,4 +35,4 @@ export const tokens = {
     "size": "0.19em",
     "gap": "0.05em"
   }
-} as const;
+};

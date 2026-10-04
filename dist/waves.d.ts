@@ -17,5 +17,6 @@ export declare function contoursSvg(
   height: number,
   options?: WaveOptions & { t?: number; signal: string; lake: string; opacity?: number },
 ): string;
+/** contours/contoursSvg throw RangeError for out-of-range sizes or options (step must be at least 1) and TypeError for non-hex colors. */
 /** Mounts the animated Atmosphere on a canvas; returns a function that stops it. */
 export declare function mountAtmosphere(canvas: HTMLCanvasElement | null | undefined): () => void;

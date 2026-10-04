@@ -190,9 +190,14 @@
   margin-bottom: 14px;
 }
 
-/* Table */
+/* Table. The wrapper scrolls on narrow screens, so it must be keyboard-reachable:
+   <div class="u-table" tabindex="0" role="region" aria-label="Licensee registry"><table>…</table></div> */
 .u-table {
   overflow-x: auto;
+}
+.u-table:focus-visible {
+  outline: 2px solid var(--u-accent);
+  outline-offset: 4px;
 }
 .u-table table {
   border-collapse: collapse;

@@ -7,8 +7,20 @@
 export const DEFAULTS = { strands: 52, band: 0.32, spread: 0.48, center: 0.5, step: 12 };
 
 /** Contour polylines at time t. Each item: { points: [[x, y], ...], alpha, width }. */
+const HEX = /^#[0-9a-fA-F]{3,8}$/;
+const finite = (n, min, max, name) => {
+  if (typeof n !== "number" || !Number.isFinite(n) || n < min || n > max)
+    throw new RangeError(`${name} must be a number from ${min} to ${max}`);
+  return n;
+};
+
 export function contours(width, height, t = 0, options = {}) {
   const o = { ...DEFAULTS, ...options };
+  finite(width, 1, 20000, "width");
+  finite(height, 1, 20000, "height");
+  finite(t, -1e6, 1e6, "t");
+  finite(o.strands, 1, 200, "strands");
+  finite(o.step, 1, 1000, "step"); // step 0 would never terminate
   const lines = [];
   for (let strand = 0; strand < o.strands; strand++) {
     const depth = o.strands === 1 ? 0.5 : strand / (o.strands - 1);
@@ -30,6 +42,14 @@ export function contours(width, height, t = 0, options = {}) {
 
 /** Static SVG string of the contours (for PDFs, OG images, print). */
 export function contoursSvg(width, height, { t = 2.6, signal, lake, opacity = 1, ...options } = {}) {
+  // Values are written into SVG markup, so only plain hex colors are accepted.
+  for (const [name, value] of [
+    ["signal", signal],
+    ["lake", lake],
+  ])
+    if (typeof value !== "string" || !HEX.test(value))
+      throw new TypeError(`${name} must be a hex color like #c8402a`);
+  finite(opacity, 0, 1, "opacity");
   const lines = contours(width, height, t, options);
   const grad = `<linearGradient id="u-wave" gradientUnits="userSpaceOnUse" x1="0" y1="${height}" x2="${width}" y2="0"><stop offset="0" stop-color="${signal}"/><stop offset=".38" stop-color="${lake}"/><stop offset="1" stop-color="${lake}"/></linearGradient>`;
   const paths = lines

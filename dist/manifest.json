@@ -2,7 +2,7 @@
   "name": "@uniform/design",
   "files": {
     "atmosphere.js": "2975faaf299d17a906f14fc1f70e06db72559063b1fe7ff80b89bcb4b4d36306",
-    "design.css": "6b86da8f56df745cc2ebdeff002f6043c2661cc2ba74f58e3d258bc74b7c052a",
+    "design.css": "d1ba05f2fc8c13b0b85ab14622f6485a1c01eafacfe83d27827396d76266dac8",
     "fonts/ibm-plex-mono-latin-500-normal.woff2": "01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22",
     "fonts/OFL-IBMPlexMono.txt": "23b0a9d0c6d3f140a0b77e483c5cfa6bba574325ef5cb189ed9f2fec4884533f",
     "fonts/OFL-PublicSans.txt": "157a9e77f7580246e97c769490e2e977ae94399f9d30f4556015c41fe8c28bac",
@@ -40,11 +40,12 @@
     "svg/uniform-wordmark-on-dark.svg": "3143100aa92f2ada212b8b6d53a573665290fcb9dc970946fafd8ac23fc2cb36",
     "svg/uniform-wordmark-white.svg": "de154ba5385096f77a1db2350c7f4b4e9f178de4850aa5acf9e14779725a8f2b",
     "tokens.css": "d94a8995cb68ccb413d7fb140b70975575799d4d8519fff10a928cb8c540d233",
+    "tokens.d.ts": "7fefdf133c69fd95de3192af3cecf0a0e37382a0d4cbfe0d1b257d302a6eb50c",
+    "tokens.js": "f3dac9352e695f1c073230fff2d7906fd09f346be4f820c9432c7f15db331944",
     "tokens.py": "91c3e305a78238e59576f80dbe1dcc6ec9c3405d36bc4a13ac0e90f3b8875058",
-    "tokens.ts": "f0e9e11907f568a3caded10e6a370b49a38f3638f245b5740e472f0094b16ce4",
     "vars.css": "ed2628ad8d29ffb242ee410edde11ff46eae5a0d12a518170d0cde470cf99b69",
-    "waves.d.ts": "f65fd7335c121941dcafe95a95146fee8eaea95914f7e2a157a331171e2ff31c",
-    "waves.js": "ecf064f30e04e52293c8e9d86afcd7e887a2bbc0ef2a704b6834f898743684f3",
+    "waves.d.ts": "f581c1cf608c5fe67dd8e0936d85284b58cf58f37946971d8e3c941e99731904",
+    "waves.js": "820270fa28943249300569d3bc34892a124dd11f60044681ba52f4088f0b3b93",
     "waves/band-light.svg": "0c5ae745d05929b9429d8b0e2961610fc8c013f309670e13a4aa0b21393ce501",
     "waves/cover-dark.svg": "4807ea6c62fcd519ac842e4ce20a28b3480fb59986101a306b89bf77487f6ba5"
   }
