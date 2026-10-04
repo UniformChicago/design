@@ -22,22 +22,25 @@ jobs:
         with: { persist-credentials: false }
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with: { node-version-file: .nvmrc, package-manager-cache: false }
-      - name: Tag matches package.json and has changelog notes
+      - name: Tag matches package.json
         env:
           TAG: ${{ github.ref_name }}
         run: |
           [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "::error::not a release tag: $TAG"; exit 1; }
           version=$(node -p 'require("./package.json").version')
           [ "v$version" = "$TAG" ] || { echo "::error::tag $TAG but package.json is $version"; exit 1; }
-          mkdir -p out
-          awk -v h="## $TAG " 'index($0, h) == 1 {on=1; next} /^## / {on=0} on' CHANGELOG.md > out/notes.md
-          grep -q '[^[:space:]]' out/notes.md || { echo "::error::CHANGELOG.md has no '## $TAG' section"; exit 1; }
       - run: npm ci
       - run: npm run check
       - run: npx playwright install --with-deps chromium
       - run: npm run test:a11y
-      - name: Pack and checksum
+      # After the checks, so nothing generated here is linted as source.
+      - name: Changelog notes, pack and checksum
+        env:
+          TAG: ${{ github.ref_name }}
         run: |
+          mkdir -p out
+          awk -v h="## $TAG " 'index($0, h) == 1 {on=1; next} /^## / {on=0} on' CHANGELOG.md > out/notes.md
+          grep -q '[^[:space:]]' out/notes.md || { echo "::error::CHANGELOG.md has no '## $TAG' section"; exit 1; }
           npm pack --pack-destination out
           (cd out && sha256sum ./*.tgz > SHA256SUMS && cat SHA256SUMS)
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
