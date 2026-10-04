@@ -23,11 +23,6 @@
 .g-top nav [aria-current] {
   color: var(--u-fg);
 }
-.g-main {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: var(--u-space-7) var(--u-space-6) var(--u-space-5);
-}
 .g-intro {
   margin-bottom: var(--u-space-6);
 }
@@ -237,9 +232,6 @@
   }
   .g-top nav {
     gap: var(--u-space-4);
-  }
-  .g-main {
-    padding: var(--u-space-6) var(--u-space-4);
   }
   .g-workspace {
     grid-template-columns: 1fr;

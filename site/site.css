@@ -42,7 +42,7 @@ html {
 }
 
 /* Layout: sticky sidebar plus content */
-.u-shell-layout s-layout {
+.s-layout {
   position: relative;
   display: grid;
   grid-template-columns: 232px minmax(0, 1fr);
@@ -393,7 +393,7 @@ html {
 
 /* Narrow screens: the sidebar becomes a row of section groups under the header. */
 @media (max-width: 960px) {
-  .u-shell-layout s-layout {
+  .s-layout {
     display: block;
   }
   .s-side {

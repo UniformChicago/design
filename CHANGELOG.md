@@ -1,3 +1,8 @@
+## v0.1.10 (2026-10-04)
+
+- Fix CSS selector bug that broke the main site layout grid.
+
+
 ## v0.1.9 (2026-10-04)
 
 - Fix button rendering width inside nav headers by removing whitespace and adding font-size: 0.
