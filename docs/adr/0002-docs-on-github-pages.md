@@ -21,7 +21,7 @@ The kit needs a public docs site: install steps, tokens, components and assets. 
 
 **Domain:**
 
-- `design` in the `uniformrealestate.com` zone is a DNS-only CNAME to `uniformrealestate.github.io`, managed in infra. It's DNS-only because GitHub must issue the certificate.
+- `design` in the `uniformrealestate.com` zone is a DNS-only CNAME to `uniformchicago.github.io`, managed in infra. It's DNS-only because GitHub must issue the certificate.
 - The domain is verified on the GitHub organization, so no other repository can claim it. The custom domain was set on this repository before the DNS record existed.
 
 ## Consequences

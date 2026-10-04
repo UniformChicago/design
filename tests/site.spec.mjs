@@ -83,7 +83,7 @@ test("copy buttons appear with JavaScript and copy the code", async ({ page, con
   await first.click();
   await expect(first).toHaveText("Copied");
   expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
-    `npm install --save-exact github:UniformRealEstate/design#v${version}`,
+    `npm install --save-exact github:UniformChicago/design#v${version}`,
   );
 });
 
