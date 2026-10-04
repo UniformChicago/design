@@ -1,0 +1,28 @@
+/* Generated from tokens/tokens.json by build/build.mjs. Do not edit. */
+:root {
+  --u-ink: #14212b;
+  --u-paper: #f3f5f6;
+  --u-slate: #5e6e79;
+  --u-signal: #c8402a;
+  --u-signal-on-dark: #e3654d;
+  --u-lake: #1f5f7a;
+  --u-lake-light: #8fc3d9;
+  --u-night: #0e171e;
+  --u-mist: #9dacb6;
+  --u-rule: #d5dce0;
+  --u-rule-dark: #22313b;
+  --u-font-sans: "Public Sans", "Helvetica Neue", Arial, sans-serif;
+  --u-font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --u-radius-sm: 4px;
+  --u-radius-md: 6px;
+  --u-radius-lg: 10px;
+  --u-space-1: 4px;
+  --u-space-2: 8px;
+  --u-space-3: 12px;
+  --u-space-4: 16px;
+  --u-space-5: 24px;
+  --u-space-6: 32px;
+  --u-space-7: 48px;
+  --u-dot-size: 0.19em;
+  --u-dot-gap: 0.05em;
+}

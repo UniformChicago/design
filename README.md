@@ -8,7 +8,7 @@ components/             CSS components (u-*), dark by default, light with data-t
 atmosphere/waves.js     contour math, animated canvas, static SVG export
 brand/                  logos and icon (see LICENSE-BRAND), fonts (SIL OFL)
 gallery/index.html      every component on dark and light
-dist/                   built output, committed: design.css, tokens.css/.ts/.py, svg/, fonts/, waves/
+dist/                   built output, committed: design.css, tokens.css (with fonts), vars.css (variables only), tokens.ts/.py, svg/, fonts/, waves/
 ```
 
 ## Use

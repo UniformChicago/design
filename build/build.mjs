@@ -47,6 +47,8 @@ const faces = [
   )
   .join("\n");
 const tokensCss = `${HEADER}:root {\n${vars.join("\n")}\n}\n${faces}\n`;
+// vars.css: variables only, for projects that self-host fonts their own way.
+put("vars.css", `${HEADER}:root {\n${vars.join("\n")}\n}\n`);
 put("tokens.css", tokensCss);
 put("design.css", tokensCss + "\n" + readFileSync(join(ROOT, "components/components.css"), "utf8"));
 
