@@ -1,0 +1,23 @@
+html {
+  background: var(--u-bg);
+}
+.p-content {
+  padding: var(--u-space-6);
+}
+.p-content > * {
+  margin-top: 0;
+}
+.p-content .u-field {
+  margin-block: var(--u-space-4);
+}
+.p-content .u-table {
+  margin-top: var(--u-space-5);
+}
+.p-content .u-button {
+  margin-top: var(--u-space-3);
+}
+@media (max-width: 480px) {
+  .p-content {
+    padding: var(--u-space-4);
+  }
+}

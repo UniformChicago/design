@@ -32,7 +32,7 @@ Uniform Design brings brand tokens, CSS components, self-hosted typography, and 
 
 ### Status and scope
 
-**Early foundation · v0.1.7.** This release supplies visual primitives and a component gallery. It is not yet a complete application UI framework or an accessibility certification. Pin a release and test it in your application before upgrading.
+**Early foundation · v0.1.8.** This release supplies visual primitives and an interactive component playground. It is not yet a complete application UI framework or an accessibility certification. Pin a release and test it in your application before upgrading.
 
 The direction is a shared foundation for more real estate experiences. Today, routing, authentication, data handling, interactive widget behavior, and regulatory requirements belong to the consuming application. Dialogs, comboboxes, date pickers, and other complex controls are not supplied.
 
@@ -41,7 +41,7 @@ The direction is a shared foundation for more real estate experiences. Today, ro
 ### 1. Install a pinned release
 
 ```sh
-npm install --save-exact github:UniformChicago/design#v0.1.7
+npm install --save-exact github:UniformChicago/design#v0.1.8
 ```
 
 The package name is `@uniform/design`. It installs from a Git tag; there is no registry package ([why](docs/adr/0001-releases-not-a-registry.md)). Each tag has a [GitHub Release](https://github.com/UniformChicago/design/releases) with the tarball, `SHA256SUMS` and a signed provenance attestation. The package declares Node 24 or newer; repository development uses the version in [`.nvmrc`](.nvmrc).
@@ -90,7 +90,9 @@ Use native elements for their behavior: anchors for navigation, buttons for acti
 | Navigation and accessibility | `u-nav`, `u-skip`, `u-sr`                                                                                                          |
 | Brand details                | `u-dot`, `u-atmosphere`                                                                                                            |
 
-[The gallery](gallery/index.html) contains working component markup, with dark and light examples. Clone the repository and open `gallery/index.html` to inspect the static components. Serve the repository through a local HTTP server to run the optional animation module as well.
+[Playground](https://design.uniformrealestate.com/playground/) offers starter patterns, state and heading controls, light/dark previews, a mobile-width preview, and editable HTML with copy/reset actions. Drafts survive switching patterns within the current page; reloading clears them. State and heading controls regenerate the current pattern.
+
+For a local preview, run `npm run build`, `node build/site.mjs`, and `node scripts/serve.mjs 4401 ../_site/`, then open `http://127.0.0.1:4401/playground/`. The built site also keeps `/gallery/` working as an alias.
 
 For a labeled field with help text:
 
@@ -182,7 +184,7 @@ atmosphere/    Shared wave implementation and types
 brand/         Marks, fonts, and font licenses
 build/         Deterministic asset generation
 scripts/       Repository checks
-gallery/       Component examples
+gallery/       Playground source (built at /playground/ and /gallery/)
 site/          Docs site source (built into _site/ by build/site.mjs)
 docs/adr/      Decisions: distribution, docs hosting
 dist/          Committed release assets

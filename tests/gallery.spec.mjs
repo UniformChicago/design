@@ -3,11 +3,10 @@ import AxeBuilder from "@axe-core/playwright";
 
 const GALLERY = "/gallery/index.html";
 
-test("every component, in both themes, has zero axe violations (WCAG 2.2 AA + best practices)", async ({
-  page,
-}) => {
+test("Playground shell has zero axe violations (WCAG 2.2 AA + best practices)", async ({ page }) => {
   await page.goto(GALLERY);
   const r = await new AxeBuilder({ page })
+    .setLegacyMode()
     .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"])
     .analyze();
   expect(r.violations.map((v) => `${v.id}: ${v.nodes.length} node(s)`)).toEqual([]);

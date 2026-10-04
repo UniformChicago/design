@@ -1,3 +1,4 @@
+import { icon } from "./icons.js";
 // Docs-site enhancements: theme toggle, copy buttons and the current section in the sidebar.
 // The page reads fine without it; the buttons stay hidden until this runs.
 const root = document.documentElement;
@@ -11,7 +12,12 @@ const say = (text) => {
 const toggle = document.getElementById("s-theme");
 if (toggle) {
   // The label names the current theme; clicking switches to the other one.
-  const sync = () => (toggle.textContent = `Theme: ${root.dataset.theme === "light" ? "Light" : "Dark"}`);
+  const sync = () => {
+    const light = root.dataset.theme === "light";
+    toggle.innerHTML = icon(light ? "moon" : "sun");
+    toggle.setAttribute("aria-label", `Switch to ${light ? "dark" : "light"} theme`);
+    toggle.title = toggle.getAttribute("aria-label");
+  };
   sync();
   toggle.hidden = false;
   toggle.addEventListener("click", () => {
@@ -26,16 +32,22 @@ if (toggle) {
 
 if (navigator.clipboard) {
   for (const button of document.querySelectorAll("button[data-copy]")) {
+    button.innerHTML = icon("copy");
     button.hidden = false;
+    let reset;
     button.addEventListener("click", async () => {
       const target = button.dataset.copyFrom && document.getElementById(button.dataset.copyFrom);
       const text = target ? target.textContent : button.dataset.copy;
       try {
         await navigator.clipboard.writeText(text);
-        const label = button.textContent;
-        button.textContent = "Copied";
+        clearTimeout(reset);
+        button.innerHTML = icon("check");
+        button.dataset.copied = "true";
         say("Copied to clipboard");
-        setTimeout(() => (button.textContent = label), 1500);
+        reset = setTimeout(() => {
+          button.innerHTML = icon("copy");
+          delete button.dataset.copied;
+        }, 1500);
       } catch {
         say("Copy failed");
       }

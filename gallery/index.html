@@ -1,160 +1,108 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Uniform design system · Gallery</title>
+    <title>Playground · Uniform Design</title>
     <meta
       name="description"
-      content="Every Uniform component on dark and light, built from the design system's own CSS."
+      content="Try Uniform components, change their states, and make the HTML your own."
     />
     <link rel="stylesheet" href="../dist/design.css" />
-    <link rel="icon" href="../dist/svg/uniform-icon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="gallery.css" />
+    <link rel="icon" href="../dist/svg/uniform-icon.svg" type="image/svg+xml" />
   </head>
   <body class="u-root">
     <a class="u-skip" href="#main">Skip to content</a>
-    <canvas id="atmosphere" class="u-atmosphere" aria-hidden="true"></canvas>
+    <header class="g-top">
+      <a href="../" aria-label="Uniform Design documentation"
+        ><img src="../dist/svg/uniform-wordmark-on-dark.svg" alt="Uniform" width="124" height="27"
+      /></a>
+      <nav aria-label="Design system">
+        <a href="../">Documentation</a><a href="./" aria-current="page">Playground</a
+        ><a href="https://github.com/UniformChicago/design">GitHub</a>
+      </nav>
+    </header>
     <main id="main" class="g-main">
       <header class="g-intro">
-        <img src="../dist/svg/uniform-wordmark-on-dark.svg" alt="Uniform" width="220" height="48" />
-        <p class="u-eyebrow">Design system · <a href="https://design.uniformrealestate.com/">Docs</a></p>
-        <h1 class="u-title">Gallery<span class="u-dot" aria-hidden="true"></span></h1>
-        <p class="u-lede">
-          Every component, on dark and light, from the same CSS every Uniform surface uses.
-        </p>
+        <p class="u-eyebrow">Uniform Design / Playground</p>
+        <h1 class="u-title">Make it yours<span class="u-dot" aria-hidden="true"></span></h1>
+        <p class="u-lede">Start with a pattern. Try a different state. Make the HTML your own.</p>
       </header>
-
-      <section class="g-theme" data-theme="dark" aria-labelledby="dark">
-        <h2 id="dark" class="u-heading">Dark</h2>
-        <div class="g-grid">
-          <div class="u-panel u-panel--accent">
-            <p class="u-eyebrow">Contact</p>
-            <dl class="u-facts u-facts--stacked">
-              <dt>Name</dt>
-              <dd>Jordan Rivera</dd>
-              <dt>License</dt>
-              <dd>Example 471.000000</dd>
-              <dt>Service area</dt>
-              <dd>Example City</dd>
-            </dl>
-          </div>
-          <div class="u-panel">
-            <h3 class="u-heading">Checklist</h3>
-            <div
-              class="u-progress"
-              role="progressbar"
-              aria-label="Checklist"
-              aria-valuenow="40"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            >
-              <span class="g-w40"></span>
-            </div>
-            <div class="g-checks">
-              <div class="u-check u-check--done">
-                <span class="u-check__status" aria-hidden="true"></span>
-                <span
-                  ><span class="u-check__title">Example document</span
-                  ><span class="u-check__detail">Finalized record</span></span
-                >
-                <span class="u-tag u-tag--ok">Done</span>
-              </div>
-              <div class="u-check u-check--progress">
-                <span class="u-check__status" aria-hidden="true"></span>
-                <span
-                  ><span class="u-check__title">Example filing</span
-                  ><span class="u-check__detail">Citation · in progress</span></span
-                >
-                <span class="u-tag u-tag--warn">In progress</span>
-              </div>
-              <div class="u-check">
-                <span class="u-check__status" aria-hidden="true"></span>
-                <span
-                  ><span class="u-check__title">Example requirement</span
-                  ><span class="u-check__detail">Citation</span></span
-                >
-                <a class="u-button u-button--quiet" href="#main">Upload</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="g-row">
-          <a class="u-button" href="#main">Primary</a>
-          <button class="u-button u-button--quiet" type="button">Quiet</button>
-          <span class="u-tag">Neutral</span>
-          <span class="u-tag u-tag--ok">Final</span>
-          <span class="u-tag u-tag--warn">Inbox</span>
-        </div>
-        <div class="u-table" tabindex="0" role="region" aria-label="Example registry">
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Name</th>
-                <th scope="col">License type</th>
-                <th scope="col">Number</th>
-                <th scope="col">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Jordan Rivera</td>
-                <td>License type</td>
-                <td>Example 471.000000</td>
-                <td>Example 471.000000</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="g-grid">
-          <form class="u-panel" action="#main">
-            <label class="u-field">File <input type="file" /></label>
-            <label class="u-field">Transaction <input type="text" placeholder="e.g. 100 Example St" /></label>
-            <label class="u-field"
-              >Category
-              <span class="u-select"
-                ><select>
-                  <option>agreement</option>
-                  <option>disclosure</option>
-                </select></span
-              >
-              <span class="u-hint">Uploads stay in your inbox until finalized.</span>
-            </label>
-          </form>
-          <div>
-            <p class="u-callout">
-              Audit chain verified: 42 entries, head <code class="u-code">9f3c72b1e0aa…</code>
+      <noscript
+        ><p class="u-callout">
+          Enable JavaScript to use the interactive preview, or <a href="../">browse the documentation</a>.
+        </p></noscript
+      >
+      <div class="g-workspace" id="workspace" hidden>
+        <aside class="g-library" aria-label="Pattern library">
+          <p class="u-eyebrow">Start with</p>
+          <div class="g-presets" id="presets" role="group" aria-label="Starter patterns"></div>
+          <div class="g-customize">
+            <label class="u-field" for="variant"
+              >State <span class="u-select"><select id="variant"></select></span
+            ></label>
+            <label class="u-field" for="sample-title"
+              >Heading <input id="sample-title" type="text" maxlength="100"
+            /></label>
+            <p class="u-hint">
+              Edits stay here while you explore other patterns. State and heading changes regenerate the HTML.
             </p>
-            <p class="u-callout u-callout--danger">Audit chain broken at entry 17.</p>
-            <nav class="u-nav" aria-label="Example navigation">
-              <a href="#dark" aria-current="page">Office</a>
-              <a href="#light">Records</a>
-            </nav>
           </div>
-        </div>
-      </section>
-
-      <section class="g-theme" data-theme="light" aria-labelledby="light">
-        <h2 id="light" class="u-heading">Light</h2>
-        <div class="g-grid">
-          <div class="u-panel u-panel--accent">
-            <p class="u-eyebrow">Example Brokerage LLC</p>
-            <p class="u-title g-small">Document title<span class="u-dot" aria-hidden="true"></span></p>
-            <p class="u-meta">Effective date</p>
+          <a class="g-doc-link" id="component-docs" href="../#panels">Component reference ↗</a>
+        </aside>
+        <section class="g-stage" aria-label="Preview workspace">
+          <div class="g-toolbar">
+            <span class="g-live"><span aria-hidden="true"></span>Live preview</span>
+            <div class="g-controls">
+              <div class="g-segment" role="group" aria-label="Preview theme">
+                <button type="button" data-theme-choice="light" aria-pressed="false">Light</button
+                ><button type="button" data-theme-choice="dark" aria-pressed="true">Dark</button>
+              </div>
+              <div class="g-segment" role="group" aria-label="Preview width">
+                <button type="button" data-width="desktop" aria-pressed="true">Desktop</button
+                ><button type="button" data-width="mobile" aria-pressed="false">Mobile</button>
+              </div>
+            </div>
           </div>
-          <div class="u-empty">
-            <p class="u-heading">No records yet</p>
-            <p>Upload a document to start.</p>
+          <div class="g-canvas" id="canvas">
+            <iframe
+              id="preview"
+              title="Live component preview"
+              sandbox="allow-same-origin"
+              referrerpolicy="no-referrer"
+            ></iframe>
           </div>
-        </div>
-        <div class="g-row">
-          <a class="u-button" href="#main">Primary</a>
-          <button class="u-button u-button--quiet" type="button">Quiet</button>
-          <span class="u-tag u-tag--ok">Final</span>
-          <span class="u-tag u-tag--warn">Inbox</span>
-        </div>
-      </section>
+          <div class="g-preview-footer">
+            <span id="preview-caption">Record list</span><span>Built with Uniform CSS</span>
+          </div>
+          <details class="g-editor">
+            <summary>Edit HTML <span>Customize the markup</span></summary>
+            <div class="g-editor-bar">
+              <label for="editor">HTML</label>
+              <div>
+                <button class="u-button u-button--quiet" type="button" id="reset">Reset pattern</button
+                ><button class="u-button u-button--quiet" type="button" id="copy">Copy HTML</button>
+              </div>
+            </div>
+            <textarea
+              id="editor"
+              aria-describedby="editor-hint"
+              spellcheck="false"
+              autocapitalize="off"
+              autocomplete="off"
+            ></textarea>
+            <p id="editor-hint" class="u-hint">
+              Updates as you type. Use HTML and Uniform classes; scripts and external resources are disabled.
+            </p>
+          </details>
+        </section>
+      </div>
+      <p id="status" class="g-status u-meta" role="status" aria-live="polite"></p>
+      <footer class="g-footer">
+        <span>Small pieces. Consistent surfaces.</span><a href="../#install">Get the design system ↗</a>
+      </footer>
     </main>
-    <script type="module" src="../dist/atmosphere.js"></script>
+    <script type="module" src="playground.js"></script>
   </body>
 </html>

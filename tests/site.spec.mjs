@@ -7,23 +7,27 @@ const tokens = JSON.parse(readFileSync(new URL("../tokens/tokens.json", import.m
 const SITE = "http://127.0.0.1:4401";
 const TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
 const axe = async (page) =>
-  (await new AxeBuilder({ page }).withTags(TAGS).analyze()).violations.map(
+  (await new AxeBuilder({ page }).setLegacyMode().withTags(TAGS).analyze()).violations.map(
     (v) => `${v.id}: ${v.nodes.length} node(s)`,
   );
 
-for (const path of ["/", "/gallery/"]) {
+for (const path of ["/", "/gallery/", "/playground/"]) {
   test(`docs ${path}: zero axe violations, no horizontal scroll, no console errors`, async ({ page }) => {
     const errors = [];
     page.on("pageerror", (e) => errors.push(String(e)));
-    page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
+    const consoleError = (m) => m.type() === "error" && errors.push(m.text());
+    page.on("console", consoleError);
     await page.goto(SITE + path);
-    expect(await axe(page)).toEqual([]);
     const [sw, cw] = await page.evaluate(() => [
       document.documentElement.scrollWidth,
       document.documentElement.clientWidth,
     ]);
     expect(sw).toBeLessThanOrEqual(cw);
     expect(errors).toEqual([]);
+    // Axe injects its own script into the deliberately script-free preview.
+    // Check application console output before that instrumentation.
+    page.off("console", consoleError);
+    expect(await axe(page)).toEqual([]);
   });
 
   test(`docs ${path}: every same-site link, image, stylesheet and script resolves`, async ({ page }) => {
@@ -42,10 +46,10 @@ for (const path of ["/", "/gallery/"]) {
 test("the light theme also has zero axe violations, and the choice survives a reload", async ({ page }) => {
   await page.goto(SITE + "/");
   const toggle = page.locator("#s-theme");
-  await expect(toggle).toHaveText("Theme: Dark");
+  await expect(toggle).toHaveAccessibleName("Switch to light theme");
   await toggle.click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
-  await expect(toggle).toHaveText("Theme: Light");
+  await expect(toggle).toHaveAccessibleName("Switch to dark theme");
   expect(await axe(page)).toEqual([]);
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
@@ -81,7 +85,7 @@ test("copy buttons appear with JavaScript and copy the code", async ({ page, con
   const first = page.locator("#install button[data-copy]").first();
   await expect(first).toBeVisible();
   await first.click();
-  await expect(first).toHaveText("Copied");
+  await expect(first).toHaveAttribute("data-copied", "true");
   expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
     `npm install --save-exact github:UniformChicago/design#v${version}`,
   );

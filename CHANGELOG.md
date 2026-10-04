@@ -2,6 +2,13 @@
 
 Each release is a `vX.Y.Z` tag with a [GitHub Release](https://github.com/UniformChicago/design/releases): notes from this file, the npm tarball, `SHA256SUMS` and a signed build-provenance attestation. During `0.x`, any release may change markup or class names; read the notes before upgrading.
 
+## v0.1.8 — 2026-10-04
+
+- Replace the gallery with an interactive Playground: five starter patterns, state and heading controls, editable HTML, copy/reset, and light/dark and mobile/desktop previews. Existing `/gallery/` links remain usable.
+- Refine the docs with icon theme/copy controls, aligned token actions, and readable asset names with explicit SVG downloads.
+- Add browser coverage for Playground editing, draft retention, reset, clipboard, preview isolation, and accessibility across starter states and themes.
+- No changes to `dist/`.
+
 ## v0.1.7 — 2026-10-04
 
 - The repository moved to [UniformChicago/design](https://github.com/UniformChicago/design). Install with `github:UniformChicago/design#v0.1.7`.

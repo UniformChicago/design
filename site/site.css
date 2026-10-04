@@ -291,9 +291,35 @@ html {
 .s-card code {
   font: 500 13px/1.5 var(--u-font-mono);
 }
-.s-card .s-copy {
-  align-self: flex-start;
-  margin: auto var(--u-space-2) 0;
+.s-token-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--u-space-1);
+}
+.s-token-heading code {
+  overflow-wrap: anywhere;
+}
+.s-card .s-token-heading {
+  padding-right: var(--u-space-2);
+}
+.s-copy,
+.s-theme {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex: none;
+  padding: 0;
+}
+.s-copy[hidden],
+.s-theme[hidden] {
+  display: none;
+}
+.s-copy:focus-visible {
+  outline: 2px solid var(--u-link);
+  outline-offset: 2px;
 }
 .s-note {
   color: var(--u-muted);
@@ -371,7 +397,7 @@ html {
 .s-marks li {
   display: grid;
   gap: var(--u-space-3);
-  padding: var(--u-space-4);
+  overflow: hidden;
   border: 1px solid var(--u-line);
   border-radius: var(--u-radius-lg);
   background: var(--u-bg);
@@ -452,4 +478,41 @@ html {
 .s-code pre:focus-visible {
   outline: 2px solid var(--u-link);
   outline-offset: -2px;
+}
+
+.s-mark-preview {
+  display: grid;
+  place-items: center;
+  min-height: 140px;
+  padding: var(--u-space-5);
+  background: var(--u-bg);
+  border-bottom: 1px solid var(--u-line);
+}
+.s-mark-info {
+  display: grid;
+  gap: var(--u-space-2);
+  padding: 0 var(--u-space-4) var(--u-space-4);
+  font-size: 14px;
+}
+.s-mark-info a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 36px;
+}
+@media (max-width: 520px) {
+  .s-top {
+    padding-inline: var(--u-space-4);
+    gap: var(--u-space-2);
+  }
+  .s-top-actions {
+    gap: var(--u-space-1);
+  }
+  .s-logo {
+    width: 104px;
+    height: auto;
+  }
+  .s-top .s-theme {
+    padding: 0;
+  }
 }

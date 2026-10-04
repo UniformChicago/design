@@ -33,9 +33,17 @@
       /></a>
       <span class="u-tag s-version">v{{version}}</span>
       <span class="s-top-actions">
-        <button type="button" class="u-button u-button--quiet s-theme" id="s-theme" hidden>
-          Theme: Dark
+        <button
+          type="button"
+          class="u-button u-button--quiet s-theme"
+          id="s-theme"
+          aria-label="Switch to light theme"
+          title="Switch to light theme"
+          hidden
+        >
+          <span class="s-theme-icon" aria-hidden="true"></span>
         </button>
+        <a class="u-button u-button--quiet" href="playground/">Playground</a>
         <a class="u-button u-button--quiet" href="https://github.com/UniformChicago/design">GitHub</a>
       </span>
     </header>
@@ -94,7 +102,7 @@
             </p>
             <p class="s-actions">
               <a class="u-button" href="#install">Get started</a>
-              <a class="u-button u-button--quiet" href="gallery/">All components on one page</a>
+              <a class="u-button u-button--quiet" href="playground/">Open playground</a>
             </p>
             <ul class="s-points">
               <li>
