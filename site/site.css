@@ -9,7 +9,7 @@ html {
 }
 
 /* Header */
-.s-top {
+.u-shell-header {
   position: sticky;
   top: 0;
   z-index: 3;
@@ -35,14 +35,14 @@ html {
 [data-theme="light"] .s-logo--light {
   display: block;
 }
-.s-top-actions {
+.u-shell-header-actions {
   display: flex;
   gap: var(--u-space-2);
   margin-left: auto;
 }
 
 /* Layout: sticky sidebar plus content */
-.s-layout {
+.u-shell-layout s-layout {
   position: relative;
   display: grid;
   grid-template-columns: 232px minmax(0, 1fr);
@@ -110,7 +110,7 @@ html {
 /* Hero */
 .s-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  grid-template-columns: 1fr;
   gap: var(--u-space-7);
   align-items: center;
   min-height: 520px;
@@ -131,40 +131,6 @@ html {
 }
 .s-points strong {
   color: var(--u-fg);
-}
-.s-hero-art {
-  position: relative;
-  min-height: 420px;
-}
-.s-art {
-  position: absolute;
-  margin: 0;
-  box-shadow: 0 24px 60px color-mix(in srgb, var(--u-night) 35%, transparent);
-}
-.s-art--back {
-  top: 0;
-  right: 10%;
-  width: 76%;
-}
-.s-art--mid {
-  top: 54%;
-  left: 0;
-  width: 58%;
-  background: var(--u-surface);
-}
-.s-art--front {
-  top: 74%;
-  right: 0;
-  width: 50%;
-}
-.s-art--front .s-art-row {
-  flex-wrap: nowrap;
-}
-.s-art-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--u-space-2);
-  margin: var(--u-space-3) 0 0;
 }
 
 /* Code */
@@ -304,6 +270,16 @@ html {
   padding-right: var(--u-space-2);
 }
 .s-copy,
+.s-theme,
+.s-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  padding: 0;
+  font-size: 0;
+}
+.s-copy,
 .s-theme {
   display: inline-flex;
   align-items: center;
@@ -417,7 +393,7 @@ html {
 
 /* Narrow screens: the sidebar becomes a row of section groups under the header. */
 @media (max-width: 960px) {
-  .s-layout {
+  .u-shell-layout s-layout {
     display: block;
   }
   .s-side {
@@ -457,15 +433,12 @@ html {
     min-height: 0;
     padding-top: var(--u-space-7);
   }
-  .s-hero-art {
-    display: none; /* decorative; the components are shown in full below */
-  }
   .s-preview {
     padding: var(--u-space-4);
   }
 }
 @media (max-width: 520px) {
-  .s-top .u-button {
+  .u-shell-header .u-button {
     padding-inline: var(--u-space-3);
   }
   .s-version {
@@ -501,18 +474,18 @@ html {
   min-height: 36px;
 }
 @media (max-width: 520px) {
-  .s-top {
+  .u-shell-header {
     padding-inline: var(--u-space-4);
     gap: var(--u-space-2);
   }
-  .s-top-actions {
+  .u-shell-header-actions {
     gap: var(--u-space-1);
   }
   .s-logo {
     width: 104px;
     height: auto;
   }
-  .s-top .s-theme {
+  .u-shell-header .s-theme {
     padding: 0;
   }
 }

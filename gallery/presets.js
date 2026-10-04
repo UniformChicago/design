@@ -42,8 +42,10 @@ export const presets = [
     <div class="u-field"><label for="document-title">Document title</label><input id="document-title" placeholder="e.g. Purchase agreement" ${state === "Disabled" ? "disabled" : ""} /></div>
     <div class="u-field"><label for="category">Category</label><span class="u-select"><select id="category" ${state === "Disabled" ? "disabled" : ""}><option>Agreement</option><option>Disclosure</option><option>Checklist</option></select></span></div>
     <div class="u-field"><label for="notes">Notes</label><textarea id="notes" rows="3" aria-describedby="notes-hint" placeholder="Add a little context" ${state === "Disabled" ? "disabled" : ""}></textarea><span id="notes-hint" class="u-hint">Optional. Include anything helpful for review.</span></div>
-    <button class="u-button" type="button" ${state === "Disabled" ? "disabled" : ""}>Save document</button>
-    <button class="u-button u-button--quiet" type="button" ${state === "Disabled" ? "disabled" : ""}>Cancel</button>
+    <div class="u-actions">
+      <button class="u-button" type="button" ${state === "Disabled" ? "disabled" : ""}>Save document</button>
+      <button class="u-button u-button--quiet" type="button" ${state === "Disabled" ? "disabled" : ""}>Cancel</button>
+    </div>
   </form>
 </section>`,
   },
@@ -71,8 +73,10 @@ export const presets = [
     render: (title, state) => `<section class="u-panel">
   <h2 class="u-heading">${esc(title)}</h2>
   <p class="u-meta">One primary action, with room for an alternative.</p>
-  <button class="u-button" type="button" ${state === "Disabled" ? "disabled" : ""}>Continue</button>
-  <button class="u-button u-button--quiet" type="button" ${state === "Disabled" ? "disabled" : ""}>Save for later</button>
+  <div class="u-actions">
+    <button class="u-button" type="button" ${state === "Disabled" ? "disabled" : ""}>Continue</button>
+    <button class="u-button u-button--quiet" type="button" ${state === "Disabled" ? "disabled" : ""}>Save for later</button>
+  </div>
 </section>`,
   },
   {
@@ -86,6 +90,27 @@ export const presets = [
   <p class="u-eyebrow">Workspace status</p>
   <h2 class="u-heading">${esc(title)}</h2>
   <p class="u-callout${state === "Error" ? " u-callout--danger" : ""}">${state === "Error" ? "We couldn’t save your changes. Please try again." : "Your latest changes have been saved."}</p>
+</section>`,
+  },
+  {
+    id: "auth",
+    name: "Authentication",
+    description: "Forms, inputs & links",
+    section: "auth",
+    title: "Sign in",
+    states: ["Default", "Error"],
+    render: (title, state) => `<section class="u-panel" style="max-width: 400px; margin: 0 auto;">
+  <h2 class="u-heading">${esc(title)}</h2>
+  <p class="u-meta">Welcome back to Uniform.</p>
+  ${state === "Error" ? '<p class="u-callout u-callout--danger" style="margin-bottom: var(--u-space-4);">Invalid email or password.</p>' : ""}
+  <form>
+    <div class="u-field"><label for="email">Email address</label><input id="email" type="email" placeholder="you@example.com" /></div>
+    <div class="u-field"><label for="password">Password</label><input id="password" type="password" /></div>
+    <div class="u-actions">
+      <button class="u-button" type="button">Sign in</button>
+      <button class="u-button u-button--quiet" type="button">Forgot password?</button>
+    </div>
+  </form>
 </section>`,
   },
 ];

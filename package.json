@@ -1,7 +1,7 @@
 {
   "name": "@uniform/design",
-  "version": "0.1.8",
-  "description": "Uniform design system: tokens, brand assets, waves, CSS components",
+  "version": "0.1.9",
+  "description": "Uniform design system: tokens, brand assets, CSS components",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",
   "files": [

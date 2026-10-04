@@ -1,3 +1,12 @@
+## v0.1.9 (2026-10-04)
+
+- Fix button rendering width inside nav headers by removing whitespace and adding font-size: 0.
+- Demote Atmosphere wave motif to an experimental feature in text.
+- Remove overlapping s-hero-art collage from the landing page.
+- Add a standard u-shell shell system and use it across playground and landing page for consistent spacing and margins.
+- Add a new "Authentication" preset to the playground.
+- Fix u-callout border rendering corner artifact by using a pseudo element.
+
 # Changelog
 
 Each release is a `vX.Y.Z` tag with a [GitHub Release](https://github.com/UniformChicago/design/releases): notes from this file, the npm tarball, `SHA256SUMS` and a signed build-provenance attestation. During `0.x`, any release may change markup or class names; read the notes before upgrading.
