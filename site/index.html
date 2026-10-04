@@ -8,9 +8,10 @@
       name="description"
       content="Uniform Design: brand tokens, CSS components, self-hosted fonts and the Atmosphere wave motif, for websites, applications and documents."
     />
+    <script src="theme.js"></script>
     <link rel="stylesheet" href="dist/design.css" />
     <link rel="stylesheet" href="site.css" />
-    <link rel="stylesheet" href="swatches.css" />
+    <link rel="stylesheet" href="tokens-demo.css" />
     <link rel="icon" href="dist/svg/uniform-icon.svg" type="image/svg+xml" />
   </head>
   <body class="u-root">
@@ -18,235 +19,343 @@
     <canvas id="atmosphere" class="u-atmosphere" aria-hidden="true"></canvas>
     <header class="s-top">
       <a href="./" class="s-brand"
-        ><img src="dist/svg/uniform-wordmark-on-dark.svg" alt="Uniform" width="140" height="31"
+        ><img
+          class="s-logo s-logo--dark"
+          src="dist/svg/uniform-wordmark-on-dark.svg"
+          alt="Uniform Design"
+          width="124"
+          height="27" /><img
+          class="s-logo s-logo--light"
+          src="dist/svg/uniform-wordmark-color.svg"
+          alt="Uniform Design"
+          width="124"
+          height="27"
       /></a>
-      <nav class="u-nav s-nav" aria-label="Docs">
-        <a href="#start"><span>Get started</span></a>
-        <a href="#tokens"><span>Tokens</span></a>
-        <a href="#components"><span>Components</span></a>
-        <a href="#assets"><span>Assets</span></a>
-        <a href="#releases"><span>Releases</span></a>
-      </nav>
+      <span class="u-tag s-version">v{{version}}</span>
+      <span class="s-top-actions">
+        <button type="button" class="u-button u-button--quiet s-theme" id="s-theme" hidden>
+          Theme: Dark
+        </button>
+        <a class="u-button u-button--quiet" href="https://github.com/UniformRealEstate/design">GitHub</a>
+      </span>
     </header>
-    <main id="main" class="s-main">
-      <section class="s-hero">
-        <p class="u-eyebrow">Design system · v{{version}}</p>
-        <h1 class="u-title">Uniform Design<span class="u-dot" aria-hidden="true"></span></h1>
-        <p class="u-lede">
-          Brand tokens, CSS components, self-hosted fonts and the Atmosphere wave motif. One small, versioned
-          package for websites, applications and documents.
-        </p>
-        <p class="s-actions">
-          <a class="u-button" href="#start">Get started</a>
-          <a class="u-button u-button--quiet" href="gallery/">Component gallery</a>
-          <a class="u-button u-button--quiet" href="https://github.com/UniformRealEstate/design">Source</a>
-        </p>
-      </section>
 
-      <section id="start" aria-labelledby="start-h">
-        <h2 id="start-h" class="u-heading">Get started</h2>
-        <p>
-          Install a pinned release. <code class="u-code">dist/</code> is committed, so nothing builds on
-          install.
-        </p>
-        <pre
-          class="s-code"
-          tabindex="0"
-        ><code>npm install --save-exact github:UniformRealEstate/design#v{{version}}</code></pre>
-        <p>
-          Copy <code class="u-code">node_modules/@uniform/design/dist/</code> to your static directory,
-          keeping its structure (CSS references fonts by relative path), and link the stylesheet:
-        </p>
-        <pre
-          class="s-code"
-          tabindex="0"
-        ><code>&lt;link rel="stylesheet" href="/design/design.css" /&gt;</code></pre>
-        <p>
-          Compose with plain HTML. Dark is the default; set <code class="u-code">data-theme="light"</code> on
-          any element for light.
-        </p>
-        <pre class="s-code" tabindex="0"><code>&lt;body class="u-root"&gt;
-  &lt;main class="u-panel"&gt;
-    &lt;h1 class="u-title"&gt;Your workspace&lt;span class="u-dot" aria-hidden="true"&gt;&lt;/span&gt;&lt;/h1&gt;
-    &lt;p class="u-lede"&gt;A clear place to begin.&lt;/p&gt;
-    &lt;a class="u-button" href="/records"&gt;View records&lt;/a&gt;
-  &lt;/main&gt;
-&lt;/body&gt;</code></pre>
-        <p>
-          Not using npm? Download <code class="u-code">dist/</code> from a tag and check each file against
-          <code class="u-code">dist/manifest.json</code>.
-        </p>
-      </section>
-
-      <section id="tokens" aria-labelledby="tokens-h">
-        <h2 id="tokens-h" class="u-heading">Tokens</h2>
-        <p>
-          Every value comes from <code class="u-code">tokens/tokens.json</code> and is built into CSS
-          variables, JavaScript (<code class="u-code">@uniform/design/tokens</code>) and Python. Consumers
-          never hard-code hex values.
-        </p>
-        <h3 class="s-sub">Color</h3>
-        <div class="u-table" tabindex="0" role="region" aria-label="Color tokens">
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Swatch</th>
-                <th scope="col">Variable</th>
-                <th scope="col">Value</th>
-                <th scope="col">Use</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!--colors-->
-            </tbody>
-          </table>
-        </div>
-        <div class="s-pair">
-          <div>
-            <h3 class="s-sub">Spacing</h3>
-            <div class="u-table" tabindex="0" role="region" aria-label="Spacing tokens">
-              <table>
-                <thead>
-                  <tr>
-                    <th scope="col">Variable</th>
-                    <th scope="col">Value</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <!--space-->
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div>
-            <h3 class="s-sub">Radius and type</h3>
-            <div class="u-table" tabindex="0" role="region" aria-label="Radius and font tokens">
-              <table>
-                <thead>
-                  <tr>
-                    <th scope="col">Variable</th>
-                    <th scope="col">Value</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <!--radius-->
-                  <!--font-->
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        <p>
-          In your own CSS, use the semantic variables (<code class="u-code">--u-bg</code>,
-          <code class="u-code">--u-fg</code>, <code class="u-code">--u-surface</code>,
-          <code class="u-code">--u-line</code>, <code class="u-code">--u-link</code>), which follow the theme.
-        </p>
-      </section>
-
-      <section id="components" aria-labelledby="components-h">
-        <h2 id="components-h" class="u-heading">Components</h2>
-        <p>
-          Plain <code class="u-code">u-*</code> classes on native elements, with no framework or component
-          JavaScript. <a href="gallery/">The gallery</a> shows each one with working markup, in both themes.
-        </p>
-        <div class="u-table" tabindex="0" role="region" aria-label="Component classes">
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Need</th>
-                <th scope="col">Classes</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Typography</td>
-                <td><code class="u-code">u-title u-heading u-eyebrow u-lede u-meta u-code</code></td>
-              </tr>
-              <tr>
-                <td>Surfaces and messages</td>
-                <td>
-                  <code class="u-code">u-panel u-panel--accent u-callout u-callout--danger u-empty</code>
-                </td>
-              </tr>
-              <tr>
-                <td>Actions</td>
-                <td><code class="u-code">u-button u-button--quiet</code></td>
-              </tr>
-              <tr>
-                <td>Forms</td>
-                <td><code class="u-code">u-field u-select u-hint</code></td>
-              </tr>
-              <tr>
-                <td>Structured information</td>
-                <td><code class="u-code">u-facts u-facts--stacked u-table</code></td>
-              </tr>
-              <tr>
-                <td>Status</td>
-                <td><code class="u-code">u-tag u-tag--ok u-tag--warn</code></td>
-              </tr>
-              <tr>
-                <td>Navigation and accessibility</td>
-                <td><code class="u-code">u-nav u-skip u-sr</code></td>
-              </tr>
-              <tr>
-                <td>Brand details</td>
-                <td><code class="u-code">u-dot u-atmosphere</code></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p>
-          A scrolling <code class="u-code">u-table</code> wrapper needs
-          <code class="u-code">tabindex="0" role="region" aria-label="…"</code> so keyboard users can reach
-          it. The brand dot is always <code class="u-code">u-dot</code>, never a typed period.
-        </p>
-        <h3 class="s-sub">Atmosphere</h3>
-        <p>The optional wave motif: one implementation for the animated canvas and for static SVG.</p>
-        <pre
-          class="s-code"
-          tabindex="0"
-        ><code>&lt;canvas id="atmosphere" class="u-atmosphere" aria-hidden="true"&gt;&lt;/canvas&gt;
-&lt;script type="module" src="/design/atmosphere.js"&gt;&lt;/script&gt;</code></pre>
-        <p>It pauses for reduced motion and hidden tabs. For SVG output, pass only trusted values.</p>
-      </section>
-
-      <section id="assets" aria-labelledby="assets-h">
-        <h2 id="assets-h" class="u-heading">Assets</h2>
-        <p>
-          Brand marks ship in <code class="u-code">dist/svg/</code>, fonts in
-          <code class="u-code">dist/fonts/</code>. Use the on-dark variants on dark surfaces.
-        </p>
-        <ul class="s-marks">
-          <!--marks-->
+    <div class="s-layout">
+      <nav class="s-side" aria-label="Documentation">
+        <p class="s-group"><a href="#overview">Start</a></p>
+        <ul>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#install">Install</a></li>
+          <li><a href="#usage">Usage</a></li>
         </ul>
-        <p class="u-callout">
-          Uniform names, logos, wordmarks and icons are all rights reserved (<a
-            href="https://github.com/UniformRealEstate/design/blob/main/LICENSE-BRAND"
-            >LICENSE-BRAND</a
-          >). Code is <a href="https://github.com/UniformRealEstate/design/blob/main/LICENSE">Apache-2.0</a>,
-          and fonts are under the SIL Open Font License.
-        </p>
-      </section>
+        <p class="s-group"><a href="#color">Foundations</a></p>
+        <ul>
+          <li><a href="#color">Color</a></li>
+          <li><a href="#theme">Theme variables</a></li>
+          <li><a href="#type">Type</a></li>
+          <li><a href="#spacing">Spacing and radius</a></li>
+        </ul>
+        <p class="s-group"><a href="#typography">Components</a></p>
+        <ul>
+          <li><a href="#typography">Typography</a></li>
+          <li><a href="#buttons">Buttons</a></li>
+          <li><a href="#tags">Tags</a></li>
+          <li><a href="#panels">Panels</a></li>
+          <li><a href="#callouts">Callouts</a></li>
+          <li><a href="#facts">Facts</a></li>
+          <li><a href="#tables">Tables</a></li>
+          <li><a href="#forms">Forms</a></li>
+          <li><a href="#navigation">Navigation</a></li>
+          <li><a href="#empty">Empty state</a></li>
+          <li><a href="#progress">Progress and checks</a></li>
+        </ul>
+        <p class="s-group"><a href="#atmosphere-motif">Brand</a></p>
+        <ul>
+          <li><a href="#atmosphere-motif">Atmosphere</a></li>
+          <li><a href="#assets">Assets</a></li>
+        </ul>
+        <p class="s-group"><a href="#releases">Project</a></p>
+        <ul>
+          <li><a href="#releases">Releases</a></li>
+          <li><a href="#licensing">Licensing</a></li>
+        </ul>
+      </nav>
 
-      <section id="releases" aria-labelledby="releases-h">
-        <h2 id="releases-h" class="u-heading">Releases</h2>
-        <p>
-          Every <code class="u-code">vX.Y.Z</code> tag becomes a
-          <a href="https://github.com/UniformRealEstate/design/releases">GitHub Release</a> once the full
-          checks pass. Each release has notes, the npm tarball, <code class="u-code">SHA256SUMS</code> and a
-          signed build-provenance attestation. Upgrade on purpose: change the pinned tag, read the
-          <a href="https://github.com/UniformRealEstate/design/blob/main/CHANGELOG.md">changelog</a>, then
-          test.
-        </p>
-        <pre
-          class="s-code"
-          tabindex="0"
-        ><code>gh attestation verify uniform-design-{{version}}.tgz -R UniformRealEstate/design</code></pre>
-      </section>
-    </main>
-    <footer class="s-foot">
-      <p class="u-meta">Uniform Design v{{version}} · © 2026 Uniform Real Estate LLC</p>
-    </footer>
+      <main id="main" class="s-main">
+        <section id="overview" class="s-hero" aria-labelledby="overview-h">
+          <div class="s-hero-copy">
+            <p class="u-eyebrow">Design system</p>
+            <h1 id="overview-h" class="u-title">
+              Uniform Design<span class="u-dot" aria-hidden="true"></span>
+            </h1>
+            <p class="u-lede">
+              Brand tokens, CSS components, self-hosted fonts and the Atmosphere wave motif. One small,
+              versioned package for websites, applications and documents.
+            </p>
+            <p class="s-actions">
+              <a class="u-button" href="#install">Get started</a>
+              <a class="u-button u-button--quiet" href="gallery/">All components on one page</a>
+            </p>
+            <ul class="s-points">
+              <li>
+                <strong>HTML first.</strong> Plain <code class="u-code">u-*</code> classes, no framework.
+              </li>
+              <li><strong>Two themes.</strong> Dark by default, light anywhere.</li>
+              <li><strong>Strict-CSP ready.</strong> No inline styles, no third-party requests.</li>
+            </ul>
+          </div>
+          <div class="s-hero-art" aria-hidden="true">
+            <div class="u-panel u-panel--accent s-art s-art--back">
+              <p class="u-eyebrow">Record details</p>
+              <p class="u-heading">Purchase agreement</p>
+              <dl class="u-facts">
+                <dt>Category</dt>
+                <dd>Agreement</dd>
+                <dt>Size</dt>
+                <dd>2.4 MB</dd>
+              </dl>
+              <p class="s-art-row">
+                <span class="u-tag u-tag--ok">Final</span><span class="u-tag">Locked</span>
+              </p>
+            </div>
+            <p class="u-callout s-art s-art--mid">Chain verified · 42 entries</p>
+            <div class="u-panel s-art s-art--front">
+              <p class="u-meta">Inbox</p>
+              <p class="s-art-row">
+                <span class="u-button">Finalize</span><span class="u-button u-button--quiet">Discard</span>
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="install" aria-labelledby="install-h">
+          <h2 id="install-h" class="s-h2">Install</h2>
+          <p>
+            Install a pinned release. <code class="u-code">dist/</code> is committed, so nothing builds on
+            install.
+          </p>
+          <!--code:sh
+npm install --save-exact github:UniformRealEstate/design#v{{version}}
+-->
+          <p>
+            Copy <code class="u-code">node_modules/@uniform/design/dist/</code> to your static directory,
+            keeping its structure (CSS references fonts by relative path), and link the stylesheet:
+          </p>
+          <!--code:html
+<link rel="stylesheet" href="/design/design.css" />
+-->
+          <p>
+            Not using npm? Download <code class="u-code">dist/</code> from a tag and check each file against
+            <code class="u-code">dist/manifest.json</code>.
+          </p>
+        </section>
+
+        <section id="usage" aria-labelledby="usage-h">
+          <h2 id="usage-h" class="s-h2">Usage</h2>
+          <p>
+            Put <code class="u-code">u-root</code> on the body and compose with native elements. Dark is the
+            default; set <code class="u-code">data-theme="light"</code> on any element to switch it and
+            everything inside.
+          </p>
+          <!--code:html
+<body class="u-root" data-theme="light">
+  <main class="u-panel">
+    <h1 class="u-title">Your workspace<span class="u-dot" aria-hidden="true"></span></h1>
+    <p class="u-lede">A clear place to begin.</p>
+    <a class="u-button" href="/records">View records</a>
+  </main>
+</body>
+-->
+          <p>For your own components, use the theme variables and the spacing and radius tokens:</p>
+          <!--code:css
+.record-card {
+  background: var(--u-surface);
+  color: var(--u-fg);
+  padding: var(--u-space-5);
+  border-radius: var(--u-radius-lg);
+}
+-->
+        </section>
+
+        <section id="color" aria-labelledby="color-h">
+          <h2 id="color-h" class="s-h2">Color</h2>
+          <p>
+            The brand palette, from <code class="u-code">tokens/tokens.json</code>. It's also available as
+            JavaScript (<code class="u-code">@uniform/design/tokens</code>) and Python. Consumers never
+            hard-code hex values.
+          </p>
+          <ul class="s-swatches">
+            <!--colors-->
+          </ul>
+        </section>
+
+        <section id="theme" aria-labelledby="theme-h">
+          <h2 id="theme-h" class="s-h2">Theme variables</h2>
+          <p>
+            Build with these, not the palette. They switch with the theme, so each swatch below changes when
+            you switch between dark and light.
+          </p>
+          <ul class="s-swatches s-swatches--compact">
+            <!--semantic-->
+          </ul>
+        </section>
+
+        <section id="type" aria-labelledby="type-h">
+          <h2 id="type-h" class="s-h2">Type</h2>
+          <p>Two self-hosted families under the SIL Open Font License. No font CDN.</p>
+          <ul class="s-type">
+            <!--fonts-->
+          </ul>
+        </section>
+
+        <section id="spacing" aria-labelledby="spacing-h">
+          <h2 id="spacing-h" class="s-h2">Spacing and radius</h2>
+          <div class="s-pair">
+            <ul class="s-scale">
+              <!--space-->
+            </ul>
+            <ul class="s-radii">
+              <!--radius-->
+            </ul>
+          </div>
+        </section>
+
+        <section id="typography" aria-labelledby="typography-h">
+          <h2 id="typography-h" class="s-h2">Typography</h2>
+          <p>The brand dot is always <code class="u-code">u-dot</code>, never a typed period.</p>
+          <!--example:typography-->
+        </section>
+
+        <section id="buttons" aria-labelledby="buttons-h">
+          <h2 id="buttons-h" class="s-h2">Buttons</h2>
+          <p>Anchors for navigation, buttons for actions; the class only sets the look.</p>
+          <!--example:buttons-->
+        </section>
+
+        <section id="tags" aria-labelledby="tags-h">
+          <h2 id="tags-h" class="s-h2">Tags</h2>
+          <p>Short status labels. Keep the words meaningful without the color.</p>
+          <!--example:tags-->
+        </section>
+
+        <section id="panels" aria-labelledby="panels-h">
+          <h2 id="panels-h" class="s-h2">Panels</h2>
+          <!--example:panels-->
+        </section>
+
+        <section id="callouts" aria-labelledby="callouts-h">
+          <h2 id="callouts-h" class="s-h2">Callouts</h2>
+          <!--example:callouts-->
+        </section>
+
+        <section id="facts" aria-labelledby="facts-h">
+          <h2 id="facts-h" class="s-h2">Facts</h2>
+          <p>Label and value pairs on a <code class="u-code">dl</code>, inline or stacked.</p>
+          <!--example:facts-->
+        </section>
+
+        <section id="tables" aria-labelledby="tables-h">
+          <h2 id="tables-h" class="s-h2">Tables</h2>
+          <p>
+            The wrapper scrolls on narrow screens. Give it
+            <code class="u-code">tabindex="0" role="region" aria-label="…"</code> so keyboard users can reach
+            it.
+          </p>
+          <!--example:tables-->
+        </section>
+
+        <section id="forms" aria-labelledby="forms-h">
+          <h2 id="forms-h" class="s-h2">Forms</h2>
+          <p>
+            Wrap or associate every control with its label. Validation and error messages belong to your app.
+          </p>
+          <!--example:forms-->
+        </section>
+
+        <section id="navigation" aria-labelledby="navigation-h">
+          <h2 id="navigation-h" class="s-h2">Navigation</h2>
+          <p>
+            Mark the current page with <code class="u-code">aria-current="page"</code>; the style follows it.
+          </p>
+          <!--example:navigation-->
+        </section>
+
+        <section id="empty" aria-labelledby="empty-h">
+          <h2 id="empty-h" class="s-h2">Empty state</h2>
+          <!--example:empty-->
+        </section>
+
+        <section id="progress" aria-labelledby="progress-h">
+          <h2 id="progress-h" class="s-h2">Progress and checks</h2>
+          <!--example:progress-->
+        </section>
+
+        <section id="atmosphere-motif" aria-labelledby="atmosphere-h">
+          <h2 id="atmosphere-h" class="s-h2">Atmosphere</h2>
+          <p>
+            The wave motif behind this page. One implementation draws the animated canvas and the static SVG.
+            It pauses for reduced motion and in hidden tabs.
+          </p>
+          <!--code:html
+<canvas id="atmosphere" class="u-atmosphere" aria-hidden="true"></canvas>
+<script type="module" src="/design/atmosphere.js"></script>
+-->
+          <p>Or mount it yourself, and dispose of it when the view unmounts:</p>
+          <!--code:js
+import { mountAtmosphere } from "@uniform/design/waves";
+
+const dispose = mountAtmosphere(document.querySelector("#atmosphere"));
+-->
+          <p>
+            For SVG output, pass only trusted values; the helpers reject out-of-range sizes and non-hex
+            colors.
+          </p>
+        </section>
+
+        <section id="assets" aria-labelledby="assets-h">
+          <h2 id="assets-h" class="s-h2">Assets</h2>
+          <p>
+            Brand marks ship in <code class="u-code">dist/svg/</code>, fonts in
+            <code class="u-code">dist/fonts/</code>. Use the on-dark variants on dark surfaces.
+          </p>
+          <ul class="s-marks">
+            <!--marks-->
+          </ul>
+        </section>
+
+        <section id="releases" aria-labelledby="releases-h">
+          <h2 id="releases-h" class="s-h2">Releases</h2>
+          <p>
+            Every <code class="u-code">vX.Y.Z</code> tag becomes a
+            <a href="https://github.com/UniformRealEstate/design/releases">GitHub Release</a> once the full
+            checks pass, with notes, the npm tarball, <code class="u-code">SHA256SUMS</code> and a signed
+            build-provenance attestation. Upgrade on purpose: change the pinned tag, read the
+            <a href="https://github.com/UniformRealEstate/design/blob/main/CHANGELOG.md">changelog</a>, then
+            test.
+          </p>
+          <!--code:sh
+gh attestation verify uniform-design-{{version}}.tgz -R UniformRealEstate/design
+-->
+        </section>
+
+        <section id="licensing" aria-labelledby="licensing-h">
+          <h2 id="licensing-h" class="s-h2">Licensing</h2>
+          <p class="u-callout">
+            Code is <a href="https://github.com/UniformRealEstate/design/blob/main/LICENSE">Apache-2.0</a>.
+            Uniform names, logos, wordmarks and icons are all rights reserved (<a
+              href="https://github.com/UniformRealEstate/design/blob/main/LICENSE-BRAND"
+              >LICENSE-BRAND</a
+            >). Fonts are under the SIL Open Font License.
+          </p>
+        </section>
+
+        <footer class="s-foot">
+          <p class="u-meta">Uniform Design v{{version}} · © 2026 Uniform Real Estate LLC</p>
+        </footer>
+      </main>
+    </div>
+    <p class="u-sr" role="status" id="s-status"></p>
+    <script type="module" src="docs.js"></script>
     <script type="module" src="dist/atmosphere.js"></script>
   </body>
 </html>

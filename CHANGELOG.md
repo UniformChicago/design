@@ -2,6 +2,17 @@
 
 Each release is a `vX.Y.Z` tag with a [GitHub Release](https://github.com/UniformRealEstate/design/releases): notes from this file, the npm tarball, `SHA256SUMS` and a signed build-provenance attestation. During `0.x`, any release may change markup or class names; read the notes before upgrading.
 
+## v0.1.6 — 2026-10-04
+
+- Docs site redesign:
+  - a sticky sidebar that highlights the current section, and a dark/light toggle that is remembered across visits;
+  - color, theme-variable, type, spacing and radius cards with copy buttons;
+  - a live preview of every component above its markup;
+  - code highlighted at build time (no highlighter script ships), with copy buttons;
+  - a hero built from real components.
+- Tests: axe in both themes, theme persistence, sidebar targets, copy, and that each live example matches its code.
+- No changes to `dist/`.
+
 ## v0.1.5 — 2026-10-04
 
 - First GitHub Release. Releases now carry the npm tarball, `SHA256SUMS` and a signed build-provenance attestation. Releases are cut only after every check passes.
