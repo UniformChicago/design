@@ -1,6 +1,12 @@
 # Changelog
 
-Each release is a `vX.Y.Z` tag with a [GitHub Release](https://github.com/UniformRealEstate/design/releases): notes from this file, the npm tarball, `SHA256SUMS` and a signed build-provenance attestation. During `0.x`, any release may change markup or class names; read the notes before upgrading.
+Each release is a `vX.Y.Z` tag with a [GitHub Release](https://github.com/UniformChicago/design/releases): notes from this file, the npm tarball, `SHA256SUMS` and a signed build-provenance attestation. During `0.x`, any release may change markup or class names; read the notes before upgrading.
+
+## v0.1.7 — 2026-10-04
+
+- The repository moved to [UniformChicago/design](https://github.com/UniformChicago/design). Install with `github:UniformChicago/design#v0.1.7`.
+- Verify this release's attestation with `-R UniformChicago/design`. Older releases were signed under the previous org name.
+- No changes to `dist/`.
 
 ## v0.1.6 — 2026-10-04
 

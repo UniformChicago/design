@@ -6,8 +6,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/UniformRealEstate/design/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/UniformRealEstate/design/actions/workflows/ci.yml/badge.svg?branch=main" /></a>
-  <a href="https://github.com/UniformRealEstate/design/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/UniformRealEstate/design?sort=semver" /></a>
+  <a href="https://github.com/UniformChicago/design/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/UniformChicago/design/actions/workflows/ci.yml/badge.svg?branch=main" /></a>
+  <a href="https://github.com/UniformChicago/design/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/UniformChicago/design?sort=semver" /></a>
   <a href="https://design.uniformrealestate.com/"><img alt="Docs" src="https://img.shields.io/badge/docs-design.uniformrealestate.com-1f5f7a" /></a>
   <a href="LICENSE"><img alt="License: Apache-2.0 (code)" src="https://img.shields.io/badge/code-Apache--2.0-5e6e79" /></a>
   <a href="tests/"><img alt="WCAG 2.2 AA: axe-tested" src="https://img.shields.io/badge/WCAG_2.2_AA-axe--tested-5e6e79" /></a>
@@ -32,7 +32,7 @@ Uniform Design brings brand tokens, CSS components, self-hosted typography, and 
 
 ### Status and scope
 
-**Early foundation · v0.1.6.** This release supplies visual primitives and a component gallery. It is not yet a complete application UI framework or an accessibility certification. Pin a release and test it in your application before upgrading.
+**Early foundation · v0.1.7.** This release supplies visual primitives and a component gallery. It is not yet a complete application UI framework or an accessibility certification. Pin a release and test it in your application before upgrading.
 
 The direction is a shared foundation for more real estate experiences. Today, routing, authentication, data handling, interactive widget behavior, and regulatory requirements belong to the consuming application. Dialogs, comboboxes, date pickers, and other complex controls are not supplied.
 
@@ -41,10 +41,10 @@ The direction is a shared foundation for more real estate experiences. Today, ro
 ### 1. Install a pinned release
 
 ```sh
-npm install --save-exact github:UniformRealEstate/design#v0.1.6
+npm install --save-exact github:UniformChicago/design#v0.1.7
 ```
 
-The package name is `@uniform/design`. It installs from a Git tag; there is no registry package ([why](docs/adr/0001-releases-not-a-registry.md)). Each tag has a [GitHub Release](https://github.com/UniformRealEstate/design/releases) with the tarball, `SHA256SUMS` and a signed provenance attestation. The package declares Node 24 or newer; repository development uses the version in [`.nvmrc`](.nvmrc).
+The package name is `@uniform/design`. It installs from a Git tag; there is no registry package ([why](docs/adr/0001-releases-not-a-registry.md)). Each tag has a [GitHub Release](https://github.com/UniformChicago/design/releases) with the tarball, `SHA256SUMS` and a signed provenance attestation. The package declares Node 24 or newer; repository development uses the version in [`.nvmrc`](.nvmrc).
 
 ### 2. Serve the assets
 

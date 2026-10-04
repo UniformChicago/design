@@ -5,7 +5,7 @@
 
 ## Context
 
-Consumers (platform, marketing, the policy PDF builder) pin `github:UniformRealEstate/design#vX.Y.Z`, and `dist/` is committed, so installing never runs a build. There were tags but no Releases, and the repository's "Packages" panel was empty, which made it unclear how the kit ships.
+Consumers (platform, marketing, the policy PDF builder) pin `github:UniformChicago/design#vX.Y.Z`, and `dist/` is committed, so installing never runs a build. There were tags but no Releases, and the repository's "Packages" panel was empty, which made it unclear how the kit ships.
 
 The options:
 
@@ -20,7 +20,7 @@ Each `v*` tag produces a GitHub Release (`.github/workflows/release.yml`) after 
 - the notes from `CHANGELOG.md`;
 - the `npm pack` tarball;
 - `SHA256SUMS`;
-- a signed build-provenance attestation. Verify it with `gh attestation verify <tarball> -R UniformRealEstate/design`.
+- a signed build-provenance attestation. Verify it with `gh attestation verify <tarball> -R UniformChicago/design`.
 
 The "Packages" panel is hidden from the repository home page.
 
