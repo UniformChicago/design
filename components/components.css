@@ -301,11 +301,24 @@
 .u-field input::placeholder {
   color: var(--u-muted);
 }
+.u-hint {
+  color: var(--u-muted);
+  font-size: 13px;
+  font-weight: 400;
+}
 .u-field .u-hint {
   display: block;
   margin-top: 6px;
-  font-weight: 400;
-  color: var(--u-muted);
+}
+.u-field input[type="file"]::file-selector-button {
+  margin-right: var(--u-space-3);
+  padding: 6px 10px;
+  border: 1px solid var(--u-line);
+  border-radius: var(--u-radius-sm);
+  background: var(--u-surface);
+  color: var(--u-fg);
+  font: inherit;
+  cursor: pointer;
 }
 /* Select with a CSS caret (no data: URIs, so it works under strict CSPs). */
 .u-select {
