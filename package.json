@@ -1,6 +1,6 @@
 {
   "name": "@uniform/design",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Uniform design system: tokens, brand assets, waves, CSS components",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",
@@ -12,7 +12,10 @@
     "./tokens.css": "./dist/tokens.css",
     "./vars.css": "./dist/vars.css",
     "./tokens": "./dist/tokens.ts",
-    "./waves": "./dist/waves.js",
+    "./waves": {
+      "types": "./dist/waves.d.ts",
+      "default": "./dist/waves.js"
+    },
     "./manifest.json": "./dist/manifest.json",
     "./*": "./dist/*"
   },

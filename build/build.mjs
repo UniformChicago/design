@@ -85,6 +85,7 @@ for (const f of readdirSync(join(ROOT, "brand/svg"))) {
 }
 copyDir("brand/fonts", "fonts");
 put("waves.js", readFileSync(join(ROOT, "atmosphere/waves.js")));
+put("waves.d.ts", readFileSync(join(ROOT, "atmosphere/waves.d.ts")));
 put("atmosphere.js", readFileSync(join(ROOT, "atmosphere/auto.js")));
 
 // Static waves for print (the PDF builder): same math, frozen at t = 2.6
