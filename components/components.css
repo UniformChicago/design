@@ -1,0 +1,438 @@
+/* Uniform components. Plain CSS classes (u-*), framework-agnostic: Astro, server-rendered
+   TypeScript and PDF HTML all use the same markup. Built from tokens.css (brand values) via
+   semantic variables, so every component works on dark (default) and light (data-theme="light"). */
+
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+  --u-bg: var(--u-night);
+  --u-fg: var(--u-paper);
+  --u-muted: var(--u-mist);
+  --u-link: var(--u-lake-light);
+  --u-accent: var(--u-signal-on-dark);
+  --u-line: color-mix(in srgb, var(--u-mist) 22%, transparent);
+  --u-surface: color-mix(in srgb, var(--u-ink) 68%, var(--u-night));
+  --u-hover: color-mix(in srgb, var(--u-lake-light) 8%, transparent);
+  --u-ok: var(--u-lake-light);
+  --u-warn: var(--u-signal-on-dark);
+  --u-button-bg: var(--u-lake-light);
+  --u-button-fg: var(--u-night);
+}
+[data-theme="light"] {
+  color-scheme: light;
+  --u-bg: #fff;
+  --u-fg: var(--u-ink);
+  --u-muted: var(--u-slate);
+  --u-link: var(--u-lake);
+  --u-accent: var(--u-signal);
+  --u-line: var(--u-rule);
+  --u-surface: var(--u-paper);
+  --u-hover: color-mix(in srgb, var(--u-lake) 6%, transparent);
+  --u-ok: var(--u-lake);
+  --u-warn: var(--u-signal);
+  --u-button-bg: var(--u-lake);
+  --u-button-fg: #fff;
+}
+
+/* Base */
+.u-root,
+.u-root * {
+  box-sizing: border-box;
+}
+.u-root {
+  margin: 0;
+  background: var(--u-bg);
+  color: var(--u-fg);
+  font: 400 15px/1.6 var(--u-font-sans);
+}
+.u-root a {
+  color: var(--u-link);
+  text-underline-offset: 4px;
+}
+.u-root a:hover {
+  color: var(--u-fg);
+}
+.u-root :focus-visible {
+  outline: 2px solid var(--u-accent);
+  outline-offset: 4px;
+}
+
+/* Accessibility helpers */
+.u-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.u-skip {
+  position: absolute;
+  left: -9999px;
+}
+.u-skip:focus {
+  left: var(--u-space-5);
+  top: var(--u-space-3);
+  z-index: 100;
+  padding: var(--u-space-3);
+  background: var(--u-bg);
+}
+
+/* Type */
+.u-eyebrow {
+  display: block;
+  margin: 0 0 var(--u-space-3);
+  font: 500 11px/1.5 var(--u-font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--u-muted);
+}
+.u-title {
+  font-size: clamp(36px, 4.2vw, 58px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.055em;
+  margin: 0 0 var(--u-space-4);
+  overflow-wrap: anywhere;
+}
+.u-heading {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+  margin: 0 0 var(--u-space-5);
+}
+.u-lede {
+  margin: 0;
+  max-width: 560px;
+  font-size: 16px;
+  color: var(--u-muted);
+}
+.u-meta {
+  color: var(--u-muted);
+  font-size: 13px;
+}
+.u-code {
+  font: 500 12px/1.6 var(--u-font-mono);
+  overflow-wrap: anywhere;
+}
+
+/* The brand dot: a circle, never a typed period (Public Sans draws the period square).
+   <h1 class="u-title">Office<span class="u-dot" aria-hidden="true"></span></h1> */
+.u-dot {
+  display: inline-block;
+  width: var(--u-dot-size);
+  height: var(--u-dot-size);
+  margin-left: var(--u-dot-gap);
+  border-radius: 50%;
+  background: var(--u-accent);
+  vertical-align: baseline;
+}
+
+/* Surfaces */
+.u-panel {
+  min-width: 0;
+  padding: 28px;
+  border: 1px solid var(--u-line);
+  border-radius: var(--u-radius-lg);
+  background: var(--u-surface);
+}
+.u-panel--accent {
+  border-top: 2px solid var(--u-accent);
+}
+.u-callout {
+  padding: 18px 20px;
+  border: 1px solid var(--u-line);
+  border-left: 2px solid var(--u-ok);
+  border-radius: var(--u-radius-md);
+  background: var(--u-surface);
+  overflow-wrap: anywhere;
+}
+.u-callout--danger {
+  border-left-color: var(--u-warn);
+  color: var(--u-warn);
+}
+.u-empty {
+  padding: 52px var(--u-space-5);
+  text-align: center;
+  border: 1px solid var(--u-line);
+  border-radius: var(--u-radius-lg);
+  background: var(--u-surface);
+  color: var(--u-muted);
+}
+.u-empty .u-heading {
+  color: var(--u-fg);
+  margin-bottom: var(--u-space-2);
+  font-size: 22px;
+}
+
+/* Definition list of facts */
+.u-facts {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: var(--u-space-4) var(--u-space-5);
+  margin: 0;
+}
+.u-facts dt {
+  color: var(--u-muted);
+  font-size: 12px;
+  padding-top: 3px;
+}
+.u-facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.u-facts--stacked {
+  grid-template-columns: 1fr;
+  gap: 2px;
+}
+.u-facts--stacked dd {
+  margin-bottom: 14px;
+}
+
+/* Table */
+.u-table {
+  overflow-x: auto;
+}
+.u-table table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 13px;
+}
+.u-table th,
+.u-table td {
+  text-align: left;
+  padding: var(--u-space-4) var(--u-space-3);
+  border-bottom: 1px solid var(--u-line);
+  vertical-align: top;
+}
+.u-table th {
+  color: var(--u-muted);
+  font: 500 10px/1.5 var(--u-font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.u-table th:first-child,
+.u-table td:first-child {
+  padding-left: 0;
+}
+.u-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Tag / badge */
+.u-tag {
+  display: inline-block;
+  padding: var(--u-space-1) var(--u-space-2);
+  border: 1px solid var(--u-line);
+  border-radius: var(--u-radius-sm);
+  font: 500 10px/1.5 var(--u-font-mono);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--u-muted);
+  white-space: nowrap;
+}
+.u-tag--ok {
+  color: var(--u-ok);
+}
+.u-tag--warn {
+  color: var(--u-warn);
+}
+
+/* Buttons */
+.u-button {
+  display: inline-block;
+  min-height: 44px;
+  padding: var(--u-space-3) 18px;
+  border: 1px solid transparent;
+  border-radius: var(--u-radius-md);
+  background: var(--u-button-bg);
+  color: var(--u-button-fg);
+  font: 600 13px/1.5 var(--u-font-sans);
+  text-decoration: none;
+  cursor: pointer;
+}
+.u-root a.u-button {
+  color: var(--u-button-fg);
+}
+.u-root a.u-button--quiet {
+  color: var(--u-muted);
+}
+.u-root a.u-button--quiet:hover {
+  color: var(--u-fg);
+}
+.u-button:hover {
+  background: var(--u-fg);
+  color: var(--u-bg);
+}
+.u-button--quiet {
+  background: transparent;
+  border-color: var(--u-line);
+  color: var(--u-muted);
+}
+.u-button--quiet:hover {
+  background: transparent;
+  color: var(--u-fg);
+  border-color: var(--u-muted);
+}
+
+/* Form fields */
+.u-field {
+  display: block;
+  margin-bottom: 18px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.u-field input,
+.u-field select,
+.u-field textarea {
+  display: block;
+  width: 100%;
+  min-height: 46px;
+  margin-top: var(--u-space-2);
+  padding: var(--u-space-3);
+  border: 1px solid var(--u-line);
+  border-radius: var(--u-radius-md);
+  background: var(--u-bg);
+  color: var(--u-fg);
+  font: inherit;
+  font-weight: 400;
+}
+.u-field input::placeholder {
+  color: var(--u-muted);
+}
+.u-field .u-hint {
+  display: block;
+  margin-top: 6px;
+  font-weight: 400;
+  color: var(--u-muted);
+}
+/* Select with a CSS caret (no data: URIs, so it works under strict CSPs). */
+.u-select {
+  position: relative;
+  display: block;
+}
+.u-select select {
+  appearance: none;
+  padding-right: 40px;
+}
+.u-select::after {
+  content: "";
+  position: absolute;
+  right: 16px;
+  bottom: 19px;
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid var(--u-muted);
+  border-bottom: 1.5px solid var(--u-muted);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+/* Navigation rail */
+.u-nav {
+  display: grid;
+  gap: 6px;
+}
+.u-nav a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 48px;
+  padding: var(--u-space-3);
+  border-radius: var(--u-radius-md);
+  color: var(--u-muted);
+  text-decoration: none;
+}
+.u-nav a:hover {
+  background: var(--u-hover);
+  color: var(--u-fg);
+}
+.u-nav a[aria-current="page"] {
+  background: var(--u-surface);
+  color: var(--u-fg);
+  box-shadow: inset 2px 0 var(--u-accent);
+}
+
+/* Checklist item: status, title, detail, action */
+.u-check {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) auto;
+  gap: var(--u-space-3) var(--u-space-4);
+  align-items: start;
+  padding: var(--u-space-4) 0;
+  border-top: 1px solid var(--u-line);
+}
+.u-check:first-child {
+  border-top: 0;
+}
+.u-check__status {
+  width: 16px;
+  height: 16px;
+  margin-top: 3px;
+  border: 1.5px solid var(--u-muted);
+  border-radius: 50%;
+}
+.u-check--done .u-check__status {
+  border-color: var(--u-ok);
+  background: var(--u-ok);
+  box-shadow: inset 0 0 0 3px var(--u-surface);
+}
+.u-check--progress .u-check__status {
+  border-color: var(--u-warn);
+  background: linear-gradient(90deg, var(--u-warn) 50%, transparent 50%);
+}
+.u-check__title {
+  font-weight: 600;
+}
+.u-check__detail {
+  display: block;
+  color: var(--u-muted);
+  font-size: 13px;
+}
+
+/* Progress bar */
+.u-progress {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--u-line);
+  overflow: hidden;
+}
+.u-progress > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--u-ok);
+}
+
+/* Atmosphere canvas (see atmosphere.js) */
+.u-atmosphere {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.22;
+  mask-image: linear-gradient(120deg, transparent 35%, var(--u-bg));
+}
+
+@media (max-width: 700px) {
+  .u-panel {
+    padding: 20px;
+  }
+  .u-facts {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+  .u-facts dd {
+    margin-bottom: 14px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .u-root *,
+  .u-root *::before,
+  .u-root *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

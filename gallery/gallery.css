@@ -1,0 +1,46 @@
+/* Gallery layout only; components come from dist/design.css. */
+.g-main {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--u-space-7) var(--u-space-5);
+}
+.g-intro {
+  margin-bottom: var(--u-space-7);
+}
+.g-intro img {
+  display: block;
+  margin-bottom: var(--u-space-6);
+}
+.g-theme {
+  padding: var(--u-space-6);
+  margin-bottom: var(--u-space-6);
+  border-radius: var(--u-radius-lg);
+  background: var(--u-bg);
+  color: var(--u-fg);
+}
+.g-theme a {
+  color: var(--u-link);
+}
+.g-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--u-space-5);
+  margin-bottom: var(--u-space-5);
+}
+.g-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--u-space-3);
+  margin-bottom: var(--u-space-5);
+}
+.g-checks {
+  margin-top: var(--u-space-4);
+}
+.g-w40 {
+  width: 40%;
+}
+.g-small {
+  font-size: 32px;
+}

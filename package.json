@@ -1,0 +1,28 @@
+{
+  "name": "@uniform/design",
+  "version": "0.1.0",
+  "description": "Uniform design system: tokens, brand assets, waves, CSS components",
+  "license": "SEE LICENSE IN LICENSE",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    "./design.css": "./dist/design.css",
+    "./tokens.css": "./dist/tokens.css",
+    "./tokens": "./dist/tokens.ts",
+    "./waves": "./dist/waves.js",
+    "./manifest.json": "./dist/manifest.json",
+    "./*": "./dist/*"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "node build/build.mjs",
+    "check": "prettier --check . && node build/build.mjs --check && node scripts/contrast.mjs && node scripts/forbidden.mjs"
+  },
+  "devDependencies": {
+    "prettier": "3.9.9"
+  }
+}

@@ -1,0 +1,10 @@
+Uniform design system
+Copyright 2026 Uniform Real Estate LLC
+
+Code (build/, scripts/, atmosphere/, components/, gallery/, tokens/) is licensed under the
+Apache License, Version 2.0 (LICENSE).
+
+Brand assets (brand/svg/, and the logos and marks in dist/svg/) are not licensed: see LICENSE-BRAND.
+
+Fonts (brand/fonts/, dist/fonts/) are licensed under the SIL Open Font License 1.1:
+Public Sans (OFL-PublicSans.txt) and IBM Plex Mono (OFL-IBMPlexMono.txt).
