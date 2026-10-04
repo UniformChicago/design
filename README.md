@@ -1,5 +1,8 @@
 <p align="center">
-  <img src="brand/svg/uniform-real-estate-lake-on-paper.svg" alt="Uniform Real Estate" width="360" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="dist/svg/uniform-wordmark-on-dark.svg" />
+    <img src="brand/svg/uniform-wordmark-color.svg" alt="Uniform" width="280" />
+  </picture>
 </p>
 
 # A shared visual foundation for real estate software
