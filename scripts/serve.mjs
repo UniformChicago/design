@@ -4,7 +4,7 @@ import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
 import { extname, join, normalize } from "node:path";
 
-const ROOT = new URL("..", import.meta.url).pathname;
+const ROOT = new URL(process.argv[3] ?? "..", new URL(".", import.meta.url)).pathname;
 const TYPES = {
   ".html": "text/html",
   ".css": "text/css",
@@ -16,12 +16,13 @@ const TYPES = {
 };
 const port = Number(process.argv[2] ?? 4400);
 createServer(async (req, res) => {
-  const path = normalize(decodeURIComponent(new URL(req.url, "http://x").pathname)).replace(
+  const clean = normalize(decodeURIComponent(new URL(req.url, "http://x").pathname)).replace(
     /^(\.\.[/\\])+/,
     "",
   );
+  const path = clean.endsWith("/") ? clean + "index.html" : clean;
   try {
-    const body = await readFile(join(ROOT, path.endsWith("/") ? path + "index.html" : path));
+    const body = await readFile(join(ROOT, path));
     res.writeHead(200, { "Content-Type": TYPES[extname(path)] ?? "application/octet-stream" });
     res.end(body);
   } catch {

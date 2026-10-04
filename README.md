@@ -5,13 +5,21 @@
   </picture>
 </p>
 
+<p align="center">
+  <a href="https://github.com/UniformRealEstate/design/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/UniformRealEstate/design/actions/workflows/ci.yml/badge.svg?branch=main" /></a>
+  <a href="https://github.com/UniformRealEstate/design/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/UniformRealEstate/design?sort=semver" /></a>
+  <a href="https://design.uniformrealestate.com/"><img alt="Docs" src="https://img.shields.io/badge/docs-design.uniformrealestate.com-1f5f7a" /></a>
+  <a href="LICENSE"><img alt="License: Apache-2.0 (code)" src="https://img.shields.io/badge/code-Apache--2.0-5e6e79" /></a>
+  <a href="tests/"><img alt="WCAG 2.2 AA: axe-tested" src="https://img.shields.io/badge/WCAG_2.2_AA-axe--tested-5e6e79" /></a>
+</p>
+
 # A shared visual foundation for real estate software
 
 **Consistent interfaces, from the first public page to the last transaction document.**
 
 Uniform Design brings brand tokens, CSS components, self-hosted typography, and the Atmosphere wave motif into one small, versioned package. Use the same foundation in a website, an application, or an HTML document destined for PDF.
 
-[Get started](#get-started) · [Components](#components) · [Tokens and assets](#tokens-and-assets) · [Contribute](#contribute) · [Licensing](#licensing)
+[Docs](https://design.uniformrealestate.com/) · [Get started](#get-started) · [Components](#components) · [Tokens and assets](#tokens-and-assets) · [Contribute](#contribute) · [Licensing](#licensing)
 
 ## Built to travel
 
@@ -24,7 +32,7 @@ Uniform Design brings brand tokens, CSS components, self-hosted typography, and 
 
 ### Status and scope
 
-**Early foundation · v0.1.4.** This release supplies visual primitives and a component gallery. It is not yet a complete application UI framework or an accessibility certification. Pin a release and test it in your application before upgrading.
+**Early foundation · v0.1.5.** This release supplies visual primitives and a component gallery. It is not yet a complete application UI framework or an accessibility certification. Pin a release and test it in your application before upgrading.
 
 The direction is a shared foundation for more real estate experiences. Today, routing, authentication, data handling, interactive widget behavior, and regulatory requirements belong to the consuming application. Dialogs, comboboxes, date pickers, and other complex controls are not supplied.
 
@@ -33,10 +41,10 @@ The direction is a shared foundation for more real estate experiences. Today, ro
 ### 1. Install a pinned release
 
 ```sh
-npm install --save-exact github:UniformRealEstate/design#v0.1.4
+npm install --save-exact github:UniformRealEstate/design#v0.1.5
 ```
 
-The package name is `@uniform/design`. Installation currently uses GitHub. The package declares Node 24 or newer; repository development uses the version in [`.nvmrc`](.nvmrc).
+The package name is `@uniform/design`. It installs from a Git tag; there is no registry package ([why](docs/adr/0001-releases-not-a-registry.md)). Each tag has a [GitHub Release](https://github.com/UniformRealEstate/design/releases) with the tarball, `SHA256SUMS` and a signed provenance attestation. The package declares Node 24 or newer; repository development uses the version in [`.nvmrc`](.nvmrc).
 
 ### 2. Serve the assets
 
@@ -109,8 +117,6 @@ Provide application-specific validation, error announcements, loading states, an
 | `dist/svg/`, `dist/fonts/`   | Brand marks and self-hosted fonts; separate licenses apply                   |
 | `dist/manifest.json`         | SHA-256 hashes for generated files                                           |
 
-The `@uniform/design/tokens` export currently points to TypeScript source. It is **not a portable plain-Node runtime import** from `node_modules`. Use CSS variables, a TypeScript-capable bundler, or the generated Python file as appropriate.
-
 For your own components, use semantic variables from `design.css`, plus spacing and radius tokens:
 
 ```css
@@ -148,9 +154,9 @@ The canvas uses viewport dimensions. Animation pauses for reduced-motion prefere
 
 ## Quality and accessibility
 
-Current CI checks formatting, exact agreement between sources and committed `dist/`, AA text contrast for explicitly listed token pairs, the brand-asset allowlist, a limited credential-pattern scan, and GitHub Actions workflow security linting.
+Current CI checks formatting, exact agreement between sources and committed `dist/`, AA text contrast for explicitly listed token pairs, brand SVG colors, the brand-asset allowlist, a limited credential-pattern scan, and GitHub Actions workflow security linting. Playwright runs axe (WCAG 2.2 AA plus best practices), keyboard focus, horizontal-scroll and broken-link checks on the gallery and the docs site, at desktop and mobile sizes.
 
-These checks are a baseline. They do not yet cover every rendered component state, keyboard interaction, screen reader behavior, responsive layout, or browser. Test actual pages in both themes, including focus, errors, zoom, and reduced motion. Verify CSP compatibility against the consuming application's policy.
+These checks are a baseline. They do not yet cover every rendered component state, screen reader behavior, or browser. Test actual pages in both themes, including focus, errors, zoom, and reduced motion. Verify CSP compatibility against the consuming application's policy.
 
 ## Contribute
 
@@ -177,10 +183,12 @@ brand/         Marks, fonts, and font licenses
 build/         Deterministic asset generation
 scripts/       Repository checks
 gallery/       Component examples
+site/          Docs site source (built into _site/ by build/site.mjs)
+docs/adr/      Decisions: distribution, docs hosting
 dist/          Committed release assets
 ```
 
-Releases use `vX.Y.Z` Git tags. Consumers upgrade explicitly by updating their pinned dependency and lockfile. During `0.x`, review changes and validate integrations before adopting a new release.
+To release: bump `version` in `package.json`, add a `## vX.Y.Z` section to [CHANGELOG.md](CHANGELOG.md), merge, then push the tag `vX.Y.Z`. [The release workflow](.github/workflows/release.yml) reruns every check, then publishes the GitHub Release and deploys the docs. Consumers upgrade explicitly by updating their pinned dependency and lockfile. During `0.x`, review changes and validate integrations before adopting a new release.
 
 ## Licensing
 
@@ -190,4 +198,4 @@ Releases use `vX.Y.Z` Git tags. Consumers upgrade explicitly by updating their p
 - Uniform names, logos, wordmarks, and icons: [all rights reserved](LICENSE-BRAND). Publishing assets does not grant permission to brand another product as Uniform.
 - Fonts: SIL Open Font License; see [Public Sans](brand/fonts/OFL-PublicSans.txt) and [IBM Plex Mono](brand/fonts/OFL-IBMPlexMono.txt).
 
-If you use the code for a different brand, supply your own identity assets and tokens. Consult the repository's license files; the current package's file list does not include every root-level notice.
+If you use the code for a different brand, supply your own identity assets and tokens.
