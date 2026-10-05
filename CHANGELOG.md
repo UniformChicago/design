@@ -2,6 +2,15 @@
 
 Each release is a `vX.Y.Z` tag with a [GitHub Release](https://github.com/UniformChicago/design/releases): notes from this file, the npm tarball, `SHA256SUMS` and a signed build-provenance attestation. During `0.x`, any release may change markup or class names; read the notes before upgrading.
 
+## v0.1.12 — 2026-10-04
+
+- `.u-shell-header` is a fixed 64px tall (border included), so sticky elements below it at `top: 64px` are no longer overlapped.
+- Docs site: every local CSS, JS and SVG reference carries a content hash (`?v=…`), so a new release never runs with the previous release's cached files. This fixes the theme toggle doing nothing on iOS Safari right after a deploy.
+- Docs site: on narrow screens the sticky row of section groups highlights the current group and scrolls to keep it in view.
+- Docs site: navigating between the docs and the Playground keeps the old page on screen until the new one paints, preloads the main fonts, warms the cache for the other page, and lets Chrome prerender it.
+- Docs site: Assets moves to Foundations; Labs (Atmosphere) is now the last group. Tighter hero spacing and a larger wordmark on phones.
+- Playground: the preview width toggle is hidden on phones, where the preview is already mobile width. Links use `→` instead of `↗`, which iOS renders as an emoji.
+
 ## v0.1.11 — 2026-10-04
 
 - Docs and Playground share one header: same markup (`makeHeader()` in `build/site.mjs`), styles (`site/shell.css`) and theme toggle (`site/shell.js`). The Playground gains the theme toggle; a test keeps both headers pixel-identical.

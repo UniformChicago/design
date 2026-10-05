@@ -29,3 +29,19 @@ if (toggle) {
     }
   });
 }
+
+// Warm the cache for the other page (docs <-> Playground) once this one is idle: its HTML, then the
+// stylesheets and scripts it references, so the header link opens from cache. Skipped on Save-Data.
+const other = document.querySelector("a[data-prefetch]");
+if (other && !navigator.connection?.saveData) {
+  const warm = async () => {
+    try {
+      const html = await (await fetch(other.href)).text();
+      const refs = [...html.matchAll(/(?:href|src)="([^"]+\.(?:css|js)\?v=\w+)"/g)];
+      await Promise.all(refs.map(([, ref]) => fetch(new URL(ref, other.href))));
+    } catch {} // best effort: the link still works without it
+  };
+  const idle = () => (window.requestIdleCallback ? requestIdleCallback(warm) : setTimeout(warm, 500));
+  if (document.readyState === "complete") idle();
+  else addEventListener("load", idle, { once: true });
+}

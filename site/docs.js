@@ -36,14 +36,34 @@ if (navigator.clipboard) {
 const links = new Map(
   [...document.querySelectorAll(".s-side li a[href^='#']")].map((a) => [a.getAttribute("href").slice(1), a]),
 );
+// Each section's group link: the only sidebar links shown on narrow screens, where the sidebar is a
+// sticky row of groups. The current group is marked too, and the row scrolls to keep it in view.
+const side = document.querySelector(".s-side");
+const groupOf = new Map(
+  [...links].map(([id, a]) => [id, a.closest("ul")?.previousElementSibling?.querySelector("a")]),
+);
 const sections = [...links.keys()].map((id) => document.getElementById(id)).filter(Boolean);
 if ("IntersectionObserver" in window && sections.length) {
   const visible = new Set();
+  let group;
   const mark = () => {
     const current = sections.find((s) => visible.has(s.id));
+    if (!current) return; // between observations: keep the last mark
     for (const [id, a] of links) {
-      if (current && id === current.id) a.setAttribute("aria-current", "location");
+      if (id === current.id) a.setAttribute("aria-current", "location");
       else a.removeAttribute("aria-current");
+    }
+    const next = groupOf.get(current.id);
+    if (!next || next === group) return;
+    group?.removeAttribute("aria-current");
+    next.setAttribute("aria-current", "true");
+    group = next;
+    if (side.scrollWidth > side.clientWidth) {
+      const left = next.offsetLeft - (side.clientWidth - next.offsetWidth) / 2;
+      side.scrollTo({
+        left,
+        behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      });
     }
   };
   const io = new IntersectionObserver(
@@ -51,7 +71,8 @@ if ("IntersectionObserver" in window && sections.length) {
       for (const e of entries) e.isIntersecting ? visible.add(e.target.id) : visible.delete(e.target.id);
       mark();
     },
-    { rootMargin: "-80px 0px -55% 0px" },
+    // Below the sticky header (and the group row on narrow screens); the top 45% of the viewport counts.
+    { rootMargin: "-130px 0px -55% 0px" },
   );
   sections.forEach((s) => io.observe(s));
 }

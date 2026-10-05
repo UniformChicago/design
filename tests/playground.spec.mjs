@@ -52,7 +52,9 @@ test("all starter states render accessibly in both themes", async ({ page }) => 
     }
   }
   await specimen.close();
-  await page.getByRole("button", { name: "Mobile", exact: true }).click();
+  // On phones the width toggle is hidden: the preview is already mobile width.
+  const mobile = page.getByRole("button", { name: "Mobile", exact: true });
+  if (await mobile.isVisible()) await mobile.click();
   expect(
     await page.locator("#preview").evaluate((el) => el.getBoundingClientRect().width),
   ).toBeLessThanOrEqual(390);

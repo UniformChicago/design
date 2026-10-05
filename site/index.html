@@ -34,6 +34,7 @@
           <li><a href="#theme">Theme variables</a></li>
           <li><a href="#type">Type</a></li>
           <li><a href="#spacing">Spacing and radius</a></li>
+          <li><a href="#assets">Assets</a></li>
         </ul>
         <p class="s-group"><a href="#typography">Components</a></p>
         <ul>
@@ -49,15 +50,14 @@
           <li><a href="#empty">Empty state</a></li>
           <li><a href="#progress">Progress and checks</a></li>
         </ul>
-        <p class="s-group"><a href="#labs-atmosphere">Labs</a></p>
-        <ul>
-          <li><a href="#labs-atmosphere">Atmosphere</a></li>
-          <li><a href="#assets">Assets</a></li>
-        </ul>
         <p class="s-group"><a href="#releases">Project</a></p>
         <ul>
           <li><a href="#releases">Releases</a></li>
           <li><a href="#licensing">Licensing</a></li>
+        </ul>
+        <p class="s-group"><a href="#labs-atmosphere">Labs</a></p>
+        <ul>
+          <li><a href="#labs-atmosphere">Atmosphere</a></li>
         </ul>
       </nav>
 
@@ -178,6 +178,17 @@ npm install --save-exact github:UniformChicago/design#v{{version}}
           </div>
         </section>
 
+        <section id="assets" aria-labelledby="assets-h">
+          <h2 id="assets-h" class="s-h2">Assets</h2>
+          <p>
+            Brand marks ship in <code class="u-code">dist/svg/</code>, fonts in
+            <code class="u-code">dist/fonts/</code>. Use the on-dark variants on dark surfaces.
+          </p>
+          <ul class="s-marks">
+            <!--marks-->
+          </ul>
+        </section>
+
         <section id="typography" aria-labelledby="typography-h">
           <h2 id="typography-h" class="s-h2">Typography</h2>
           <p>The brand dot is always <code class="u-code">u-dot</code>, never a typed period.</p>
@@ -248,39 +259,6 @@ npm install --save-exact github:UniformChicago/design#v{{version}}
           <!--example:progress-->
         </section>
 
-        <section id="labs-atmosphere" aria-labelledby="atmosphere-h">
-          <h2 id="atmosphere-h" class="s-h2">Labs: Atmosphere</h2>
-          <p>
-            The wave effect behind this page. One implementation draws the animated canvas and the static SVG.
-            It pauses for reduced motion and in hidden tabs.
-          </p>
-          <!--code:html
-<canvas id="atmosphere" class="u-atmosphere" aria-hidden="true"></canvas>
-<script type="module" src="/design/atmosphere.js"></script>
--->
-          <p>Or mount it yourself, and dispose of it when the view unmounts:</p>
-          <!--code:js
-import { mountAtmosphere } from "@uniform/design/waves";
-
-const dispose = mountAtmosphere(document.querySelector("#atmosphere"));
--->
-          <p>
-            For SVG output, pass only trusted values; the helpers reject out-of-range sizes and non-hex
-            colors.
-          </p>
-        </section>
-
-        <section id="assets" aria-labelledby="assets-h">
-          <h2 id="assets-h" class="s-h2">Assets</h2>
-          <p>
-            Brand marks ship in <code class="u-code">dist/svg/</code>, fonts in
-            <code class="u-code">dist/fonts/</code>. Use the on-dark variants on dark surfaces.
-          </p>
-          <ul class="s-marks">
-            <!--marks-->
-          </ul>
-        </section>
-
         <section id="releases" aria-labelledby="releases-h">
           <h2 id="releases-h" class="s-h2">Releases</h2>
           <p>
@@ -304,6 +282,28 @@ gh attestation verify uniform-design-{{version}}.tgz -R UniformChicago/design
               href="https://github.com/UniformChicago/design/blob/main/LICENSE-BRAND"
               >LICENSE-BRAND</a
             >). Fonts are under the SIL Open Font License.
+          </p>
+        </section>
+
+        <section id="labs-atmosphere" aria-labelledby="atmosphere-h">
+          <h2 id="atmosphere-h" class="s-h2">Labs: Atmosphere</h2>
+          <p>
+            The wave effect behind this page. One implementation draws the animated canvas and the static SVG.
+            It pauses for reduced motion and in hidden tabs.
+          </p>
+          <!--code:html
+<canvas id="atmosphere" class="u-atmosphere" aria-hidden="true"></canvas>
+<script type="module" src="/design/atmosphere.js"></script>
+-->
+          <p>Or mount it yourself, and dispose of it when the view unmounts:</p>
+          <!--code:js
+import { mountAtmosphere } from "@uniform/design/waves";
+
+const dispose = mountAtmosphere(document.querySelector("#atmosphere"));
+-->
+          <p>
+            For SVG output, pass only trusted values; the helpers reject out-of-range sizes and non-hex
+            colors.
           </p>
         </section>
 

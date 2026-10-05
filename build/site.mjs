@@ -5,7 +5,8 @@
 //   <!--colors--> etc.      token demos generated from tokens/tokens.json
 // Highlighting happens here, at build time: no highlighter library ships to the browser.
 // Plus the gallery and dist/. Run after `npm run build`.
-import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync, readdirSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync, readdirSync, existsSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { join, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { icon } from "../site/icons.js";
@@ -94,8 +95,8 @@ const HEADER_SVG_GH = `<svg viewBox="0 0 24 24" width="18" height="18" fill="non
 
 function makeHeader(root, isPlayground) {
   const midLink = isPlayground
-    ? `<a class="u-button u-button--quiet u-shell-icon" href="${root}" aria-label="Documentation" title="Documentation">${HEADER_SVG_HOME}</a>`
-    : `<a class="u-button u-button--quiet u-shell-icon" href="${root}playground/" aria-label="Playground" title="Playground">${HEADER_SVG_PLAY}</a>`;
+    ? `<a class="u-button u-button--quiet u-shell-icon" href="${root}" data-prefetch aria-label="Documentation" title="Documentation">${HEADER_SVG_HOME}</a>`
+    : `<a class="u-button u-button--quiet u-shell-icon" href="${root}playground/" data-prefetch aria-label="Playground" title="Playground">${HEADER_SVG_PLAY}</a>`;
 
   return `<header class="u-shell-header">
       <a href="${root}" class="s-brand"
@@ -108,6 +109,25 @@ function makeHeader(root, isPlayground) {
       </span>
     </header>`;
 }
+
+// Shared <head> additions: preload the faces used above the fold, so text doesn't paint in a
+// fallback font first and then swap on every page load.
+const PRELOAD_FONTS = [
+  "public-sans-latin-400-normal",
+  "public-sans-latin-600-normal",
+  "public-sans-latin-700-normal",
+  "ibm-plex-mono-latin-500-normal",
+];
+// Also: Chrome prerenders the other page (docs <-> Playground) as soon as a tap or hover starts, so the
+// header link opens instantly; other browsers get a cache warm-up from shell.js instead.
+const headExtras = (root, other) =>
+  [
+    ...PRELOAD_FONTS.map(
+      (f) =>
+        `<link rel="preload" href="${root}dist/fonts/${f}.woff2" as="font" type="font/woff2" crossorigin />`,
+    ),
+    `<script type="speculationrules">${JSON.stringify({ prerender: [{ urls: [other], eagerness: "moderate" }] })}</script>`,
+  ].join("\n    ") + "\n  </head>";
 
 const FACES = [
   ["sans", 400, "Public Sans", "Regular · body"],
@@ -157,7 +177,8 @@ let html = readFileSync(join(SITE, "index.html"), "utf8")
   .replace("<!--space-->", space.join("\n"))
   .replace("<!--radius-->", radius.join("\n"))
   .replace("<!--marks-->", marks.join("\n"))
-  .replace("<!--header-->", makeHeader("./", false));
+  .replace("<!--header-->", makeHeader("./", false))
+  .replace("</head>", headExtras("./", "playground/"));
 const left = html.match(/\{\{\w+\}\}|<!--[\w:-]+/);
 if (left) throw new Error(`site/index.html: unfilled placeholder ${left[0]}`);
 
@@ -192,7 +213,29 @@ for (const p of ["gallery/index.html", "playground/index.html"]) {
   const path = join(OUT, p);
   const html = readFileSync(path, "utf8")
     .replaceAll("{{version}}", esc(version))
-    .replace("<!--header-->", makeHeader("../", true));
+    .replace("<!--header-->", makeHeader("../", true))
+    .replace("</head>", headExtras("../", "../"));
   writeFileSync(path, html);
 }
+
+// Cache-busting: every local CSS/JS/SVG reference gets ?v=<content hash>. GitHub Pages caches files
+// for 10 minutes under fixed URLs, so without this a fresh page can run last release's CSS and JS.
+// Module imports are rewritten before the HTML, so a changed dependency also changes its importer's
+// hash. (Imported modules import nothing themselves.)
+const hashOf = (path) => createHash("sha256").update(readFileSync(path)).digest("hex").slice(0, 10);
+const bust = (file, pattern) => {
+  const src = readFileSync(file, "utf8");
+  const out = src.replace(pattern, (all, pre, ref, post) => {
+    if (/^(\/|[a-z]+:)/i.test(ref)) return all; // absolute or external: not ours
+    const target = resolve(dirname(file), ref);
+    if (!existsSync(target)) return all;
+    return `${pre}${ref}?v=${hashOf(target)}${post}`;
+  });
+  writeFileSync(file, out);
+};
+const IMPORT = /(from ")(\.\.?\/[^"?#]+\.js)(")/g;
+const ATTR = /((?:href|src)=")([^"?#]+\.(?:css|js|svg))(")/g;
+for (const dir of [OUT, join(OUT, "gallery"), join(OUT, "playground")])
+  for (const f of readdirSync(dir).filter((f) => f.endsWith(".js"))) bust(join(dir, f), IMPORT);
+for (const p of ["index.html", "gallery/index.html", "playground/index.html"]) bust(join(OUT, p), ATTR);
 console.log(`_site/ built for v${version}`);

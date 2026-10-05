@@ -21,8 +21,25 @@
   .s-version {
     display: none;
   }
+  /* No version tag on phones, so the wordmark gets the room (still clear of the icons at 375px+). */
   .s-logo {
-    width: 104px;
+    width: 168px;
     height: auto;
   }
+}
+@media (max-width: 360px) {
+  .s-logo {
+    width: 136px;
+  }
+}
+
+/* Page-to-page navigation: keep the old page on screen until the next one has painted, then swap
+   with no animation, so there's no blank flash between pages (Safari 18.2+, Chrome 126+). */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-group(*),
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation: none;
 }

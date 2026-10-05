@@ -557,8 +557,8 @@
   display: flex;
   align-items: center;
   gap: var(--u-space-3);
-  min-height: 64px;
-  padding: var(--u-space-3) var(--u-space-5);
+  height: 64px; /* fixed, border included: sticky elements below it use top: 64px */
+  padding: 0 var(--u-space-5);
   border-bottom: 1px solid var(--u-line);
   background: color-mix(in srgb, var(--u-bg) 86%, transparent);
   backdrop-filter: blur(12px);

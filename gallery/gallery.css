@@ -234,3 +234,9 @@
     display: none;
   }
 }
+/* On a phone the preview is already narrower than the mobile width (390px), so the width toggle does nothing. */
+@media (max-width: 520px) {
+  .g-width {
+    display: none;
+  }
+}
