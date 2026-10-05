@@ -1,20 +1,30 @@
-## v0.1.10 (2026-10-04)
+# Changelog
+
+Each release is a `vX.Y.Z` tag with a [GitHub Release](https://github.com/UniformChicago/design/releases): notes from this file, the npm tarball, `SHA256SUMS` and a signed build-provenance attestation. During `0.x`, any release may change markup or class names; read the notes before upgrading.
+
+## v0.1.11 — 2026-10-04
+
+- Docs and Playground share one header: same markup (`makeHeader()` in `build/site.mjs`), styles (`site/shell.css`) and theme toggle (`site/shell.js`). The Playground gains the theme toggle; a test keeps both headers pixel-identical.
+- `.u-shell-main` sets only block padding, so `.u-shell-layout` keeps its side gutters; `.u-shell-header-actions` gap is now `--u-space-2`.
+- The Playground preview starts in the page's theme.
+- The favicon follows the browser's color scheme (ink U on light, paper U on dark).
+- Add `uniform-icon-color.svg` and its generated `uniform-icon-on-dark.svg`.
+- Tighten the hero spacing; points sit between the lede and the actions.
+- Fix the Atmosphere section anchor (`#labs-atmosphere`), which collided with the background canvas id.
+- Playground tests run against the built site.
+
+## v0.1.10 — 2026-10-04
 
 - Fix CSS selector bug that broke the main site layout grid.
 
-
-## v0.1.9 (2026-10-04)
+## v0.1.9 — 2026-10-04
 
 - Fix button rendering width inside nav headers by removing whitespace and adding font-size: 0.
-- Demote Atmosphere wave motif to an experimental feature in text.
+- Demote Atmosphere wave to an experimental feature in text.
 - Remove overlapping s-hero-art collage from the landing page.
 - Add a standard u-shell shell system and use it across playground and landing page for consistent spacing and margins.
 - Add a new "Authentication" preset to the playground.
 - Fix u-callout border rendering corner artifact by using a pseudo element.
-
-# Changelog
-
-Each release is a `vX.Y.Z` tag with a [GitHub Release](https://github.com/UniformChicago/design/releases): notes from this file, the npm tarball, `SHA256SUMS` and a signed build-provenance attestation. During `0.x`, any release may change markup or class names; read the notes before upgrading.
 
 ## v0.1.8 — 2026-10-04
 

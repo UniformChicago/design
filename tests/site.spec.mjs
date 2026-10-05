@@ -55,6 +55,27 @@ test("the light theme also has zero axe violations, and the choice survives a re
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
 });
 
+test("docs and Playground share one header: same position, size and controls", async ({ page }) => {
+  const shell = async (path) => {
+    await page.goto(SITE + path);
+    await expect(page.locator("#s-theme")).toBeVisible();
+    return page.evaluate(() => {
+      const box = (e) => {
+        const r = e.getBoundingClientRect();
+        return [r.x, r.y, r.width, r.height].map(Math.round);
+      };
+      return {
+        header: box(document.querySelector(".u-shell-header")),
+        brand: box(document.querySelector(".s-brand")),
+        controls: [...document.querySelectorAll(".u-shell-header-actions > *")].map(box),
+      };
+    });
+  };
+  const docs = await shell("/");
+  expect(docs.controls).toHaveLength(3);
+  expect(await shell("/playground/")).toEqual(docs);
+});
+
 test("every sidebar link points at a section on the page", async ({ page }) => {
   await page.goto(SITE + "/");
   const ids = await page

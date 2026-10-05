@@ -17,7 +17,7 @@
 
 **Consistent interfaces, from the first public page to the last transaction document.**
 
-Uniform Design brings brand tokens, CSS components, and self-hosted typography into one small, versioned package. It also includes experimental features like the Atmosphere wave motif. Use the same foundation in a website, an application, or an HTML document destined for PDF.
+Uniform Design brings brand tokens, CSS components, and self-hosted typography into one small, versioned package. It also includes experimental features like the Atmosphere wave. Use the same foundation in a website, an application, or an HTML document destined for PDF.
 
 [Docs](https://design.uniformrealestate.com/) · [Get started](#get-started) · [Components](#components) · [Tokens and assets](#tokens-and-assets) · [Contribute](#contribute) · [Licensing](#licensing)
 
@@ -134,7 +134,7 @@ Python and other non-Node projects can obtain `dist/` from a pinned Git tag. Ver
 
 ## Labs: Atmosphere
 
-The optional wave motif shares one implementation between animated canvas and static SVG output. For a server-rendered page:
+The optional wave effect shares one implementation between animated canvas and static SVG output. For a server-rendered page:
 
 ```html
 <canvas id="atmosphere" class="u-atmosphere" aria-hidden="true"></canvas>

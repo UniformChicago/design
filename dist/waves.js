@@ -1,4 +1,4 @@
-// Uniform "Atmosphere": folded contour lines, the brand's background motif.
+// Uniform "Atmosphere": folded contour lines, the brand's background effect.
 // One implementation for every surface:
 //   - contours(width, height, options) → polylines (pure math; used for static SVG in Node)
 //   - mountAtmosphere(canvas) → animated canvas in the browser (reduced-motion aware)

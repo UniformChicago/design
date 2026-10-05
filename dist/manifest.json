@@ -2,7 +2,7 @@
   "name": "@uniform/design",
   "files": {
     "atmosphere.js": "2975faaf299d17a906f14fc1f70e06db72559063b1fe7ff80b89bcb4b4d36306",
-    "design.css": "3ede63c327e7f07db7d0ec9ae2e457fb5e4da793eb163810b559d3e379509b2e",
+    "design.css": "221d8b82e9ec7ccf273c20a1f106c540ccd63d2b76931fb2f256c7b3c04c9825",
     "fonts/ibm-plex-mono-latin-500-normal.woff2": "01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22",
     "fonts/OFL-IBMPlexMono.txt": "23b0a9d0c6d3f140a0b77e483c5cfa6bba574325ef5cb189ed9f2fec4884533f",
     "fonts/OFL-PublicSans.txt": "157a9e77f7580246e97c769490e2e977ae94399f9d30f4556015c41fe8c28bac",
@@ -17,6 +17,8 @@
     "svg/uniform-icon-24.png": "45b0c9087a319f96a8a2515c7c8735525aea2bc390577ea77d44183d385f45c2",
     "svg/uniform-icon-32.png": "ae36eded6ba6b3132f42576f60c71e167a64e93a92ad4b4e152156611b08153d",
     "svg/uniform-icon-48.png": "8c2a0e01e94c518e45b66cf4c91c193db060bfd190f940ebb0a7c6536f3e30bf",
+    "svg/uniform-icon-color.svg": "576948dc5889c0c48c837738224877ee8f12205a9624bbe7c481a10d0b41de9b",
+    "svg/uniform-icon-on-dark.svg": "1d5da95d9414a983f068a840c5cf3c99a76b705b0acb1e5e5bde2d7166510061",
     "svg/uniform-icon.svg": "655f906bb8ad66f024511d2e214be5a21f6de3e7a2bba5f7bdc1daecc72c52cf",
     "svg/uniform-real-estate-color.svg": "49d3c94f9572dbd66c7c408c069b66b01e4a03c61042cc7459e1ea7b0ddc7b9d",
     "svg/uniform-real-estate-dark.svg": "9762d755040fd3656fac64c36a544054d1101143d1746a7e10c6169cfeac3844",
@@ -45,7 +47,7 @@
     "tokens.py": "91c3e305a78238e59576f80dbe1dcc6ec9c3405d36bc4a13ac0e90f3b8875058",
     "vars.css": "ed2628ad8d29ffb242ee410edde11ff46eae5a0d12a518170d0cde470cf99b69",
     "waves.d.ts": "f581c1cf608c5fe67dd8e0936d85284b58cf58f37946971d8e3c941e99731904",
-    "waves.js": "820270fa28943249300569d3bc34892a124dd11f60044681ba52f4088f0b3b93",
+    "waves.js": "fd851a478eff946789d4fdc61f66cf4e54770101c554f3d6ae1406e67cfc1142",
     "waves/band-light.svg": "0c5ae745d05929b9429d8b0e2961610fc8c013f309670e13a4aa0b21393ce501",
     "waves/cover-dark.svg": "4807ea6c62fcd519ac842e4ce20a28b3480fb59986101a306b89bf77487f6ba5"
   }

@@ -2,7 +2,8 @@ import { presets } from "./presets.js";
 const $ = (id) => document.getElementById(id);
 const drafts = new Map();
 let active = presets[0];
-let theme = "dark";
+// The preview starts in the page theme; its own Light/Dark control changes only the preview.
+let theme = document.documentElement.dataset.theme === "light" ? "light" : "dark";
 let renderTimer;
 let copyTimer;
 const css = new URL("../dist/design.css", location.href).href;
@@ -108,6 +109,9 @@ document.querySelectorAll("[data-theme-choice]").forEach((button) =>
     render();
   }),
 );
+document
+  .querySelectorAll("[data-theme-choice]")
+  .forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.themeChoice === theme)));
 document.querySelectorAll("[data-width]").forEach((button) =>
   button.addEventListener("click", () => {
     $("canvas").dataset.width = button.dataset.width;

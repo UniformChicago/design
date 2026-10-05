@@ -1,28 +1,4 @@
 /* Playground shell; all brand values come from the design tokens. */
-.g-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--u-space-4);
-  padding: var(--u-space-4) var(--u-space-6);
-  border-bottom: 1px solid var(--u-line);
-}
-.g-top img {
-  display: block;
-}
-.g-top nav {
-  display: flex;
-  gap: var(--u-space-5);
-  align-items: center;
-  font-size: 14px;
-}
-.g-top nav a {
-  text-decoration: none;
-  padding-block: var(--u-space-2);
-}
-.g-top nav [aria-current] {
-  color: var(--u-fg);
-}
 .g-intro {
   margin-bottom: var(--u-space-6);
 }
@@ -226,13 +202,6 @@
   font-size: 13px;
 }
 @media (max-width: 800px) {
-  .g-top {
-    padding: var(--u-space-4);
-    flex-wrap: wrap;
-  }
-  .g-top nav {
-    gap: var(--u-space-4);
-  }
   .g-workspace {
     grid-template-columns: 1fr;
   }

@@ -1,34 +1,12 @@
 import { icon } from "./icons.js";
-// Docs-site enhancements: theme toggle, copy buttons and the current section in the sidebar.
+// Docs-site enhancements: copy buttons and the current section in the sidebar (theme toggle: shell.js).
 // The page reads fine without it; the buttons stay hidden until this runs.
-const root = document.documentElement;
 const status = document.getElementById("s-status");
 const say = (text) => {
   if (!status) return;
   status.textContent = "";
   setTimeout(() => (status.textContent = text), 50);
 };
-
-const toggle = document.getElementById("s-theme");
-if (toggle) {
-  // The label names the current theme; clicking switches to the other one.
-  const sync = () => {
-    const light = root.dataset.theme === "light";
-    toggle.innerHTML = icon(light ? "moon" : "sun");
-    toggle.setAttribute("aria-label", `Switch to ${light ? "dark" : "light"} theme`);
-    toggle.title = toggle.getAttribute("aria-label");
-  };
-  sync();
-  toggle.hidden = false;
-  toggle.addEventListener("click", () => {
-    root.dataset.theme = root.dataset.theme === "light" ? "dark" : "light";
-    try {
-      localStorage.setItem("u-docs-theme", root.dataset.theme);
-    } catch {}
-    sync();
-    say(`${root.dataset.theme === "light" ? "Light" : "Dark"} theme`);
-  });
-}
 
 if (navigator.clipboard) {
   for (const button of document.querySelectorAll("button[data-copy]")) {

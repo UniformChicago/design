@@ -1,7 +1,8 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
-const GALLERY = "/gallery/index.html";
+// The built Playground, as deployed (its header is injected at build time).
+const GALLERY = "http://127.0.0.1:4401/playground/";
 
 test("Playground shell has zero axe violations (WCAG 2.2 AA + best practices)", async ({ page }) => {
   await page.goto(GALLERY);

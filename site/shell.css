@@ -1,0 +1,28 @@
+/* Docs-site chrome shared by the documentation and the Playground: logo, version tag, theme toggle.
+   Header layout and sizing come from the u-shell-* classes in dist/design.css; the header markup comes
+   from makeHeader() in build/site.mjs. Change the header here, never per page. */
+.s-brand {
+  display: block;
+}
+.s-logo {
+  display: block;
+}
+.s-logo--light,
+[data-theme="light"] .s-logo--dark {
+  display: none;
+}
+[data-theme="light"] .s-logo--light {
+  display: block;
+}
+.s-theme[hidden] {
+  display: none;
+}
+@media (max-width: 520px) {
+  .s-version {
+    display: none;
+  }
+  .s-logo {
+    width: 104px;
+    height: auto;
+  }
+}

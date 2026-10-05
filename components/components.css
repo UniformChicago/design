@@ -489,7 +489,18 @@
 .u-shell-header-actions {
   display: flex;
   align-items: center;
-  gap: var(--u-space-3);
+  gap: var(--u-space-2);
+  margin-left: auto;
+}
+.u-shell-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  padding: 0;
+  font-size: 0;
 }
 .u-shell-header-actions .u-button {
   margin: 0;
@@ -498,6 +509,7 @@
   width: 100%;
   max-width: 1320px;
   margin: 0 auto;
+  padding-inline: var(--u-space-5);
 }
 @media (max-width: 800px) {
   .u-shell-header {
@@ -510,10 +522,13 @@
 }
 
 .u-shell-main {
-  padding: var(--u-space-7) var(--u-space-6);
+  padding-block: var(--u-space-7);
 }
 @media (max-width: 800px) {
+  .u-shell-layout {
+    padding-inline: var(--u-space-4);
+  }
   .u-shell-main {
-    padding: var(--u-space-6) var(--u-space-4);
+    padding-block: var(--u-space-6);
   }
 }

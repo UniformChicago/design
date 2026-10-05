@@ -22,3 +22,4 @@ uniform-wordmark-grayscale.svg
 uniform-wordmark-ink.svg
 uniform-wordmark-lake-on-paper.svg
 uniform-wordmark-white.svg
+uniform-icon-color.svg
