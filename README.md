@@ -13,7 +13,7 @@
   <a href="tests/"><img alt="WCAG 2.2 AA: axe-tested" src="https://img.shields.io/badge/WCAG_2.2_AA-axe--tested-5e6e79" /></a>
 </p>
 
-# A shared visual foundation for real estate software
+## A shared visual foundation for real estate software
 
 **Consistent interfaces, from the first public page to the last transaction document.**
 
