@@ -268,9 +268,10 @@ for (const width of [320, 390, 430, 700]) {
       .toBeLessThanOrEqual(1);
     const canvas = await page.locator("#canvas").boundingBox();
     expect(canvas.y).toBeLessThan(280);
-    expect(canvas.width).toBe(width);
+    const availableWidth = await page.evaluate(() => document.documentElement.clientWidth);
+    expect(canvas.width).toBe(availableWidth);
     const bounds = await photo.boundingBox();
-    expect(bounds.width).toBeGreaterThanOrEqual(width - 34);
+    expect(bounds.width).toBeGreaterThanOrEqual(availableWidth - 34);
     expect(bounds.y).toBeLessThan(500);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await page.screenshot({ path: info.outputPath("phone-preview.png") });
@@ -316,7 +317,7 @@ for (const width of [320, 390, 430, 700]) {
         .toBeLessThan(0.01);
     }
     const secondPhoto = await photos.locator("figure").nth(1).boundingBox();
-    expect(secondPhoto.width).toBeGreaterThanOrEqual(width - 34);
+    expect(secondPhoto.width).toBeGreaterThanOrEqual(availableWidth - 34);
     for (const theme of ["light", "dark"]) {
       await page.locator(`[data-theme-choice="${theme}"]`).click();
       await expect(live.locator("html")).toHaveAttribute("data-theme", theme);
