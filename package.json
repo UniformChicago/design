@@ -37,7 +37,8 @@
     "test:contracts": "node build/site.mjs && node --test tests/unit/*.test.mjs",
     "check:budgets": "node scripts/budgets.mjs",
     "design": "node scripts/design.mjs",
-    "lint:design": "node scripts/lint-design.mjs"
+    "lint:design": "node scripts/lint-design.mjs",
+    "render:share": "node scripts/render-share.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",

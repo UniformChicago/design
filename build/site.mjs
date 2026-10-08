@@ -337,6 +337,52 @@ for (const page of ["index.html", "dashboard.html", "workspace.html", "states.ht
   writeFileSync(path, source);
 }
 
+// Link previews (iMessage, Slack, social) and Safari's share sheet: the same Open Graph and Twitter
+// tags as the main site, filled from each page's own title and description. Images come from
+// scripts/render-share.mjs and need absolute URLs.
+const SITE_URL = "https://design.uniformrealestate.com";
+const metaDescription = (html) => html.match(/<meta\s+name="description"\s+content="([^"]*)"/)?.[1];
+for (const f of ["og.png", "apple-touch-icon.png"]) cpSync(join(SITE, f), join(OUT, f));
+for (const p of [
+  "index.html",
+  "gallery/index.html",
+  "playground/index.html",
+  "workflows/index.html",
+  "workflows/dashboard.html",
+  "workflows/workspace.html",
+  "workflows/states.html",
+  "workflows/map.html",
+  "agent/index.html",
+]) {
+  const file = join(OUT, p);
+  const html = readFileSync(file, "utf8");
+  const title = html.match(/<title>([^<]*)<\/title>/)[1];
+  // Pages without their own description share the home page's.
+  const description = metaDescription(html) ?? metaDescription(readFileSync(join(OUT, "index.html"), "utf8"));
+  const url = `${SITE_URL}/${p.replace(/index\.html$/, "")}`;
+  const image = `${SITE_URL}/og.png`;
+  const tags = [
+    `<link rel="canonical" href="${url}" />`,
+    `<link rel="apple-touch-icon" href="/apple-touch-icon.png" />`,
+    `<meta property="og:type" content="website" />`,
+    `<meta property="og:site_name" content="Uniform Design" />`,
+    `<meta property="og:locale" content="en_US" />`,
+    `<meta property="og:title" content="${title}" />`,
+    `<meta property="og:description" content="${description}" />`,
+    `<meta property="og:url" content="${url}" />`,
+    `<meta property="og:image" content="${image}" />`,
+    `<meta property="og:image:width" content="1200" />`,
+    `<meta property="og:image:height" content="630" />`,
+    `<meta property="og:image:alt" content="Uniform Design logo" />`,
+    `<meta name="twitter:card" content="summary_large_image" />`,
+    `<meta name="twitter:site" content="@UniformChicago" />`,
+    `<meta name="twitter:title" content="${title}" />`,
+    `<meta name="twitter:description" content="${description}" />`,
+    `<meta name="twitter:image" content="${image}" />`,
+  ];
+  writeFileSync(file, html.replace("</head>", `${tags.join("\n    ")}\n  </head>`));
+}
+
 // Cache-busting: every local CSS/JS/SVG reference gets ?v=<content hash>. GitHub Pages caches files
 // for 10 minutes under fixed URLs, so without this a fresh page can run last release's CSS and JS.
 // Module imports are rewritten before the HTML, so a changed dependency also changes its importer's

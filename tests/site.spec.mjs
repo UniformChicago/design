@@ -217,3 +217,24 @@ test("repeated Playground icon activation preserves the document, draft and butt
   expect(await page.evaluate(() => window.playgroundDocumentMarker)).toBe("same document");
   await expect(page.getByLabel("Heading", { exact: true })).toHaveValue("Retained draft");
 });
+
+test("every docs page carries link-preview tags whose image and icon resolve", async ({ page }) => {
+  for (const path of ["/", "/playground/", "/agent/", "/workflows/map.html"]) {
+    await page.goto(SITE + path);
+    const meta = (key) =>
+      page.locator(`meta[property="${key}"], meta[name="${key}"]`).getAttribute("content");
+    expect(await meta("og:title")).toBe(await page.title());
+    expect(await meta("og:description")).toBeTruthy();
+    expect(await meta("og:url")).toBe(`https://design.uniformrealestate.com${path}`);
+    expect(await meta("og:image")).toBe("https://design.uniformrealestate.com/og.png");
+    expect(await meta("twitter:card")).toBe("summary_large_image");
+  }
+  for (const [asset, size] of [
+    ["/og.png", 200_000],
+    ["/apple-touch-icon.png", 1_000],
+  ]) {
+    const response = await page.request.get(SITE + asset);
+    expect(response.headers()["content-type"]).toBe("image/png");
+    expect((await response.body()).length).toBeGreaterThan(size);
+  }
+});

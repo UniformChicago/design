@@ -31,6 +31,7 @@ Each release is a `vX.Y.Z` tag with a [GitHub Release](https://github.com/Unifor
 - Open right-click context menus after the button is released, so the release no longer dismisses them on macOS and Linux.
 - Expand a marker group just far enough to separate its properties, so one zoom-out regroups them.
 - Contain screen-reader labels inside scrolling tables, label the workflow navigation and live preview landmarks, and make the agent commands block keyboard-scrollable.
+- Give the docs site link previews: Open Graph and Twitter tags on every page, a rendered share card (`npm run render:share`) and an Apple touch icon for Safari's share sheet.
 
 ## v0.1.12 — 2026-10-04
 
