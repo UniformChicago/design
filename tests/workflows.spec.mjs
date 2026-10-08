@@ -14,23 +14,6 @@ const requireWebGL2 = async (page) =>
     "This browser build has no WebGL2, which the map renderer needs",
   );
 test.beforeEach(async ({ page }) => {
-  // TEMP diagnostics for Linux Firefox map failures.
-  if (test.info().project.name === "firefox-patterns") {
-    page.on("console", (m) => m.type() !== "log" && console.log(`[ff ${m.type()}]`, m.text().slice(0, 400)));
-    page.on("pageerror", (e) => console.log("[ff pageerror]", e.message));
-    page.on("load", () =>
-      page
-        .evaluate(() => {
-          const c = document.createElement("canvas");
-          return {
-            webgl2: !!c.getContext("webgl2"),
-            webgl: !!document.createElement("canvas").getContext("webgl"),
-          };
-        })
-        .then((r) => console.log("[ff gl]", JSON.stringify(r)))
-        .catch(() => {}),
-    );
-  }
   await page.route("https://tiles.openfreemap.org/styles/*", (route) =>
     route.fulfill({ contentType: "application/json", body: JSON.stringify(testMapStyle) }),
   );
