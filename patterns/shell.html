@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>{{title}} · Uniform Design</title>
+    <script src="theme.js"></script>
+    <link rel="stylesheet" href="../dist/design.css" />
+    <!--pattern-head-->
+    <script src="../dist/interactions.js" defer></script>
+    <link rel="stylesheet" href="../dist/context-menu.css" />
+    <script src="../dist/context-menu.js" defer></script>
+    <script src="workflow.js" defer></script>
+  </head>
+  <body class="u-root">
+    <a class="u-skip" href="#main">Skip to content</a>
+    <div class="u-app">
+      <aside class="u-app-nav">
+        <a class="u-app-brand" href="../" aria-label="Uniform Design"
+          ><img
+            class="u-app-brand-dark"
+            src="../dist/svg/uniform-wordmark-on-dark.svg"
+            width="136"
+            height="30"
+            alt="Uniform" /><img
+            class="u-app-brand-light"
+            src="../dist/svg/uniform-wordmark-color.svg"
+            width="136"
+            height="30"
+            alt="Uniform"
+        /></a>
+
+        <nav class="u-nav u-desktop-nav" aria-label="Reference patterns"><!--pattern-nav--></nav>
+        <details class="u-mobile-nav">
+          <summary aria-label="Workflow navigation">
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              aria-hidden="true"
+            >
+              <path d="M4 6h16M4 12h16M4 18h16" /></svg
+            ><span class="u-sr">Patterns</span>
+          </summary>
+          <nav class="u-nav" aria-label="Mobile patterns"><!--pattern-nav--></nav>
+        </details>
+        <div class="u-app-utility">
+          <span class="u-app-utility-label">Appearance</span>
+          <button
+            type="button"
+            class="u-button u-button--quiet u-icon-button"
+            data-theme-toggle
+            aria-label="Switch to light theme"
+            title="Switch to light theme"
+            hidden
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5" />
+            </svg>
+          </button>
+        </div>
+      </aside>
+      <main id="main" class="u-workspace">
+        <header class="u-page-header">
+          <span class="u-eyebrow">Reference patterns / {{title}}</span>
+        </header>
+        <!--pattern-body-->
+      </main>
+    </div>
+    <!--pattern-scripts-->
+  </body>
+</html>

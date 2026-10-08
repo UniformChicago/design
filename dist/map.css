@@ -1,0 +1,253 @@
+/* Optional Leaflet integration; load after Leaflet and design.css. */
+.u-root .u-geo-map {
+  min-height: 0;
+  flex: 1;
+  width: 100%;
+  background: var(--u-hover);
+  font-family: var(--u-font-sans);
+  z-index: 0;
+}
+.u-geo-map .u-map-boundary {
+  fill: var(--u-line);
+  stroke: var(--u-muted);
+}
+.u-map-price {
+  display: block;
+  box-sizing: border-box;
+  width: 108px;
+  height: 44px;
+  border: 2px solid var(--u-link);
+  border-radius: 22px;
+  background: var(--u-bg);
+  color: var(--u-fg);
+  font: 600 13px var(--u-font-sans);
+  cursor: pointer;
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--u-night) 15%, transparent);
+}
+.u-map-price[aria-pressed="true"] {
+  background: var(--u-fg);
+  color: var(--u-bg);
+  border-color: var(--u-fg);
+}
+.u-map-price:focus-visible {
+  outline: 3px solid var(--u-link);
+  outline-offset: 3px;
+}
+.u-geo-map .leaflet-bar a {
+  background: var(--u-bg);
+  color: var(--u-fg);
+  border-color: var(--u-line);
+  width: 44px;
+  height: 44px;
+  line-height: 44px;
+}
+.u-geo-map .leaflet-bar a:hover {
+  background: var(--u-hover);
+}
+.u-geo-map .leaflet-control-attribution {
+  background: var(--u-bg);
+  color: var(--u-muted);
+  font-size: 10px;
+}
+.u-geo-map .leaflet-control-attribution a {
+  color: var(--u-link);
+}
+
+.u-map-price[data-preview="true"] {
+  outline: 2px solid var(--u-link);
+  outline-offset: 2px;
+}
+
+/* Keep the renderer sized behind loading/error overlays. */
+.u-map-surface {
+  position: relative;
+}
+.u-map-surface .u-map-notice {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: var(--u-hover);
+}
+.u-map-canvas[data-obscured="true"] {
+  visibility: hidden;
+}
+.u-map-zoom {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--u-line);
+  border-radius: var(--u-radius-md);
+  overflow: hidden;
+}
+.u-map-zoom button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: var(--u-bg);
+  color: var(--u-fg);
+  font: 24px var(--u-font-sans);
+  cursor: pointer;
+}
+.u-map-zoom button + button {
+  border-top: 1px solid var(--u-line);
+}
+.u-map-zoom button:hover {
+  background: var(--u-hover);
+}
+.u-geo-map .maplibregl-ctrl-attrib {
+  background: var(--u-bg);
+  color: var(--u-muted);
+  font: 10px/1.5 var(--u-font-sans);
+}
+.u-geo-map .maplibregl-ctrl-attrib a {
+  color: var(--u-link);
+}
+.u-geo-map .u-map-price[aria-pressed="true"] {
+  z-index: 1;
+}
+
+.u-map-cluster {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  outline: 5px solid color-mix(in srgb, var(--u-link) 18%, transparent);
+  font-size: 16px;
+}
+.u-map-members {
+  width: min(400px, calc(100vw - 32px));
+}
+.u-map-member-list {
+  display: grid;
+  gap: var(--u-space-2);
+  margin-block: var(--u-space-4);
+}
+.u-map-member-list .u-button {
+  text-align: start;
+}
+.u-map-member-list [aria-pressed="true"] {
+  border-color: var(--u-link);
+}
+
+/* Switch between geographic discovery and a configurable listing gallery. */
+.u-map-views {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--u-space-2);
+  margin-bottom: var(--u-space-4);
+}
+.u-map-views [aria-pressed="true"] {
+  background: var(--u-hover);
+  border-color: var(--u-link);
+  color: var(--u-fg);
+}
+.u-map-narrow-label {
+  display: none;
+}
+.u-map-layout[data-view="gallery"] {
+  display: block;
+  height: auto;
+}
+.u-map-layout[data-view="gallery"] .u-map-surface {
+  display: none;
+}
+.u-map-layout[data-view="gallery"] .u-map-results {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  overflow: visible;
+  scroll-snap-type: none;
+}
+.u-map-layout[data-view="gallery"] [data-columns="2"] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.u-map-layout[data-view="gallery"] [data-columns="3"] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.u-map-layout[data-view="gallery"] [data-density="compact"] .u-map-card {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  column-gap: var(--u-space-3);
+  padding: var(--u-space-4);
+}
+.u-map-layout[data-view="gallery"] [data-density="compact"] .u-property-thumbnail {
+  grid-column: 1;
+  grid-row: span 5;
+  align-self: start;
+  margin: 0;
+  aspect-ratio: 1;
+}
+.u-map-layout[data-view="gallery"] [data-density="compact"] .u-property-thumbnail figcaption {
+  display: none;
+}
+.u-map-layout[data-view="gallery"] [data-density="compact"] .u-map-card > :is(h2, p, strong, .u-eyebrow) {
+  grid-column: 2;
+}
+.u-map-layout[data-view="gallery"] [data-density="compact"] h2 {
+  font-size: 17px;
+}
+.u-map-views > details {
+  flex-basis: 100%;
+}
+@media (max-width: 700px) {
+  .u-map-wide-label {
+    display: none;
+  }
+  .u-map-narrow-label {
+    display: inline;
+  }
+  .u-map-layout[data-view="gallery"] .u-map-results {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Layout choices have identical meanings at every viewport width. */
+.u-map-layout:is([data-view="list"], [data-view="map"]) {
+  grid-template-columns: minmax(0, 1fr);
+}
+.u-map-layout[data-view="list"] {
+  height: auto;
+}
+.u-map-layout[data-view="list"] .u-map-surface,
+.u-map-layout[data-view="map"] .u-map-results {
+  display: none;
+}
+.u-map-layout[data-view="list"] .u-map-results {
+  overflow: visible;
+  scroll-snap-type: none;
+}
+@media (max-width: 700px) {
+  .u-map-layout[data-view="both"] {
+    height: auto;
+  }
+  .u-map-layout[data-view="both"] .u-map-results {
+    max-height: 360px;
+  }
+  .u-map-layout[data-view="both"] .u-map-surface {
+    min-height: 360px;
+  }
+}
+.u-map-layout[data-view="list"] .u-map-card {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  column-gap: var(--u-space-4);
+}
+.u-map-layout[data-view="list"] .u-property-thumbnail {
+  grid-column: 1;
+  grid-row: span 5;
+  align-self: start;
+  aspect-ratio: 1;
+  margin: 0;
+}
+.u-map-layout[data-view="list"] .u-property-thumbnail figcaption {
+  display: none;
+}
+.u-map-layout[data-view="list"] .u-map-card > :is(h2, p, strong, .u-eyebrow) {
+  grid-column: 2;
+}
+@media (max-width: 480px) {
+  .u-map-layout[data-view="list"] .u-map-card {
+    grid-template-columns: 80px minmax(0, 1fr);
+    padding: var(--u-space-3);
+  }
+}

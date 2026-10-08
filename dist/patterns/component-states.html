@@ -1,0 +1,151 @@
+<div class="u-page-header">
+  <div>
+    <span class="u-tag">Preview · state fixtures</span>
+    <h1 class="u-page-title">Small details, complete states<span class="u-dot" aria-hidden="true"></span></h1>
+    <p class="u-lede">Reference implementations for forms, feedback, collections and review.</p>
+  </div>
+</div>
+<div class="u-stack">
+  <section class="u-panel">
+    <h2 class="u-section-heading">Actions</h2>
+    <div class="u-actions">
+      <button type="button" class="u-button">Primary action</button
+      ><button type="button" class="u-button u-button--quiet">Secondary action</button
+      ><button type="button" class="u-button u-button--danger" data-u-dialog-open="confirm-example" hidden>
+        Remove sample</button
+      ><button type="button" class="u-button" disabled>Unavailable</button
+      ><button type="button" class="u-button" disabled aria-busy="true">Saving…</button>
+    </div>
+    <p class="u-hint">
+      Disabled controls need a nearby explanation. “Saving” is a static busy-state example.
+    </p>
+  </section>
+  <section class="u-panel">
+    <h2 class="u-section-heading">Fields &amp; selection</h2>
+    <div class="u-form-grid">
+      <div class="u-field">
+        <label for="state-name">Record title</label
+        ><input id="state-name" placeholder="Enter a title" aria-describedby="state-help" /><span
+          id="state-help"
+          class="u-hint"
+          >Use a short, descriptive title.</span
+        >
+      </div>
+      <div class="u-field">
+        <label for="state-invalid">Required category</label
+        ><input id="state-invalid" required aria-invalid="true" aria-describedby="state-error" /><span
+          class="u-field-error"
+          id="state-error"
+          >Choose a category before continuing.</span
+        >
+      </div>
+      <div class="u-field">
+        <label for="state-readonly">Reference (read only)</label
+        ><input id="state-readonly" value="Sample reference" readonly />
+      </div>
+      <div class="u-field">
+        <label for="state-disabled">Assignment (unavailable)</label
+        ><input
+          id="state-disabled"
+          disabled
+          value="Not available in this example"
+          aria-describedby="state-disabled-help"
+        /><span id="state-disabled-help" class="u-hint">Choose a firm before assigning this record.</span>
+      </div>
+      <div class="u-field">
+        <label for="state-select">Record status</label
+        ><span class="u-select"
+          ><select id="state-select">
+            <option>Draft</option>
+            <option>In review</option>
+            <option>Complete</option>
+          </select></span
+        >
+      </div>
+      <div class="u-field">
+        <label for="state-date">Personal check-in</label
+        ><input id="state-date" type="date" aria-describedby="date-help" /><span id="date-help" class="u-hint"
+          >A personal reminder, not an official deadline.</span
+        >
+      </div>
+    </div>
+    <fieldset class="u-choice-group">
+      <legend>Preferred view</legend>
+      <label><input type="radio" name="view" checked /> Comfortable</label
+      ><label><input type="radio" name="view" /> Compact</label>
+    </fieldset>
+    <label class="u-choice"><input type="checkbox" /> Include archived records</label>
+  </section>
+  <section class="u-panel">
+    <h2 class="u-section-heading">Local document selection</h2>
+    <div class="u-field">
+      <label for="sample-file">Choose a sample PDF</label
+      ><input
+        id="sample-file"
+        type="file"
+        accept="application/pdf,.pdf"
+        data-u-file
+        aria-describedby="file-help file-status"
+      /><span class="u-hint" id="file-help"
+        >PDF only, up to 5 MiB. This example inspects metadata locally; it never uploads the file.</span
+      ><span id="file-status" class="u-hint" role="status">No file selected.</span>
+    </div>
+  </section>
+  <div class="u-columns">
+    <section class="u-panel">
+      <h2 class="u-section-heading">Collection states</h2>
+      <div class="u-empty">
+        <h3 class="u-section-heading">Nothing here yet</h3>
+        <p>Add the first record when you are ready.</p>
+      </div>
+      <p class="u-hint" role="status" aria-busy="true">Loading records…</p>
+      <div class="u-callout u-callout--danger">
+        <strong>Records could not be loaded</strong>
+        <p>Your existing records have not changed. Retry when your connection returns.</p>
+      </div>
+    </section>
+    <section class="u-panel">
+      <h2 class="u-section-heading">Status &amp; provenance</h2>
+      <div class="u-actions">
+        <span class="u-tag">Draft</span><span class="u-tag u-tag--warn">Needs review</span
+        ><span class="u-tag u-tag--ok">Complete</span>
+      </div>
+      <dl class="u-facts u-facts--stacked">
+        <dt>Source</dt>
+        <dd>User-provided sample</dd>
+        <dt>Verification</dt>
+        <dd>Not independently verified</dd>
+        <dt>Last checked</dt>
+        <dd>Not checked</dd>
+      </dl>
+      <p class="u-hint">Use text labels as well as color. Unknown values are not zero.</p>
+    </section>
+  </div>
+  <section class="u-panel">
+    <h2 class="u-section-heading">Review summary</h2>
+    <dl class="u-facts">
+      <dt>Record</dt>
+      <dd>Sample document</dd>
+      <dt>Requested change</dt>
+      <dd>Confirm its category</dd>
+      <dt>Outcome</dt>
+      <dd>Pending review</dd>
+    </dl>
+    <p class="u-hint" id="dialog-result" role="status">No action taken.</p>
+  </section>
+</div>
+<dialog
+  class="u-dialog"
+  id="confirm-example"
+  aria-labelledby="dialog-heading"
+  aria-describedby="dialog-description"
+>
+  <h2 class="u-section-heading" id="dialog-heading">Remove this sample?</h2>
+  <p id="dialog-description">This is a local confirmation example. No record will be deleted.</p>
+  <div class="u-actions">
+    <button class="u-button u-button--quiet" type="button" data-u-dialog-close autofocus>Keep sample</button
+    ><button class="u-button u-button--danger" type="button" data-u-dialog-close="confirmed">
+      Confirm example
+    </button>
+  </div>
+</dialog>

@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>Multi-step intake · Uniform Design</title>
+    <script src="theme.js"></script>
+    <link rel="stylesheet" href="../dist/design.css" />
+    
+    <script src="../dist/interactions.js" defer></script>
+    <link rel="stylesheet" href="../dist/context-menu.css" />
+    <script src="../dist/context-menu.js" defer></script>
+    <script src="workflow.js" defer></script>
+  </head>
+  <body class="u-root">
+    <a class="u-skip" href="#main">Skip to content</a>
+    <div class="u-app">
+      <aside class="u-app-nav">
+        <a class="u-app-brand" href="../" aria-label="Uniform Design"
+          ><img
+            class="u-app-brand-dark"
+            src="../dist/svg/uniform-wordmark-on-dark.svg"
+            width="136"
+            height="30"
+            alt="Uniform" /><img
+            class="u-app-brand-light"
+            src="../dist/svg/uniform-wordmark-color.svg"
+            width="136"
+            height="30"
+            alt="Uniform"
+        /></a>
+
+        <nav class="u-nav u-desktop-nav" aria-label="Reference patterns"><a href="map.html">Map and list</a>
+<a href="index.html" aria-current="page">Multi-step intake</a>
+<a href="dashboard.html">Status dashboard</a>
+<a href="workspace.html">Searchable collection</a>
+<a href="states.html">Component states</a><span class="u-eyebrow" style="padding: var(--u-space-4) var(--u-space-3) var(--u-space-1); display: block; color: var(--u-muted);">Resources</span><a href="../">Components</a><a href="../agent/">Agents</a><a href="../playground/">Playground</a></nav>
+        <details class="u-mobile-nav">
+          <summary aria-label="Workflow navigation">
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              aria-hidden="true"
+            >
+              <path d="M4 6h16M4 12h16M4 18h16" /></svg
+            ><span class="u-sr">Patterns</span>
+          </summary>
+          <nav class="u-nav" aria-label="Mobile patterns"><a href="map.html">Map and list</a>
+<a href="index.html" aria-current="page">Multi-step intake</a>
+<a href="dashboard.html">Status dashboard</a>
+<a href="workspace.html">Searchable collection</a>
+<a href="states.html">Component states</a><span class="u-eyebrow" style="padding: var(--u-space-4) var(--u-space-3) var(--u-space-1); display: block; color: var(--u-muted);">Resources</span><a href="../">Components</a><a href="../agent/">Agents</a><a href="../playground/">Playground</a></nav>
+        </details>
+        <div class="u-app-utility">
+          <span class="u-app-utility-label">Appearance</span>
+          <button
+            type="button"
+            class="u-button u-button--quiet u-icon-button"
+            data-theme-toggle
+            aria-label="Switch to light theme"
+            title="Switch to light theme"
+            hidden
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5" />
+            </svg>
+          </button>
+        </div>
+      </aside>
+      <main id="main" class="u-workspace">
+        <header class="u-page-header">
+          <span class="u-eyebrow">Reference patterns / Multi-step intake</span>
+        </header>
+        <div class="u-page-header">
+  <div>
+    <span class="u-tag">Preview · onboarding</span>
+    <h1 class="u-page-title">Your next chapter starts here<span class="u-dot" aria-hidden="true"></span></h1>
+    <p class="u-lede">Start with where you are. Build a plan you can come back to.</p>
+  </div>
+</div>
+<div class="u-columns">
+  <section class="u-panel">
+    <form id="onboarding" data-u-stepper novalidate>
+      <p class="u-meta" id="step-count" data-u-step-count>Step 1 of 3</p>
+      <div data-u-step="0">
+        <h2 class="u-section-heading" tabindex="-1">Your starting point</h2>
+        <p class="u-hint">Choose a starting point for this sample plan.</p>
+        <div class="u-field">
+          <label for="stage">Where are you in your journey?</label
+          ><span class="u-select"
+            ><select id="stage" name="stage" required aria-describedby="stage-error">
+              <option value="">Choose your current stage</option>
+              <option>Exploring a first license</option>
+              <option>Preparing an application</option>
+              <option>Managing an existing license</option>
+            </select></span
+          ><span class="u-field-error" id="stage-error" hidden>Choose your current stage to continue.</span>
+        </div>
+        <div class="u-field">
+          <label for="goal">Your next goal</label
+          ><span class="u-select"
+            ><select id="goal" name="goal">
+              <option>Get organized</option>
+              <option>Find a sponsoring firm</option>
+              <option>Prepare for renewal</option>
+            </select></span
+          >
+        </div>
+      </div>
+      <div data-u-step="1" hidden>
+        <h2 class="u-section-heading" tabindex="-1">Make room for progress</h2>
+        <p class="u-hint">Set a personal check-in. This is not a regulatory deadline.</p>
+        <div class="u-field">
+          <label for="checkin">Check-in date (optional)</label
+          ><input id="checkin" name="checkin" type="date" />
+        </div>
+        <div class="u-field">
+          <label for="notes">What would help you move forward? (optional)</label
+          ><textarea
+            id="notes"
+            name="notes"
+            rows="4"
+            maxlength="500"
+            placeholder="For example, gathering my education records"
+          ></textarea>
+        </div>
+      </div>
+      <div data-u-step="2" hidden>
+        <h2 class="u-section-heading" tabindex="-1">Your plan, at a glance</h2>
+        <p class="u-hint">Review your choices before opening the sample dashboard.</p>
+        <dl id="review" class="u-facts u-facts--stacked"></dl>
+      </div>
+      <div class="u-form-footer">
+        <button type="button" class="u-button u-button--quiet" id="back" data-u-back disabled>Back</button>
+        <div class="u-actions">
+          <button type="button" class="u-button u-button--quiet" id="save">Save draft</button
+          ><button type="submit" class="u-button" id="next" data-u-next data-u-final-label="Open dashboard">
+            Continue
+          </button>
+        </div>
+      </div>
+      <p id="form-status" class="u-hint" role="status"></p>
+    </form>
+    <noscript
+      ><p>
+        The fields above are available to explore. Enable JavaScript to navigate the example, or
+        <a href="dashboard.html">view the dashboard</a>.
+      </p></noscript
+    >
+  </section>
+  <aside class="u-stack">
+    <section class="u-panel">
+      <h2 class="u-section-heading">Your route</h2>
+      <ol class="u-step-list" data-u-step-list>
+        <li aria-current="step">
+          <span>Starting point<small>Your experience and next goal</small></span>
+        </li>
+        <li>
+          <span>Personal check-in<small>A pace that works for you</small></span>
+        </li>
+        <li>
+          <span>Review your plan<small>Everything in one place</small></span>
+        </li>
+      </ol>
+    </section>
+    <section class="u-panel">
+      <h2 class="u-section-heading">One step at a time</h2>
+      <p class="u-hint">
+        A useful plan makes the next action clear, while keeping the bigger picture in view.
+      </p>
+      <p class="u-hint">Drafts stay in this browser session. Use only sample information.</p>
+    </section>
+  </aside>
+</div>
+
+      </main>
+    </div>
+    
+  </body>
+</html>

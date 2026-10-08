@@ -36,8 +36,7 @@ if (navigator.clipboard) {
 const links = new Map(
   [...document.querySelectorAll(".s-side li a[href^='#']")].map((a) => [a.getAttribute("href").slice(1), a]),
 );
-// Each section's group link: the only sidebar links shown on narrow screens, where the sidebar is a
-// sticky row of groups. The current group is marked too, and the row scrolls to keep it in view.
+// Mark the active section and group; keep the active group visible in the narrow scrollable row.
 const side = document.querySelector(".s-side");
 const groupOf = new Map(
   [...links].map(([id, a]) => [id, a.closest("ul")?.previousElementSibling?.querySelector("a")]),
@@ -71,8 +70,27 @@ if ("IntersectionObserver" in window && sections.length) {
       for (const e of entries) e.isIntersecting ? visible.add(e.target.id) : visible.delete(e.target.id);
       mark();
     },
-    // Below the sticky header (and the group row on narrow screens); the top 45% of the viewport counts.
-    { rootMargin: "-130px 0px -55% 0px" },
+    // Below the shared header; the top part of the viewport identifies the active section.
+    { rootMargin: "-180px 0px -55% 0px" },
   );
   sections.forEach((s) => io.observe(s));
 }
+
+if (globalThis.UniformContextMenu) globalThis.UniformContextMenu.mount(document);
+document.addEventListener("uniform:context-action", (event) => {
+  if (event.detail.trigger.dataset.uContextMenu === "example-context") {
+    document.getElementById("example-context-status").textContent = "Sample opened for review.";
+  }
+});
+
+// Initialize examples after all deferred scripts have loaded.
+const mountExamples = () => globalThis.UniformInteractions?.mount(document);
+if (globalThis.UniformInteractions || document.readyState === "complete") mountExamples();
+else document.addEventListener("DOMContentLoaded", mountExamples, { once: true });
+document.addEventListener("uniform:dialog-close", (event) => {
+  if (event.target.dataset.uDialogOpen !== "example-dialog") return;
+  document.getElementById("example-dialog-status").textContent =
+    event.detail.value === "confirmed"
+      ? "Sample action confirmed. No records were changed."
+      : "Action canceled. Your sample stays in place.";
+});

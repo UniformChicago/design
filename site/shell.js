@@ -45,3 +45,13 @@ if (other && !navigator.connection?.saveData) {
   if (document.readyState === "complete") idle();
   else addEventListener("load", idle, { once: true });
 }
+
+// Activating the current destination should keep the workspace and its drafts intact.
+// Preserve native modified clicks and ordinary navigation from other pages.
+const playground = document.querySelector('.s-pages a[aria-label="Playground"]');
+playground?.addEventListener("click", (event) => {
+  if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  const destination = new URL(playground.href);
+  if (destination.origin === location.origin && destination.pathname === location.pathname)
+    event.preventDefault();
+});

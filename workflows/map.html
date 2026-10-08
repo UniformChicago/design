@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' blob: https://tiles.openfreemap.org; font-src 'self'; connect-src 'self' https://tiles.openfreemap.org; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>Map and list · Uniform Design</title>
+    <script src="theme.js"></script>
+    <link rel="stylesheet" href="../dist/design.css" />
+    <link rel="stylesheet" href="../dist/vendor/maplibre/maplibre-gl.css" /><link rel="stylesheet" href="../dist/map.css" />
+    <script src="../dist/interactions.js" defer></script>
+    <link rel="stylesheet" href="../dist/context-menu.css" />
+    <script src="../dist/context-menu.js" defer></script>
+    <script src="workflow.js" defer></script>
+  </head>
+  <body class="u-root">
+    <a class="u-skip" href="#main">Skip to content</a>
+    <div class="u-app">
+      <aside class="u-app-nav">
+        <a class="u-app-brand" href="../" aria-label="Uniform Design"
+          ><img
+            class="u-app-brand-dark"
+            src="../dist/svg/uniform-wordmark-on-dark.svg"
+            width="136"
+            height="30"
+            alt="Uniform" /><img
+            class="u-app-brand-light"
+            src="../dist/svg/uniform-wordmark-color.svg"
+            width="136"
+            height="30"
+            alt="Uniform"
+        /></a>
+
+        <nav class="u-nav u-desktop-nav" aria-label="Reference patterns"><a href="map.html" aria-current="page">Map and list</a>
+<a href="index.html">Multi-step intake</a>
+<a href="dashboard.html">Status dashboard</a>
+<a href="workspace.html">Searchable collection</a>
+<a href="states.html">Component states</a><span class="u-eyebrow" style="padding: var(--u-space-4) var(--u-space-3) var(--u-space-1); display: block; color: var(--u-muted);">Resources</span><a href="../">Components</a><a href="../agent/">Agents</a><a href="../playground/">Playground</a></nav>
+        <details class="u-mobile-nav">
+          <summary aria-label="Workflow navigation">
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              aria-hidden="true"
+            >
+              <path d="M4 6h16M4 12h16M4 18h16" /></svg
+            ><span class="u-sr">Patterns</span>
+          </summary>
+          <nav class="u-nav" aria-label="Mobile patterns"><a href="map.html" aria-current="page">Map and list</a>
+<a href="index.html">Multi-step intake</a>
+<a href="dashboard.html">Status dashboard</a>
+<a href="workspace.html">Searchable collection</a>
+<a href="states.html">Component states</a><span class="u-eyebrow" style="padding: var(--u-space-4) var(--u-space-3) var(--u-space-1); display: block; color: var(--u-muted);">Resources</span><a href="../">Components</a><a href="../agent/">Agents</a><a href="../playground/">Playground</a></nav>
+        </details>
+        <div class="u-app-utility">
+          <span class="u-app-utility-label">Appearance</span>
+          <button
+            type="button"
+            class="u-button u-button--quiet u-icon-button"
+            data-theme-toggle
+            aria-label="Switch to light theme"
+            title="Switch to light theme"
+            hidden
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5" />
+            </svg>
+          </button>
+        </div>
+      </aside>
+      <main id="main" class="u-workspace">
+        <header class="u-page-header">
+          <span class="u-eyebrow">Reference patterns / Map and list</span>
+        </header>
+        <div class="u-page-header">
+  <div>
+    <span class="u-tag">Pattern · property explorer</span>
+    <h1 class="u-page-title">Map and list<span class="u-dot" aria-hidden="true"></span></h1>
+    <p class="u-lede">Explore properties with linked map, results and details.</p>
+  </div>
+</div>
+<section data-map-preview aria-label="Sample property explorer">
+  <svg class="u-sr" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="property-photo-exterior" viewBox="0 0 480 300">
+        <rect width="480" height="300" fill="var(--u-surface)" />
+        <path d="M0 225H480V300H0Z" fill="var(--u-hover)" />
+        <path d="M105 145L235 63L365 145" fill="none" stroke="var(--u-muted)" stroke-width="6" />
+        <path d="M125 147H345V247H125Z" fill="var(--u-bg)" stroke="var(--u-muted)" stroke-width="3" />
+        <path
+          d="M212 185H257V247H212Z M150 173H187V205H150Z M282 173H319V205H282Z"
+          fill="var(--u-hover)"
+          stroke="var(--u-muted)"
+          stroke-width="3"
+        />
+        <path
+          d="M386 248V168 M364 177Q386 105 408 177Z"
+          fill="var(--u-hover)"
+          stroke="var(--u-muted)"
+          stroke-width="3"
+        />
+      </symbol>
+      <symbol id="property-photo-apartment" viewBox="0 0 480 300">
+        <rect width="480" height="300" fill="var(--u-surface)" />
+        <path d="M0 250H480V300H0Z" fill="var(--u-hover)" />
+        <rect
+          x="135"
+          y="50"
+          width="210"
+          height="210"
+          rx="3"
+          fill="var(--u-bg)"
+          stroke="var(--u-muted)"
+          stroke-width="3"
+        />
+        <path
+          d="M158 83H198V114H158Z M220 83H260V114H220Z M282 83H322V114H282Z M158 139H198V170H158Z M220 139H260V170H220Z M282 139H322V170H282Z M158 195H198V226H158Z M282 195H322V226H282Z M220 210H260V260H220Z"
+          fill="var(--u-hover)"
+          stroke="var(--u-muted)"
+          stroke-width="3"
+        />
+      </symbol>
+      <symbol id="property-photo-interior" viewBox="0 0 480 300">
+        <rect width="480" height="300" fill="var(--u-surface)" />
+        <path
+          d="M60 50H420V235H60Z M60 235L0 300H480L420 235"
+          fill="var(--u-bg)"
+          stroke="var(--u-muted)"
+          stroke-width="3"
+        />
+        <path
+          d="M98 85H200V175H98Z M149 85V175 M98 130H200"
+          fill="var(--u-hover)"
+          stroke="var(--u-muted)"
+          stroke-width="3"
+        />
+        <path
+          d="M242 158H370V215H242Z M232 212H380V240H232Z M250 240V260 M364 240V260"
+          fill="var(--u-hover)"
+          stroke="var(--u-muted)"
+          stroke-width="3"
+        />
+      </symbol>
+      <symbol id="property-photo-outdoor" viewBox="0 0 480 300">
+        <rect width="480" height="300" fill="var(--u-surface)" />
+        <path d="M0 220H480V300H0Z" fill="var(--u-hover)" />
+        <path
+          d="M45 225V135H435V225 M95 135V225 M145 135V225 M335 135V225 M385 135V225"
+          fill="none"
+          stroke="var(--u-muted)"
+          stroke-width="3"
+        />
+        <path
+          d="M150 216H330L360 275H120Z M192 190H287V215H192Z M209 215V248 M270 215V248 M86 218V110"
+          fill="var(--u-bg)"
+          stroke="var(--u-muted)"
+          stroke-width="3"
+        />
+        <circle cx="86" cy="94" r="38" fill="var(--u-hover)" stroke="var(--u-muted)" stroke-width="3" />
+      </symbol>
+    </defs>
+  </svg>
+  <div class="u-toolbar u-map-toolbar">
+    <div class="u-field">
+      <label for="property-kind">Property type</label
+      ><span class="u-select"
+        ><select id="property-kind" data-map-filter>
+          <option value="all">All properties</option>
+          <option>House</option>
+          <option>Apartment</option>
+          <option>Land</option>
+        </select></span
+      >
+    </div>
+    <button type="button" class="u-button u-button--quiet" data-map-clear>Clear filter</button>
+    <p class="u-hint" data-map-count role="status">5 properties · 4 on map</p>
+  </div>
+  <p class="u-sr" data-map-announcement role="status"></p>
+  <div class="u-map-views" role="group" aria-label="View">
+    <button type="button" class="u-button u-button--quiet" data-map-view="both" aria-pressed="true">
+      Map and list
+    </button>
+    <button type="button" class="u-button u-button--quiet" data-map-view="list" aria-pressed="false">
+      List only
+    </button>
+    <button type="button" class="u-button u-button--quiet" data-map-view="map" aria-pressed="false">
+      Map only
+    </button>
+    <button type="button" class="u-button u-button--quiet" data-map-view="gallery" aria-pressed="false">
+      Gallery
+    </button>
+    <details data-map-gallery-controls hidden>
+      <summary>Gallery settings</summary>
+      <div class="u-toolbar">
+        <div class="u-field">
+          <label for="gallery-columns">Columns</label
+          ><span class="u-select"
+            ><select id="gallery-columns" data-map-columns>
+              <option value="auto">Automatic</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select></span
+          >
+        </div>
+        <div class="u-field">
+          <label for="gallery-density">Card style</label
+          ><span class="u-select"
+            ><select id="gallery-density" data-map-density>
+              <option value="roomy">Photo cards</option>
+              <option value="compact">Compact cards</option>
+            </select></span
+          >
+        </div>
+      </div>
+    </details>
+  </div>
+  <div class="u-map-layout" data-view="both">
+    <div class="u-map-results" aria-label="Property results" data-columns="auto" data-density="roomy">
+      <article
+        class="u-map-card"
+        data-property="courtyard"
+        data-area="1,840 sq ft"
+        data-description="Private courtyard, a flexible main-floor workspace and a detached two-car garage."
+        data-review="Confirm roof age, garage condition and recent maintenance."
+        data-lat="41.94"
+        data-lng="-87.67"
+        data-kind="House"
+      >
+        <figure class="u-property-thumbnail">
+          <svg viewBox="0 0 480 300" aria-hidden="true"><use href="#property-photo-exterior" /></svg>
+          <figcaption>Exterior · Placeholder</figcaption>
+        </figure>
+        <span class="u-eyebrow">House</span>
+        <h2 class="u-section-heading">Courtyard house</h2>
+        <p>3 beds · 2 baths</p>
+        <strong>$425,000</strong>
+        <p class="u-hint">Sample location</p>
+        <button
+          type="button"
+          class="u-map-card-select"
+          data-select="courtyard"
+          data-u-context-menu="property-context"
+          aria-pressed="false"
+        >
+          <span class="u-sr">Select Courtyard house</span>
+        </button>
+        <button
+          type="button"
+          class="u-context-trigger"
+          data-u-context-menu="property-context"
+          data-u-context-open
+          aria-label="Actions for Courtyard house"
+          hidden
+        >
+          <span aria-hidden="true">⋯</span>
+        </button>
+      </article>
+      <article
+        class="u-map-card"
+        data-property="terrace"
+        data-area="1,260 sq ft"
+        data-description="A corner apartment with an open living area, a covered terrace and dedicated parking."
+        data-review="Review association documents, monthly dues and rental restrictions."
+        data-lat="41.9"
+        data-lng="-87.64"
+        data-kind="Apartment"
+      >
+        <figure class="u-property-thumbnail">
+          <svg viewBox="0 0 480 300" aria-hidden="true"><use href="#property-photo-apartment" /></svg>
+          <figcaption>Exterior · Placeholder</figcaption>
+        </figure>
+        <span class="u-eyebrow">Apartment</span>
+        <h2 class="u-section-heading">Terrace apartment</h2>
+        <p>2 beds · 2 baths</p>
+        <strong>$310,000</strong>
+        <p class="u-hint">Sample location</p>
+        <button
+          type="button"
+          class="u-map-card-select"
+          data-select="terrace"
+          data-u-context-menu="property-context"
+          aria-pressed="false"
+        >
+          <span class="u-sr">Select Terrace apartment</span>
+        </button>
+        <button
+          type="button"
+          class="u-context-trigger"
+          data-u-context-menu="property-context"
+          data-u-context-open
+          aria-label="Actions for Terrace apartment"
+          hidden
+        >
+          <span aria-hidden="true">⋯</span>
+        </button>
+      </article>
+      <article
+        class="u-map-card"
+        data-property="garden"
+        data-area="2,420 sq ft"
+        data-description="Four bedrooms, a generous backyard and a separate lower-level living area."
+        data-review="Confirm lower-level permits, drainage and mechanical service history."
+        data-lat="41.86"
+        data-lng="-87.68"
+        data-kind="House"
+      >
+        <figure class="u-property-thumbnail">
+          <svg viewBox="0 0 480 300" aria-hidden="true"><use href="#property-photo-exterior" /></svg>
+          <figcaption>Exterior · Placeholder</figcaption>
+        </figure>
+        <span class="u-eyebrow">House</span>
+        <h2 class="u-section-heading">Garden house</h2>
+        <p>4 beds · 3 baths</p>
+        <strong>$560,000</strong>
+        <p class="u-hint">Sample location</p>
+        <button
+          type="button"
+          class="u-map-card-select"
+          data-select="garden"
+          data-u-context-menu="property-context"
+          aria-pressed="false"
+        >
+          <span class="u-sr">Select Garden house</span>
+        </button>
+        <button
+          type="button"
+          class="u-context-trigger"
+          data-u-context-menu="property-context"
+          data-u-context-open
+          aria-label="Actions for Garden house"
+          hidden
+        >
+          <span aria-hidden="true">⋯</span>
+        </button>
+      </article>
+      <article
+        class="u-map-card"
+        data-property="courtyard-flat"
+        data-area="980 sq ft"
+        data-description="A compact two-bedroom layout near the courtyard house, with shared outdoor space."
+        data-review="Review reserves, shared-space rules and recent building improvements."
+        data-lat="41.9412"
+        data-lng="-87.6685"
+        data-kind="Apartment"
+      >
+        <figure class="u-property-thumbnail">
+          <svg viewBox="0 0 480 300" aria-hidden="true"><use href="#property-photo-apartment" /></svg>
+          <figcaption>Exterior · Placeholder</figcaption>
+        </figure>
+        <span class="u-eyebrow">Apartment</span>
+        <h2 class="u-section-heading">Courtyard flat</h2>
+        <p>2 beds · 1 bath</p>
+        <strong>$285,000</strong>
+        <p class="u-hint">Nearby sample location · About 180 m from Courtyard house</p>
+        <button
+          type="button"
+          class="u-map-card-select"
+          data-select="courtyard-flat"
+          data-u-context-menu="property-context"
+          aria-pressed="false"
+        >
+          <span class="u-sr">Select Courtyard flat</span>
+        </button>
+        <button
+          type="button"
+          class="u-context-trigger"
+          data-u-context-menu="property-context"
+          data-u-context-open
+          aria-label="Actions for Courtyard flat"
+          hidden
+        >
+          <span aria-hidden="true">⋯</span>
+        </button>
+      </article>
+      <article
+        class="u-map-card"
+        data-property="studio"
+        data-area="540 sq ft"
+        data-description="An efficient studio with an independent kitchen and built-in storage."
+        data-review="Request the location before planning a visit; review building documents."
+        data-kind="Apartment"
+      >
+        <figure class="u-property-thumbnail">
+          <svg viewBox="0 0 480 300" aria-hidden="true"><use href="#property-photo-apartment" /></svg>
+          <figcaption>Exterior · Placeholder</figcaption>
+        </figure>
+        <span class="u-eyebrow">Apartment</span>
+        <h2 class="u-section-heading">Corner studio</h2>
+        <p>Studio · 1 bath</p>
+        <strong>$195,000</strong>
+        <p class="u-hint" id="studio-location"><span class="u-tag u-tag--warn">Location unknown</span></p>
+        <button
+          type="button"
+          class="u-map-card-select"
+          data-select="studio"
+          aria-pressed="false"
+          aria-describedby="studio-location"
+        >
+          <span class="u-sr">Select Corner studio</span>
+        </button>
+        <button
+          type="button"
+          class="u-context-trigger"
+          data-u-context-menu="property-context"
+          data-u-context-open
+          aria-label="Actions for Corner studio"
+          hidden
+        >
+          <span aria-hidden="true">⋯</span>
+        </button>
+      </article>
+      <div class="u-empty" data-map-empty hidden>
+        <h2 class="u-section-heading">No matching properties</h2>
+        <p>Choose another property type or clear the filter.</p>
+      </div>
+    </div>
+    <div class="u-map-surface" aria-busy="false">
+      <div class="u-map-notice" data-map-notice hidden>
+        <div class="u-map-state-art" aria-hidden="true">
+          <svg viewBox="0 0 640 520" preserveAspectRatio="xMidYMid slice">
+            <path
+              class="u-map-state-block"
+              d="M40 35h130v115H40zM200 35h150v115H200zM40 180h130v130H40zM200 180h150v130H200zM380 35h90v275h-90zM40 340h310v140H40z"
+            />
+            <path class="u-map-state-river" d="M570-20Q450 150 560 280T570 550" />
+            <g class="u-map-state-markers">
+              <rect x="120" y="120" width="90" height="34" rx="17" />
+              <rect x="320" y="220" width="90" height="34" rx="17" />
+              <rect x="200" y="360" width="90" height="34" rx="17" />
+            </g>
+          </svg>
+        </div>
+        <div class="u-map-state-card">
+          <span class="u-map-state-icon" aria-hidden="true"
+            ><svg
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3V6Z M9 3v15 M15 6v15" /></svg
+          ></span>
+          <div class="u-map-state-message">
+            <span class="u-eyebrow" data-map-notice-label>MAP VIEW</span>
+            <h3 class="u-section-heading" data-map-notice-title></h3>
+            <p data-map-notice-copy></p>
+          </div>
+          <div class="u-map-state-actions">
+            <button type="button" class="u-button" data-map-retry hidden>
+              <svg
+                aria-hidden="true"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.75"
+              >
+                <path d="M20 7v5h-5M20 12a8 8 0 1 0-2 5" /></svg
+              >Retry map</button
+            ><button type="button" class="u-button u-button--quiet" data-map-show-list>
+              View results <span aria-hidden="true">→</span>
+            </button>
+          </div>
+          <span class="u-map-loading-track" aria-hidden="true"></span>
+        </div>
+      </div>
+      <p class="u-map-caption">OpenFreeMap · Sample properties</p>
+      <div
+        class="u-map-notice"
+        data-map-location-status
+        role="region"
+        aria-labelledby="unknown-location-title"
+        hidden
+      >
+        <div class="u-map-state-card">
+          <span class="u-map-state-icon" aria-hidden="true"
+            ><svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path d="M9 3a7 7 0 0 1 10 6c0 5-7 12-7 12l-4-5M5 6a7 7 0 0 0 0 7 M3 3l18 18" /></svg
+          ></span>
+          <div class="u-map-state-message">
+            <span class="u-eyebrow" data-map-location-name></span>
+            <h3 class="u-section-heading" id="unknown-location-title">Location unknown</h3>
+            <p>This property has no address or coordinates yet. There is no map pin to show.</p>
+          </div>
+          <div class="u-map-state-actions">
+            <a class="u-button" href="#map-selection">View property details</a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="u-map-canvas u-geo-map"
+        tabindex="0"
+        role="region"
+        aria-label="Property map. Use arrow keys to pan, plus and minus to zoom."
+      ></div>
+    </div>
+  </div>
+  <section class="u-map-selection" id="map-selection" tabindex="-1" aria-label="Selected property details">
+    <p class="u-sr" data-map-selection role="status">Select a marker or result to inspect it.</p>
+    <p class="u-hint" data-selection-empty>
+      Select a property to explore its photos, features and review notes.
+    </p>
+    <div data-selection-facts hidden>
+      <div class="u-property-gallery" aria-label="Sample property photo placeholders">
+        <button
+          type="button"
+          class="u-button u-button--quiet u-shell-icon u-property-dismiss"
+          data-map-dismiss
+          aria-label="Clear selection"
+          title="Clear selection"
+          hidden
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            aria-hidden="true"
+          >
+            <path d="M6 6L18 18M18 6L6 18" />
+          </svg>
+        </button>
+        <figure>
+          <svg viewBox="0 0 480 300" aria-hidden="true">
+            <use data-selection-photo href="#property-photo-exterior" />
+          </svg>
+          <figcaption>Exterior · Placeholder</figcaption>
+        </figure>
+        <figure>
+          <svg viewBox="0 0 480 300" aria-hidden="true"><use href="#property-photo-interior" /></svg>
+          <figcaption>Living space · Placeholder</figcaption>
+        </figure>
+        <figure>
+          <svg viewBox="0 0 480 300" aria-hidden="true"><use href="#property-photo-outdoor" /></svg>
+          <figcaption>Outdoor space · Placeholder</figcaption>
+        </figure>
+      </div>
+      <div class="u-property-summary">
+        <div>
+          <h2 class="u-section-heading" data-selection-title>Property details</h2>
+          <span class="u-tag" data-selection-kind></span>
+          <p class="u-property-price" data-selection-price></p>
+          <dl class="u-property-facts">
+            <div>
+              <dt>Layout</dt>
+              <dd data-selection-layout></dd>
+            </div>
+            <div>
+              <dt>Interior</dt>
+              <dd data-selection-area></dd>
+            </div>
+            <div>
+              <dt>Location</dt>
+              <dd data-selection-location></dd>
+            </div>
+          </dl>
+        </div>
+        <div class="u-property-overview">
+          <h3 class="u-section-heading">Property snapshot</h3>
+          <p data-selection-description></p>
+          <div class="u-callout" data-selection-location-notice hidden>
+            <strong>Address not provided</strong>
+            <p class="u-hint">
+              Request a confirmed location before planning a visit. Photos and property details are still
+              available.
+            </p>
+          </div>
+          <h3 class="u-section-heading">Before a tour</h3>
+          <p class="u-hint" data-selection-review></p>
+          <div class="u-actions">
+            <button type="button" class="u-button" data-selection-save aria-pressed="false">
+              Save property
+            </button>
+            <span class="u-hint">Sample shortlist · this page only.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div id="property-context" class="u-context-menu" popover="auto" role="menu" aria-label="Property actions">
+    <button type="button" role="menuitem" tabindex="-1" data-u-context-action="view">View details</button>
+    <button type="button" role="menuitem" tabindex="-1" data-u-context-action="save">Save property</button>
+    <button type="button" role="menuitem" tabindex="-1" data-u-context-action="copy">Copy price</button>
+  </div>
+  <p class="u-hint">Fictional listings with illustrative image placeholders.</p>
+  <details class="u-panel u-map-guide">
+    <summary id="map-contract-title">Pattern reference</summary>
+    <div class="u-columns">
+      <section aria-labelledby="map-behavior-title">
+        <h2 class="u-section-heading" id="map-behavior-title">Interaction behavior</h2>
+        <dl class="u-facts">
+          <dt>Preview</dt>
+          <dd>Hover or focus to highlight the matching card or marker.</dd>
+          <dt>Select</dt>
+          <dd>Activate a card or marker to open its details. Selection carries between views.</dd>
+          <dt>Dismiss</dt>
+          <dd>Clear selection or press Escape to return focus to the initiating control.</dd>
+          <dt>Filter</dt>
+          <dd>Update the list and map together. Clear selection only if its result is excluded.</dd>
+          <dt>Unknown location</dt>
+          <dd>
+            Keep the listing and its details available. Show an explicit location state instead of a map pin.
+          </dd>
+        </dl>
+      </section>
+      <section class="u-map-review-controls" aria-labelledby="map-review-title">
+        <h2 class="u-section-heading" id="map-review-title">State previews</h2>
+        <div class="u-field">
+          <label for="map-state">Simulated renderer state</label>
+          <span class="u-select"
+            ><select id="map-state" data-map-state>
+              <option value="ready">Ready</option>
+              <option value="loading">Loading</option>
+              <option value="error">Unavailable</option>
+            </select></span
+          >
+        </div>
+        <p class="u-hint">Inspect loading and failure states while keeping filters and selection.</p>
+        <h3 class="u-section-heading">Integration notes</h3>
+        <p class="u-hint">
+          OpenFreeMap is the default provider. Keep its attribution visible when using a live map.
+        </p>
+        <ul class="u-hint">
+          <li>Retry reconnects to the configured provider.</li>
+          <li>Viewport searches require an explicit action.</li>
+          <li>Clusters expose counts and keyboard access.</li>
+        </ul>
+      </section>
+    </div>
+  </details>
+</section>
+
+      </main>
+    </div>
+    <script src="../dist/map-list.js"></script><script src="../dist/maplibre.js"></script><script type="module" src="map-preview.js"></script>
+  </body>
+</html>

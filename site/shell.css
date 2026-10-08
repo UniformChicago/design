@@ -1,4 +1,4 @@
-/* Docs-site chrome shared by the documentation and the Playground: logo, version tag, theme toggle.
+/* Site chrome shared by Components, Patterns, Agent contract and Playground.
    Header layout and sizing come from the u-shell-* classes in dist/design.css; the header markup comes
    from makeHeader() in build/site.mjs. Change the header here, never per page. */
 .s-brand {
@@ -23,7 +23,7 @@
   }
   /* No version tag on phones, so the wordmark gets the room (still clear of the icons at 375px+). */
   .s-logo {
-    width: 168px;
+    width: 124px;
     height: auto;
   }
 }
@@ -42,4 +42,239 @@
 ::view-transition-old(*),
 ::view-transition-new(*) {
   animation: none;
+}
+
+/* Page routes stay in the same place; each page owns its local navigation. */
+html {
+  --s-header-height: 64px;
+  scrollbar-gutter: stable;
+}
+.u-shell-header {
+  height: var(--s-header-height);
+  flex-wrap: nowrap;
+  align-content: start;
+  row-gap: 0;
+}
+.s-brand,
+.s-version,
+.u-shell-header-actions {
+  align-self: center;
+}
+.s-brand {
+  margin-block: 18px;
+}
+.s-pages {
+  display: flex;
+}
+.u-root .s-pages a[aria-current] {
+  background: var(--u-hover);
+  color: var(--u-fg);
+  border-color: var(--u-accent);
+}
+.s-pattern-layout {
+  min-height: 0;
+}
+.s-pattern-layout > .u-workspace {
+  padding: var(--u-space-5);
+}
+.s-pattern-layout > .u-app-nav {
+  top: var(--s-header-height);
+  height: auto;
+  max-height: calc(100svh - var(--s-header-height) - var(--u-space-4));
+  align-self: start;
+  background: var(--u-surface);
+  padding: var(--u-space-5) var(--u-space-4);
+}
+.s-agent-main {
+  max-width: 1080px;
+}
+.s-agent-main > .u-lede {
+  max-width: 68ch;
+  margin-bottom: var(--u-space-7);
+}
+.s-agent-main pre {
+  overflow-x: auto;
+}
+@media (max-width: 900px) {
+  .s-pattern-layout > .u-app-nav {
+    top: auto;
+    height: auto;
+    max-height: none;
+    border-right: 0;
+  }
+  .s-pattern-layout > .u-app-nav > .u-eyebrow {
+    margin: 0;
+  }
+}
+@media (max-width: 520px) {
+  .s-logo {
+    width: 124px;
+    height: 27px;
+  }
+  .s-pages {
+    column-gap: var(--u-space-4);
+  }
+}
+
+/* One title scale across documentation, the editor and reference pages. */
+.s-hero .u-title,
+.g-intro .u-title,
+.s-agent-main .u-page-title {
+  font-size: clamp(28px, 3vw, 40px);
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+/* Keep native scrolling in menus, result lists and code panes while hiding scrollbar chrome. */
+.s-side,
+.s-pages,
+.s-pattern-layout > .u-app-nav,
+.u-root pre,
+.u-map-results,
+.g-editor textarea {
+  scrollbar-width: none;
+}
+.s-side::-webkit-scrollbar,
+.s-pages::-webkit-scrollbar,
+.s-pattern-layout > .u-app-nav::-webkit-scrollbar,
+.u-root pre::-webkit-scrollbar,
+.u-map-results::-webkit-scrollbar,
+.g-editor textarea::-webkit-scrollbar {
+  display: none;
+}
+
+/* Native interaction polish for the documentation and reference applications. */
+.s-pages {
+  scroll-snap-type: x proximity;
+  overscroll-behavior-x: contain;
+  scroll-padding-inline: var(--u-space-2);
+}
+.s-pages > a {
+  scroll-snap-align: start;
+}
+.u-map-results {
+  scroll-snap-type: y proximity;
+  overscroll-behavior-y: contain;
+}
+.u-map-card {
+  scroll-snap-align: start;
+}
+.u-root pre,
+.u-table {
+  overscroll-behavior-x: contain;
+}
+.u-dialog {
+  overscroll-behavior: contain;
+}
+.u-root :is(button, a, summary, select) {
+  touch-action: manipulation;
+}
+.u-field textarea {
+  resize: vertical;
+}
+.s-pattern-layout :focus-visible,
+.s-agent-main :focus-visible {
+  scroll-margin-top: calc(var(--s-header-height) + var(--u-space-4));
+  scroll-margin-bottom: var(--u-space-4);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .s-pages,
+  .u-map-results {
+    scroll-behavior: smooth;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .s-pages,
+  .s-side,
+  .u-map-results {
+    scroll-behavior: auto;
+    scroll-snap-type: none;
+  }
+}
+@media (max-width: 700px) {
+  .u-field :is(input, select, textarea) {
+    font-size: 16px;
+    padding-block: var(--u-space-2);
+  }
+}
+
+.u-app .u-map-guide {
+  padding: var(--u-space-4);
+}
+.u-map-guide .u-map-review-controls,
+.u-map-guide .u-map-review-controls > :last-child {
+  margin-bottom: 0;
+}
+.u-map-guide .u-map-review-controls .u-field {
+  max-width: none;
+}
+.u-map-guide .u-map-review-controls .u-hint + .u-section-heading {
+  margin-top: var(--u-space-5);
+}
+
+/* Expansion grows rows without rebalancing document columns. */
+.u-table[data-u-results] table {
+  table-layout: fixed;
+  min-width: 640px;
+}
+.u-table[data-u-results] thead th:first-child {
+  width: 28%;
+}
+.u-table[data-u-results] thead th:nth-child(2),
+.u-table[data-u-results] thead th:nth-child(3) {
+  width: 18%;
+}
+.u-table[data-u-results] td {
+  overflow-wrap: anywhere;
+}
+.u-table[data-u-results] details > p {
+  margin: var(--u-space-2) 0 0;
+}
+
+.u-table[data-u-results] details > :is(dl, ul) {
+  margin-block: var(--u-space-3) 0;
+}
+.u-table[data-u-results] details > ul {
+  padding-left: var(--u-space-4);
+}
+.u-property-overview > .u-hint + .u-section-heading,
+.u-property-overview > .u-callout + .u-section-heading {
+  margin-top: var(--u-space-4);
+}
+
+.u-shell-header-actions {
+  order: 1;
+}
+.s-resource-footer {
+  max-width: 1320px;
+  margin-inline: auto;
+  padding: var(--u-space-4) var(--u-space-5) var(--u-space-6);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--u-space-5);
+  font-size: 13px;
+}
+
+/* Live copy and task feedback must not resize their surrounding panels. */
+#task-status {
+  min-height: 3.2em;
+  margin-bottom: 0;
+}
+.s-pattern-layout .u-task-list label {
+  display: flex;
+  align-items: center;
+  gap: var(--u-space-2);
+  min-width: 0;
+}
+.s-pattern-layout .u-task-list input {
+  flex: none;
+}
+.s-pattern-layout .u-stat dd {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Shared destinations stay at identical positions in the lab and workflow pages. */
+.g-library > .u-nav,
+.s-pattern-layout > .u-app-nav > .u-nav {
+  margin-block: 0;
 }

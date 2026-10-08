@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'"
+    />
+    <title>Agent contract · Uniform Design</title>
+    <script src="../workflows/theme.js"></script>
+    <link rel="stylesheet" href="../dist/design.css" />
+    <script src="../dist/catalog.js"></script>
+    <script type="module" src="webmcp.mjs"></script>
+  </head>
+  <body class="u-root">
+    <main class="u-workspace">
+      <a href="../">Uniform Design</a>
+      <h1 class="u-page-title">Agent contract<span class="u-dot" aria-hidden="true"></span></h1>
+      <p class="u-lede">
+        Discover a pattern. Read its contract. Compose with supported components. Validate the result.
+      </p>
+      <div class="u-stack">
+        <section class="u-panel">
+          <h2 class="u-section-heading">Start here</h2>
+          <ul>
+            <li><a href="../dist/catalog.json">Versioned catalog: contracts, tokens and exact markup</a></li>
+            <li><a href="../dist/AGENTS.md">Generated agent instructions and examples</a></li>
+            <li><a href="../workflows/">Multi-step intake fixture</a></li>
+            <li><a href="../workflows/dashboard.html">Status dashboard fixture</a></li>
+            <li><a href="../workflows/workspace.html">Searchable collection fixture</a></li>
+            <li><a href="../workflows/map.html">Map and list</a></li>
+            <li><a href="../workflows/states.html">Core state fixtures</a></li>
+          </ul>
+        </section>
+        <section class="u-panel">
+          <h2 class="u-section-heading">Read-only tools</h2>
+          <p id="tool-status" role="status">
+            Static contracts are available above. WebMCP needs a compatible browser and an HTTP(S) origin.
+          </p>
+          <p class="u-hint">
+            Tools read the packaged catalog only. They do not inspect forms, access saved drafts or change
+            application data.
+          </p>
+          <pre class="u-code">
+node scripts/design.mjs recipe map-list
+node scripts/design.mjs list
+node scripts/design.mjs component select
+node scripts/design.mjs pattern multi-step-intake
+node scripts/lint-design.mjs path/to/page.html</pre>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

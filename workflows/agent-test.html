@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Property Setup & Review · Uniform Design</title>
+    <link rel="stylesheet" href="../dist/design.css" />
+  </head>
+  <body class="u-root">
+    <div class="u-app">
+      <aside class="u-app-nav">
+        <a class="u-app-brand" href="../" aria-label="Uniform Design">
+          <img
+            class="u-app-brand-dark"
+            src="../dist/svg/uniform-wordmark-on-dark.svg"
+            width="136"
+            height="30"
+            alt="Uniform" />
+          <img
+            class="u-app-brand-light"
+            src="../dist/svg/uniform-wordmark-color.svg"
+            width="136"
+            height="30"
+            alt="Uniform" />
+        </a>
+        <nav class="u-desktop-nav" aria-label="Application navigation">
+          <a href="#" aria-current="page"><span>Property Setup</span></a>
+          <a href="#"><span>Listings</span></a>
+          <a href="#"><span>Settings</span></a>
+        </nav>
+      </aside>
+      <main id="main" class="u-workspace">
+        <header class="u-page-header">
+          <div>
+            <h1 class="u-page-title">Property Setup &amp; Review<span class="u-dot" aria-hidden="true"></span></h1>
+            <p class="u-lede">Review your property details before publishing the listing.</p>
+          </div>
+        </header>
+
+        <div class="u-stack">
+          <!-- Property Facts Summary -->
+          <section class="u-panel">
+            <h2 class="u-section-heading">Property Facts</h2>
+            <dl class="u-property-facts">
+              <div>
+                <dt>Status</dt>
+                <dd><span class="u-tag">Draft</span></dd>
+              </div>
+              <div>
+                <dt>Price</dt>
+                <dd>$425,000</dd>
+              </div>
+              <div>
+                <dt>Bedrooms</dt>
+                <dd>3</dd>
+              </div>
+              <div>
+                <dt>Bathrooms</dt>
+                <dd>2</dd>
+              </div>
+            </dl>
+          </section>
+
+          <!-- Map Preview -->
+          <section class="u-panel">
+            <h2 class="u-section-heading">Map Preview</h2>
+            <div class="u-map-surface" aria-busy="false">
+              <div class="u-map-canvas u-geo-map" tabindex="0" role="region" aria-label="Property location map" data-lat="41.94" data-lng="-87.67"></div>
+            </div>
+          </section>
+
+          <!-- Document List -->
+          <section class="u-panel">
+            <h2 class="u-section-heading">Documents</h2>
+            <div class="u-table" tabindex="0" role="region" aria-label="Uploaded documents">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">File name</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Property_Deed.pdf</th>
+                    <td><span class="u-tag u-tag--ok">Uploaded</span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Floorplan.png</th>
+                    <td>
+                      <div class="u-callout u-callout--danger">
+                        <strong>Upload Error</strong>
+                        <p>The file size exceeds the maximum limit or the upload was interrupted.</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Action Area -->
+          <div class="u-form-footer">
+            <button type="button" class="u-button u-button--quiet">Cancel</button>
+            <div class="u-actions">
+              <button type="button" class="u-button">Publish Listing</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

@@ -11,7 +11,17 @@ const axe = async (page) =>
     (v) => `${v.id}: ${v.nodes.length} node(s)`,
   );
 
-for (const path of ["/", "/gallery/", "/playground/"]) {
+for (const path of [
+  "/",
+  "/gallery/",
+  "/playground/",
+  "/agent/",
+  "/workflows/",
+  "/workflows/dashboard.html",
+  "/workflows/workspace.html",
+  "/workflows/states.html",
+  "/workflows/map.html",
+]) {
   test(`docs ${path}: zero axe violations, no horizontal scroll, no console errors`, async ({ page }) => {
     const errors = [];
     page.on("pageerror", (e) => errors.push(String(e)));
@@ -73,13 +83,15 @@ test("docs and Playground share one header: same position, size and controls", a
   };
   const docs = await shell("/");
   expect(docs.controls).toHaveLength(3);
-  expect(await shell("/playground/")).toEqual(docs);
+  for (const path of ["/playground/", "/agent/", "/workflows/", "/workflows/map.html"]) {
+    expect(await shell(path)).toEqual(docs);
+  }
 });
 
-test("every sidebar link points at a section on the page", async ({ page }) => {
+test("every sidebar anchor points at a section on the page", async ({ page }) => {
   await page.goto(SITE + "/");
   const ids = await page
-    .locator(".s-side a")
+    .locator('.s-side a[href^="#"]')
     .evaluateAll((as) => as.map((a) => a.getAttribute("href").slice(1)));
   expect(ids.length).toBeGreaterThan(15);
   for (const id of ids) expect(await page.locator(`[id="${id}"]`).count(), id).toBe(1);
@@ -116,4 +128,92 @@ test("docs show the current version and every color token", async ({ page }) => 
   await page.goto(SITE + "/");
   await expect(page.locator("#install pre code").first()).toContainText(`design#v${version}`);
   expect(await page.locator("#color .s-card").count()).toBe(Object.keys(tokens.color).length);
+});
+
+test("menus retain native scrolling with hidden scrollbars", async ({ page }) => {
+  for (const width of [320, 1280]) {
+    await page.setViewportSize({ width, height: 600 });
+    await page.goto(SITE + "/");
+    const result = await page.locator(".s-side").evaluate((menu) => {
+      const style = getComputedStyle(menu);
+      menu.scrollTo({ left: menu.scrollWidth, top: menu.scrollHeight, behavior: "instant" });
+      return {
+        scrollbar: style.scrollbarWidth,
+        moved: menu.scrollLeft > 0 || menu.scrollTop > 0,
+      };
+    });
+    expect(result.scrollbar).toBe("none");
+    expect(result.moved).toBe(true);
+  }
+});
+
+test("code headers retain their height when copy controls are revealed", async ({ page }) => {
+  await page.goto(SITE + "/");
+  await expect(page.locator(".s-code-bar .s-copy").first()).toBeVisible();
+  const heights = await page
+    .locator(".s-code-bar")
+    .first()
+    .evaluate((bar) => {
+      const control = bar.querySelector("button");
+      const shown = bar.getBoundingClientRect().height;
+      control.hidden = true;
+      const hidden = bar.getBoundingClientRect().height;
+      control.hidden = false;
+      return { shown, hidden };
+    });
+  expect(heights.shown).toBe(heights.hidden);
+});
+
+test("the dialog example opens, confirms and restores focus", async ({ page }) => {
+  await page.goto(SITE + "/#dialogs");
+  const trigger = page.getByRole("button", { name: "Review action", exact: true });
+  await trigger.click();
+  const dialog = page.getByRole("dialog", { name: "Confirm sample action" });
+  await expect(dialog).toBeVisible();
+  await dialog.getByRole("button", { name: "Confirm", exact: true }).click();
+  await expect(dialog).not.toBeVisible();
+  await expect(trigger).toBeFocused();
+  await expect(page.locator("#example-dialog-status")).toContainText("Sample action confirmed");
+});
+
+test("dashboard task changes preserve panel positions", async ({ page }) => {
+  await page.goto(SITE + "/workflows/dashboard.html");
+  await page.evaluate(() => document.fonts.ready);
+  await page.locator("#tasks").scrollIntoViewIfNeeded();
+  const geometry = () =>
+    page.locator(".s-pattern-layout .u-panel").evaluateAll((panels) =>
+      panels.map((panel) => {
+        const rect = panel.getBoundingClientRect();
+        return [rect.x, rect.y + window.scrollY, rect.width, rect.height].map((value) => Math.round(value));
+      }),
+    );
+  const initial = await geometry();
+  const tasks = page.locator("[data-task]");
+  for (let mask = 0; mask < 8; mask++) {
+    for (let i = 0; i < 3; i++) await tasks.nth(i).setChecked(Boolean(mask & (1 << i)));
+    expect(await geometry()).toEqual(initial);
+  }
+});
+
+test("repeated Playground icon activation preserves the document, draft and button geometry", async ({
+  page,
+}) => {
+  await page.goto(SITE + "/playground/#records");
+  if (await page.locator("#customize-toggle").isVisible()) await page.locator("#customize-toggle").click();
+  await page.getByLabel("Heading", { exact: true }).fill("Retained draft");
+  await page.evaluate(() => {
+    window.playgroundDocumentMarker = "same document";
+  });
+  const link = page.getByRole("link", { name: "Playground", exact: true });
+  const before = await link.boundingBox();
+  for (let press = 0; press < 6; press++) {
+    await link.click();
+    expect(await page.evaluate(() => window.playgroundDocumentMarker)).toBe("same document");
+    await expect(page.getByLabel("Heading", { exact: true })).toHaveValue("Retained draft");
+    expect(await link.boundingBox()).toEqual(before);
+  }
+  await link.focus();
+  await page.keyboard.press("Enter");
+  expect(await page.evaluate(() => window.playgroundDocumentMarker)).toBe("same document");
+  await expect(page.getByLabel("Heading", { exact: true })).toHaveValue("Retained draft");
 });

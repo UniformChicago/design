@@ -2,22 +2,53 @@ html {
   background: var(--u-bg);
 }
 .p-content {
-  padding: var(--u-space-6);
+  max-width: 1240px;
+  margin-inline: auto;
+  padding: var(--u-space-5);
 }
 .p-content > * {
   margin-top: 0;
 }
-.p-content .u-field {
+.p-content:not(:has(.p-markup)) .u-field {
   margin-block: var(--u-space-4);
 }
-.p-content .u-table {
+.p-content:not(:has(.p-markup)) .u-table {
   margin-top: var(--u-space-5);
 }
-.p-content .u-button {
+.p-content:not(:has(.p-markup)) .u-button {
   margin-top: var(--u-space-3);
 }
 @media (max-width: 480px) {
   .p-content {
+    padding: var(--u-space-4);
+  }
+}
+
+/* Live examples use the same app classes without repeating site chrome. */
+.p-live .u-app,
+.p-markup.u-app {
+  display: block;
+  min-height: 0;
+}
+.p-live .u-workspace {
+  padding: var(--u-space-5);
+}
+html {
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+.p-live .u-map-results,
+.p-markup .u-map-results {
+  scrollbar-width: none;
+}
+.p-live .u-map-results::-webkit-scrollbar,
+.p-markup .u-map-results::-webkit-scrollbar {
+  display: none;
+}
+@media (max-width: 480px) {
+  .p-live .u-workspace {
     padding: var(--u-space-4);
   }
 }

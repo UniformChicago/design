@@ -2,3 +2,16 @@ dist/
 package-lock.json
 _site/
 site/examples/
+
+# Generated from patterns/shell.html and pattern bodies
+workflows/*.html
+
+# Vendored geographic data, compact JSON
+workflows/data/*.geojson
+
+# Upstream pinned distribution; preserve bytes and license
+vendor/maplibre/
+
+# Generated lab starter data and isolated live examples
+gallery/workflow-starters.js
+workflows/previews/*.html

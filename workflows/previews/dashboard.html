@@ -1,0 +1,129 @@
+<!doctype html><html lang="en"><head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>Status dashboard · Uniform Design</title>
+    <script src="../../workflows/theme.js"></script>
+    <link rel="stylesheet" href="../../dist/design.css" />
+    
+    <script src="../../dist/interactions.js" defer></script>
+    <link rel="stylesheet" href="../../dist/context-menu.css" />
+    <script src="../../dist/context-menu.js" defer></script>
+    <script src="../../workflows/workflow.js" defer></script>
+  <link rel="stylesheet" href="../../gallery/preview.css" /></head><body class="u-root p-live"><div class="u-app"><main class="u-workspace"><div class="u-page-header">
+  <div>
+    <span class="u-tag">Preview · management</span>
+    <h1 class="u-page-title">Your license, in focus<span class="u-dot" aria-hidden="true"></span></h1>
+    <p class="u-lede">Your next steps, documents and milestones in one place.</p>
+  </div>
+  <a href="index.html" class="u-button u-button--quiet">Edit sample plan</a>
+</div>
+<div class="u-stack">
+  <section class="u-stats" aria-label="At a glance">
+    <div class="u-panel">
+      <dl class="u-stat">
+        <dt>Plan status</dt>
+        <dd>In progress</dd>
+      </dl>
+    </div>
+    <div class="u-panel">
+      <dl class="u-stat">
+        <dt>Sample tasks complete</dt>
+        <dd id="task-count">1 of 3</dd>
+      </dl>
+    </div>
+    <div class="u-panel">
+      <dl class="u-stat">
+        <dt>Personal check-in</dt>
+        <dd id="checkin-display">Not set</dd>
+      </dl>
+    </div>
+  </section>
+  <div class="u-columns">
+    <div class="u-stack">
+      <section class="u-panel u-panel--accent">
+        <span class="u-eyebrow">NEXT ACTION</span>
+        <h2 class="u-section-heading">Bring your records together</h2>
+        <p class="u-hint">
+          Make a list of the documents you already have, and identify anything you still need to request.
+        </p>
+        <a class="u-button" href="#tasks">Review your checklist</a>
+      </section>
+      <section class="u-panel" id="tasks">
+        <h2 class="u-section-heading">Your working checklist</h2>
+        <p class="u-hint">Sample tasks for exploring the interface.</p>
+        <progress class="u-meter" value="1" max="3" aria-label="Sample checklist progress"></progress>
+        <ul class="u-task-list">
+          <li>
+            <label><input type="checkbox" data-task checked /> Set your starting point</label
+            ><span class="u-tag">Planning</span>
+          </li>
+          <li>
+            <label><input type="checkbox" data-task /> Gather education records</label
+            ><span class="u-tag">Documents</span>
+          </li>
+          <li>
+            <label><input type="checkbox" data-task /> Review questions with your firm</label
+            ><span class="u-tag">Follow-up</span>
+          </li>
+        </ul>
+        <p class="u-hint" id="task-status" role="status">Changes are for this preview only.</p>
+      </section>
+      <section class="u-panel">
+        <h2 class="u-section-heading">Documents</h2>
+        <p class="u-hint">No documents added yet. Your supporting records will appear here.</p>
+        <p class="u-hint">Keep education certificates and application receipts together.</p>
+        <a class="u-button u-button--quiet" href="workspace.html">Browse document examples</a>
+      </section>
+    </div>
+    <aside class="u-stack">
+      <section class="u-panel">
+        <h2 class="u-section-heading">Plan details</h2>
+        <dl class="u-facts u-facts--stacked">
+          <dt>Starting point</dt>
+          <dd id="stage-display">Exploring a first license</dd>
+          <dt>Next goal</dt>
+          <dd id="goal-display">Get organized</dd>
+          <dt>Verification</dt>
+          <dd>Sample information · not verified</dd>
+        </dl>
+      </section>
+      <section class="u-panel">
+        <p class="u-eyebrow">Property context</p>
+        <h2 class="u-section-heading">Courtyard house</h2>
+        <dl class="u-facts u-facts--stacked">
+          <dt>Layout</dt>
+          <dd>3 bedrooms · 2 bathrooms</dd>
+          <dt>Workspace stage</dt>
+          <dd>Document review</dd>
+          <dt>Reference</dt>
+          <dd>Fictional purchase workspace</dd>
+        </dl>
+      </section>
+      <section class="u-panel">
+        <h2 class="u-section-heading">Recent activity</h2>
+        <ul class="u-activity">
+          <li>
+            <strong>Review started</strong>
+            <p>Supporting records organized</p>
+            <small>Sample event · Today</small>
+          </li>
+          <li>
+            <strong>Contact added</strong>
+            <p>Sample coordinator joined the workspace</p>
+            <small>Sample event · Yesterday</small>
+          </li>
+          <li>
+            <strong>Plan created</strong>
+            <p>Starting point and next goal recorded</p>
+            <small>Sample event · Earlier</small>
+          </li>
+        </ul>
+      </section>
+    </aside>
+  </div>
+</div>
+</main></div></body></html>

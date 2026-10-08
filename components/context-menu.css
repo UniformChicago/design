@@ -1,0 +1,59 @@
+/* Optional native-popover context menus; load after design.css. */
+.u-context-menu {
+  display: none;
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  width: 220px;
+  max-width: calc(100vw - 16px);
+  max-height: calc(100dvh - 16px);
+  overflow: auto;
+  padding: var(--u-space-1);
+  border: 1px solid var(--u-line);
+  border-radius: var(--u-radius-md);
+  background: var(--u-bg);
+  color: var(--u-fg);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--u-night) 20%, transparent);
+  overscroll-behavior: contain;
+}
+.u-context-menu [role="menuitem"] {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: var(--u-space-2) var(--u-space-3);
+  border: 0;
+  border-radius: var(--u-radius-sm);
+  background: transparent;
+  color: inherit;
+  font: 400 13px/1.5 var(--u-font-sans);
+  text-align: start;
+  cursor: pointer;
+}
+.u-context-menu [role="menuitem"]:is(:hover, :focus-visible) {
+  background: var(--u-hover);
+}
+.u-context-menu [role="menuitem"]:disabled {
+  color: var(--u-muted);
+  cursor: not-allowed;
+}
+.u-context-trigger {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--u-line);
+  border-radius: var(--u-radius-md);
+  background: var(--u-bg);
+  color: var(--u-fg);
+  font: 600 20px/1 var(--u-font-sans);
+  cursor: pointer;
+}
+.u-map-card > .u-context-trigger {
+  position: absolute;
+  top: var(--u-space-3);
+  right: var(--u-space-3);
+}
+
+.u-context-menu:popover-open {
+  display: block;
+}

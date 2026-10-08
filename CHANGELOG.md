@@ -2,6 +2,30 @@
 
 Each release is a `vX.Y.Z` tag with a [GitHub Release](https://github.com/UniformChicago/design/releases): notes from this file, the npm tarball, `SHA256SUMS` and a signed build-provenance attestation. During `0.x`, any release may change markup or class names; read the notes before upgrading.
 
+## v0.2.0 — 2026-10-07
+
+- Bring five complete workflow starters into Playground, with isolated live previews and editable markup derived from canonical sources.
+- Tighten mobile controls with a native starter picker and an optional Customize panel; center select text within shared controls.
+- Add optional native-popover context menus with keyboard navigation, touch openers and viewport-safe positioning. Property actions open details, toggle the shortlist and copy the price.
+- Add a configurable full-width listing gallery alongside the split map/list view. Keep document table columns stable during detail expansion.
+
+- Add native proximity snapping to result lists and horizontal menus, contain nested scrolling, improve touch controls and mobile field typography, and respect reduced-motion preferences.
+
+- Smooth progress updates in shared bars and the checklist, with reduced-motion support and immediately updated accessible values.
+- Tighten identity text spacing and bring the map/list demo ahead of its collapsible reference guidance, with compact filters and result counts.
+- Match sortable header typography to the other column labels, stack workspace cards independently, and tighten empty states, callouts and stacked facts.
+- Standardize buttons and single-line fields at 48px, center select carets, and align toolbar controls and sortable table headings. Fix partial bottom borders on ordinary and filtered tables.
+- Lead listings with a responsive placeholder photo gallery and card thumbnails. Let details grow with their content, and remove the redundant title/status band.
+- Add richer sample property summaries, persistent unknown-location states and an in-memory shortlist.
+- Consolidate full workflow starters into Playground with working live previews, editable markup, compact controls and matching preview layouts.
+- Add explicit map-and-list, list-only, map-only and gallery views while preserving filters and selection.
+- Use the wordmark for Components and a workspace icon for Playground; keep Agents discoverable in the footer. Repeated current-page activation preserves Playground drafts.
+- Fix dialog initialization and reserve space for code controls and dashboard feedback to reduce layout shifts.
+- Hide scrollbar chrome in menus and code panes while retaining sticky sidebars, native scrolling and active-section tracking.
+- Add preview application components, native interactions, agent contracts, CLI validation and seven read-only WebMCP tools.
+- Add reference workflows for intake, dashboards, searchable collections, component states and linked maps with optional MapLibre/Leaflet assets.
+- Include Firefox and WebKit in the release workflow's browser installation, matching the configured test projects.
+
 ## v0.1.12 — 2026-10-04
 
 - `.u-shell-header` is a fixed 64px tall (border included), so sticky elements below it at `top: 64px` are no longer overlapped.

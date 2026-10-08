@@ -18,39 +18,71 @@
     <a class="u-skip" href="#main">Skip to content</a>
     <!--header-->
     <main id="main" class="g-main u-shell-layout u-shell-main">
-      <header class="g-intro">
-        <p class="u-eyebrow">Uniform Design / Playground</p>
-        <h1 class="u-title">Make it yours<span class="u-dot" aria-hidden="true"></span></h1>
-        <p class="u-lede">Start with a pattern. Try a different state. Make the HTML your own.</p>
-      </header>
       <noscript
         ><p class="u-callout">
           Enable JavaScript to use the interactive preview, or <a href="../">browse the documentation</a>.
         </p></noscript
       >
-      <div class="g-workspace" id="workspace" hidden>
+      <div class="g-workspace u-workbench" id="workspace">
         <aside class="g-library" aria-label="Pattern library">
-          <p class="u-eyebrow">Start with</p>
-          <div class="g-presets" id="presets" role="group" aria-label="Starter patterns"></div>
-          <div class="g-customize">
-            <label class="u-field" for="variant"
-              >State <span class="u-select"><select id="variant"></select></span
-            ></label>
-            <label class="u-field" for="sample-title"
-              >Heading <input id="sample-title" type="text" maxlength="100"
-            /></label>
-            <p class="u-hint">
-              Edits stay here while you explore other patterns. State and heading changes regenerate the HTML.
-            </p>
-          </div>
-          <a class="g-doc-link" id="component-docs" href="../#panels"
-            >Component reference <span aria-hidden="true">→</span></a
+          <p class="u-eyebrow g-library-heading">Start with an interface</p>
+          <label class="u-field g-mobile-starter" for="starter-picker"
+            >Starter<span class="u-select"
+              ><select id="starter-picker">
+                <!--starter-options-->
+              </select></span
+            ></label
           >
+          <div class="g-presets u-nav" id="presets" role="group" aria-label="Starter patterns">
+            <!--component-presets-->
+          </div>
+          <button
+            type="button"
+            class="u-button u-button--quiet g-mobile-customize"
+            id="customize-toggle"
+            aria-expanded="false"
+            aria-controls="starter-settings"
+          >
+            Customize
+          </button>
+          <div class="g-settings" id="starter-settings">
+            <div class="g-customize">
+              <label class="u-field" for="variant"
+                >State
+                <span class="u-select"
+                  ><select id="variant">
+                    <!--initial-states-->
+                  </select></span
+                ></label
+              >
+              <label class="u-field" for="sample-title"
+                >Heading <input id="sample-title" value="{{initial-title}}" type="text" maxlength="100"
+              /></label>
+              <p class="u-hint">
+                Edits stay here while you explore other patterns. State and heading changes regenerate the
+                HTML.
+              </p>
+            </div>
+            <p class="u-hint" id="preview-hint">
+              Live runs the example; edits use the script-free markup preview.
+            </p>
+            <a class="g-doc-link" id="component-docs" href="../#tables"
+              >Component reference <span aria-hidden="true">→</span></a
+            >
+          </div>
         </aside>
         <section class="g-stage" aria-label="Preview workspace">
-          <div class="g-toolbar">
-            <span class="g-live"><span aria-hidden="true"></span>Live preview</span>
+          <header class="g-toolbar">
+            <div class="g-heading">
+              <h1 class="u-section-heading">Playground<span class="u-dot" aria-hidden="true"></span></h1>
+              <p class="u-hint">Explore, customize and copy a complete interface.</p>
+            </div>
+            <span id="preview-mode-label" class="u-sr" role="status">Interactive preview</span>
             <div class="g-controls">
+              <div class="g-segment" role="group" aria-label="Preview mode">
+                <button type="button" data-preview-mode="live" aria-pressed="true">Live</button
+                ><button type="button" data-preview-mode="markup" aria-pressed="false">Markup</button>
+              </div>
               <div class="g-segment" role="group" aria-label="Preview theme">
                 <button type="button" data-theme-choice="light" aria-pressed="false">Light</button
                 ><button type="button" data-theme-choice="dark" aria-pressed="true">Dark</button>
@@ -60,13 +92,22 @@
                 ><button type="button" data-width="mobile" aria-pressed="false">Mobile</button>
               </div>
             </div>
-          </div>
+          </header>
           <div class="g-canvas" id="canvas">
             <iframe
+              id="live-preview"
+              title="Interactive starter preview"
+              sandbox="allow-scripts allow-same-origin"
+              referrerpolicy="no-referrer"
+              src="{{initial-live}}"
+            ></iframe>
+            <iframe
+              hidden
               id="preview"
               title="Live component preview"
               sandbox="allow-same-origin"
               referrerpolicy="no-referrer"
+              srcdoc=""
             ></iframe>
           </div>
           <div class="g-preview-footer">
@@ -87,7 +128,8 @@
               spellcheck="false"
               autocapitalize="off"
               autocomplete="off"
-            ></textarea>
+            >
+<!--initial-code--></textarea>
             <p id="editor-hint" class="u-hint">
               Updates as you type. Use HTML and Uniform classes; scripts and external resources are disabled.
             </p>

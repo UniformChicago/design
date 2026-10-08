@@ -8,3 +8,7 @@ Brand assets (brand/svg/, and the logos and marks in dist/svg/) are not licensed
 
 Fonts (brand/fonts/, dist/fonts/) are licensed under the SIL Open Font License 1.1:
 Public Sans (OFL-PublicSans.txt) and IBM Plex Mono (OFL-IBMPlexMono.txt).
+
+Optional map assets retain their upstream licenses:
+MapLibre GL JS: dist/vendor/maplibre/LICENSE.txt (BSD 3-Clause).
+Leaflet: dist/vendor/LEAFLET-LICENSE (BSD 2-Clause).

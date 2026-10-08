@@ -8,6 +8,10 @@ import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import { contoursSvg } from "../atmosphere/waves.js";
 
+import { buildCatalog, catalogMarkdown } from "./catalog.mjs";
+import { renderPatterns } from "./patterns.mjs";
+import { workflowStarters, livePreview } from "./starters.mjs";
+
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = join(ROOT, "dist");
 const CHECK = process.argv.includes("--check");
@@ -110,6 +114,66 @@ put(
     lake: color["lake-light"],
   }),
 );
+
+// Contracts and optional interactions are shipped with the same pinned package.
+const css = readFileSync(join(ROOT, "components/components.css"), "utf8");
+const catalog = buildCatalog(
+  ROOT,
+  tokensCss +
+    css +
+    readFileSync(join(ROOT, "components/map.css"), "utf8") +
+    readFileSync(join(ROOT, "components/context-menu.css"), "utf8"),
+  plain,
+);
+put("catalog.json", JSON.stringify(catalog, null, 2) + "\n");
+put("catalog.js", "globalThis.UniformDesignCatalog = " + JSON.stringify(catalog) + ";\n");
+put("AGENTS.md", catalogMarkdown(catalog));
+put("context-menu.css", readFileSync(join(ROOT, "components/context-menu.css")));
+put("context-menu.js", readFileSync(join(ROOT, "interactions/context-menu.js")));
+put("interactions.js", readFileSync(join(ROOT, "interactions/interactions.js")));
+put("map-list.js", readFileSync(join(ROOT, "interactions/map-list.js")));
+put("maplibre.js", readFileSync(join(ROOT, "interactions/maplibre.js")));
+for (const name of [
+  "maplibre-gl.mjs",
+  "maplibre-gl-shared.mjs",
+  "maplibre-gl-worker.mjs",
+  "maplibre-gl.css",
+  "LICENSE.txt",
+  "provenance.json",
+])
+  put(`vendor/maplibre/${name}`, readFileSync(join(ROOT, "vendor/maplibre", name)));
+put("map.js", readFileSync(join(ROOT, "interactions/map.js")));
+put("map.css", readFileSync(join(ROOT, "components/map.css")));
+put("vendor/leaflet.js", readFileSync(join(ROOT, "node_modules/leaflet/dist/leaflet.js")));
+put("vendor/leaflet.css", readFileSync(join(ROOT, "node_modules/leaflet/dist/leaflet.css")));
+put("vendor/LEAFLET-LICENSE", readFileSync(join(ROOT, "node_modules/leaflet/LICENSE")));
+put("lint.mjs", readFileSync(join(ROOT, "agent/lint.mjs")));
+put("agent-api.mjs", readFileSync(join(ROOT, "agent/api.mjs")));
+const starterModule = `// Generated from patterns/ by build/build.mjs.
+export const workflowStarters = ${JSON.stringify(workflowStarters(ROOT))};
+`;
+const starterPath = join(ROOT, "gallery/workflow-starters.js");
+if (CHECK) {
+  if (!existsSync(starterPath) || readFileSync(starterPath, "utf8") !== starterModule)
+    throw new Error("Stale workflow starters; run npm run build");
+} else writeFileSync(starterPath, starterModule);
+for (const route of renderPatterns(ROOT)) {
+  const previewPath = join(ROOT, "workflows/previews", route.file);
+  const preview = livePreview(route);
+  if (CHECK) {
+    if (!existsSync(previewPath) || readFileSync(previewPath, "utf8") !== preview)
+      throw new Error(`Stale live preview: ${route.file}`);
+  } else {
+    mkdirSync(dirname(previewPath), { recursive: true });
+    writeFileSync(previewPath, preview);
+  }
+  const path = join(ROOT, "workflows", route.file);
+  if (CHECK) {
+    if (!existsSync(path) || readFileSync(path, "utf8") !== route.html)
+      throw new Error(`Stale fixture: ${route.file}; run npm run build`);
+  } else writeFileSync(path, route.html);
+  put(`patterns/${route.id}.html`, route.body);
+}
 
 // Manifest of every file with its SHA-256, for consumers that verify downloads
 const manifest = Object.fromEntries(

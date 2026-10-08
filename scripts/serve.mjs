@@ -9,6 +9,8 @@ const TYPES = {
   ".html": "text/html",
   ".css": "text/css",
   ".js": "text/javascript",
+  ".mjs": "text/javascript",
+  ".geojson": "application/geo+json",
   ".svg": "image/svg+xml",
   ".woff2": "font/woff2",
   ".json": "application/json",

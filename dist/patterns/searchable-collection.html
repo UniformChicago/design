@@ -1,0 +1,198 @@
+<div class="u-page-header">
+  <div>
+    <span class="u-tag">Preview · workspace</span>
+    <h1 class="u-page-title">Document collection<span class="u-dot" aria-hidden="true"></span></h1>
+    <p class="u-lede">Find records, review their status and inspect supporting details.</p>
+  </div>
+</div>
+<div class="u-stack">
+  <section class="u-panel" data-u-collection>
+    <h2 class="u-section-heading">Documents</h2>
+    <p class="u-hint">Illustrative records; no files are attached or requests sent.</p>
+    <div class="u-toolbar">
+      <div class="u-field">
+        <label for="document-search">Find a document</label
+        ><input
+          type="search"
+          enterkeyhint="search"
+          spellcheck="false"
+          id="document-search"
+          data-u-search
+          placeholder="Search titles"
+        />
+      </div>
+      <div class="u-field">
+        <label for="document-status">Status</label
+        ><span class="u-select"
+          ><select id="document-status" data-u-filter>
+            <option value="all">All statuses</option>
+            <option value="ready">Ready</option>
+            <option value="review">Needs review</option>
+            <option value="requested">Requested</option>
+          </select></span
+        >
+      </div>
+      <button class="u-button u-button--quiet" id="clear-filters" data-u-clear type="button">
+        Clear filters
+      </button>
+    </div>
+    <p class="u-hint" id="document-count" data-u-count role="status">3 documents</p>
+    <div class="u-table" data-u-results tabindex="0" role="region" aria-label="Sample documents">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col" aria-sort="none">
+              <button type="button" class="u-sort" data-u-sort>
+                Document <span aria-hidden="true">↕</span>
+              </button>
+            </th>
+            <th scope="col">Category</th>
+            <th scope="col">Status</th>
+            <th scope="col">Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-u-row data-state="ready">
+            <th scope="row">Education certificate</th>
+            <td>Education</td>
+            <td><span class="u-tag u-tag--ok">Ready</span></td>
+            <td>
+              <details>
+                <summary>File information<span class="u-sr">: Education certificate</span></summary>
+                <dl class="u-facts u-facts--stacked">
+                  <dt>Format</dt>
+                  <dd>PDF</dd>
+                  <dt>Version</dt>
+                  <dd>1</dd>
+                  <dt>Attachment</dt>
+                  <dd>Not supplied</dd>
+                </dl>
+              </details>
+            </td>
+          </tr>
+          <tr data-u-row data-state="review">
+            <th scope="row">Application checklist</th>
+            <td>Application</td>
+            <td><span class="u-tag u-tag--warn">Needs review</span></td>
+            <td>
+              <details>
+                <summary>Review items<span class="u-sr">: Application checklist</span></summary>
+                <ul class="u-hint">
+                  <li>Confirm the document category.</li>
+                  <li>Check that every required item is complete.</li>
+                </ul>
+              </details>
+            </td>
+          </tr>
+          <tr data-u-row data-state="requested">
+            <th scope="row">Firm confirmation</th>
+            <td>Sponsorship</td>
+            <td><span class="u-tag">Requested</span></td>
+            <td>
+              <details>
+                <summary>Request information<span class="u-sr">: Firm confirmation</span></summary>
+                <dl class="u-facts u-facts--stacked">
+                  <dt>Contact</dt>
+                  <dd>Sample firm</dd>
+                  <dt>Next update</dt>
+                  <dd>Written confirmation</dd>
+                </dl>
+              </details>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="document-empty" data-u-empty class="u-empty" hidden>
+      <h3 class="u-section-heading">No matching documents</h3>
+      <p>Try a different title or clear the status filter.</p>
+    </div>
+  </section>
+  <div class="u-columns">
+    <div class="u-stack">
+      <section class="u-panel">
+        <h2 class="u-section-heading">People &amp; firms</h2>
+        <ul class="u-task-list">
+          <li>
+            <div class="u-identity">
+              <span class="u-avatar" aria-hidden="true">A</span>
+              <div>
+                <strong>Example agent</strong>
+                <p class="u-hint">Primary contact · Invitation accepted</p>
+              </div>
+            </div>
+            <span class="u-tag">Member</span>
+          </li>
+          <li>
+            <div class="u-identity">
+              <span class="u-avatar" aria-hidden="true">F</span>
+              <div>
+                <strong>Sample firm</strong>
+                <p class="u-hint">Organization · Relationship pending</p>
+              </div>
+            </div>
+            <span class="u-tag">Pending</span>
+          </li>
+        </ul>
+      </section>
+      <section class="u-panel">
+        <span class="u-eyebrow">PROPERTY SUMMARY</span>
+        <h2 class="u-section-heading">Example property</h2>
+        <p class="u-hint">Address not supplied</p>
+        <dl class="u-property-facts">
+          <div>
+            <dt>Property type</dt>
+            <dd>Residential</dd>
+          </div>
+          <div>
+            <dt>Bedrooms</dt>
+            <dd>3</dd>
+          </div>
+          <div>
+            <dt>Bathrooms</dt>
+            <dd>2</dd>
+          </div>
+          <div>
+            <dt>Area</dt>
+            <dd>Not provided</dd>
+          </div>
+        </dl>
+        <p class="u-hint">Illustrative property details · Not a listing</p>
+      </section>
+    </div>
+    <div class="u-stack">
+      <section class="u-panel">
+        <h2 class="u-section-heading">Recent activity</h2>
+        <ol class="u-activity">
+          <li>
+            <strong>Document added</strong>
+            <p>Education certificate</p>
+            <small>Sample event · Today</small>
+          </li>
+          <li>
+            <strong>Review started</strong>
+            <p>Application checklist</p>
+            <small>Sample event · Yesterday</small>
+          </li>
+          <li>
+            <strong>Workspace created</strong>
+            <p>Example workspace</p>
+            <small>Sample event · Earlier</small>
+          </li>
+        </ol>
+      </section>
+      <section class="u-panel">
+        <h2 class="u-section-heading">Cost summary</h2>
+        <p class="u-hint">Illustrative amounts, not actual fees.</p>
+        <dl class="u-facts">
+          <dt>Sample service</dt>
+          <dd>$120.00</dd>
+          <dt>Sample processing</dt>
+          <dd>$30.00</dd>
+          <dt>Estimated total</dt>
+          <dd><strong>$150.00</strong></dd>
+        </dl>
+      </section>
+    </div>
+  </div>
+</div>

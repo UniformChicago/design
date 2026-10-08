@@ -1,0 +1,17 @@
+<div class="u-stack">
+  <div>
+    <h3 class="u-section-heading">Review a sample action</h3>
+    <p class="u-hint">Open a confirmation dialog. Cancel returns you to the preview; confirm updates its status.</p>
+  </div>
+  <div><button type="button" class="u-button" data-u-dialog-open="example-dialog" hidden>Review action</button></div>
+  <p class="u-hint" id="example-dialog-status" role="status">No action taken.</p>
+  <noscript><p class="u-hint">Enable JavaScript to try the confirmation.</p></noscript>
+</div>
+<dialog id="example-dialog" class="u-dialog" aria-labelledby="example-dialog-title" aria-describedby="example-dialog-description">
+  <h2 id="example-dialog-title" class="u-section-heading">Confirm sample action</h2>
+  <p id="example-dialog-description">This demonstrates a confirmation flow. No records will be changed.</p>
+  <div class="u-actions">
+    <button type="button" class="u-button u-button--quiet" data-u-dialog-close autofocus>Cancel</button>
+    <button type="button" class="u-button" data-u-dialog-close="confirmed">Confirm</button>
+  </div>
+</dialog>

@@ -1,0 +1,507 @@
+{
+  "schemaVersion": "1.0.0",
+  "components": [
+    {
+      "id": "button",
+      "title": "Actions",
+      "purpose": "Trigger an action or navigate using a correctly typed element.",
+      "maturity": "preview",
+      "source": "site/examples/buttons.html",
+      "states": ["default", "quiet", "disabled", "busy", "danger"],
+      "requirements": [
+        "Use a button for actions and an anchor for navigation.",
+        "Set type=button outside submission actions.",
+        "Keep a visible label or accessible name; explain disabled actions."
+      ],
+      "customization": ["Labels", "Documented variants", "Adjacent layout"],
+      "dependencies": ["design.css"],
+      "limitations": ["Browser and assistive-technology verification pending for this local change."],
+      "verification": ["npm run test:contracts", "npm run test:a11y"],
+      "introduced": "0.1.12-local"
+    },
+    {
+      "id": "field",
+      "title": "Fields",
+      "purpose": "Collect a labeled value with help and error feedback.",
+      "maturity": "preview",
+      "source": "site/examples/forms.html",
+      "states": ["default", "required", "invalid", "disabled", "readonly"],
+      "requirements": [
+        "Associate a visible label with each control.",
+        "Link help and error text through aria-describedby.",
+        "Use aria-invalid=true only for an actual error."
+      ],
+      "customization": ["Label", "Help text", "Input type", "Validation message"],
+      "dependencies": ["design.css"],
+      "limitations": ["Browser and assistive-technology verification pending for this local change."],
+      "verification": ["npm run test:contracts", "npm run test:a11y"],
+      "introduced": "0.1.12-local"
+    },
+    {
+      "id": "select",
+      "title": "Select",
+      "purpose": "Choose one option using native keyboard and form behavior.",
+      "maturity": "preview",
+      "source": "site/examples/select.html",
+      "states": ["default", "required", "invalid", "disabled"],
+      "requirements": [
+        "Wrap the select in u-select within u-field.",
+        "Browser picker styling is progressive; unsupported browsers retain native menus.",
+        "Searchable combobox behavior is not included."
+      ],
+      "customization": ["Label", "Options", "Required/disabled state"],
+      "dependencies": ["design.css"],
+      "limitations": ["Browser and assistive-technology verification pending for this local change."],
+      "verification": ["npm run test:contracts", "npm run test:a11y"],
+      "introduced": "0.1.12-local"
+    },
+    {
+      "id": "dialog",
+      "title": "Confirmation dialog",
+      "purpose": "Review a consequential action in a native modal dialog.",
+      "maturity": "preview",
+      "source": "site/examples/dialog.html",
+      "states": ["closed", "open", "cancelled", "confirmed"],
+      "requirements": [
+        "Use showModal through the optional interaction controller.",
+        "Provide aria-labelledby and an explicit cancel button.",
+        "Initialize focus on the least destructive action."
+      ],
+      "customization": ["Title", "Description", "Action labels"],
+      "dependencies": ["design.css", "interactions.js", "UniformInteractions.mount(document)"],
+      "limitations": ["Browser and assistive-technology verification pending for this local change."],
+      "verification": ["npm run test:contracts", "npm run test:a11y"],
+      "introduced": "0.1.12-local"
+    },
+    {
+      "id": "table",
+      "title": "Data table",
+      "purpose": "Display comparable records with column and row semantics.",
+      "maturity": "preview",
+      "source": "site/examples/tables.html",
+      "states": ["populated", "loading", "empty", "error", "filtered-empty"],
+      "requirements": [
+        "Use headers with scope and a named keyboard-reachable scroll region.",
+        "Optional collection controller supplies title search, status filtering and title sorting. Pagination remains application-owned."
+      ],
+      "customization": ["Columns", "Cell content", "Row actions"],
+      "dependencies": ["design.css"],
+      "limitations": ["Browser and assistive-technology verification pending for this local change."],
+      "verification": ["npm run test:contracts", "npm run test:a11y"],
+      "introduced": "0.1.12-local"
+    },
+    {
+      "id": "panel",
+      "title": "Panel",
+      "purpose": "Group related content into a readable surface.",
+      "maturity": "preview",
+      "source": "site/examples/panels.html",
+      "states": ["default", "accent"],
+      "requirements": [
+        "Provide a heading for meaningful sections.",
+        "Avoid nested cards when a divider would suffice."
+      ],
+      "customization": ["Heading", "Content", "Accent variant"],
+      "dependencies": ["design.css"],
+      "limitations": ["Browser and assistive-technology verification pending for this local change."],
+      "verification": ["npm run test:contracts", "npm run test:a11y"],
+      "introduced": "0.1.12-local"
+    },
+    {
+      "id": "status",
+      "title": "Status",
+      "purpose": "Communicate state with text, not color alone.",
+      "maturity": "preview",
+      "source": "site/examples/tags.html",
+      "states": ["neutral", "attention", "complete"],
+      "requirements": ["Do not infer verification or authorization from a status color."],
+      "customization": ["Text", "Documented status variants"],
+      "dependencies": ["design.css"],
+      "limitations": ["Browser and assistive-technology verification pending for this local change."],
+      "verification": ["npm run test:contracts", "npm run test:a11y"],
+      "introduced": "0.1.12-local"
+    },
+    {
+      "id": "feedback",
+      "title": "Feedback",
+      "purpose": "Explain an outcome or recovery action.",
+      "maturity": "preview",
+      "source": "site/examples/callouts.html",
+      "states": ["informational", "error"],
+      "requirements": [
+        "Describe what happened and what the user can do next.",
+        "Use live announcements for dynamic events only."
+      ],
+      "customization": ["Message", "Recovery action"],
+      "dependencies": ["design.css"],
+      "limitations": ["Browser and assistive-technology verification pending for this local change."],
+      "verification": ["npm run test:contracts", "npm run test:a11y"],
+      "introduced": "0.1.12-local"
+    },
+    {
+      "id": "empty",
+      "title": "Empty state",
+      "purpose": "Explain why a collection has no content and how to proceed.",
+      "maturity": "preview",
+      "source": "site/examples/empty.html",
+      "states": ["initial", "filtered-empty"],
+      "requirements": ["Distinguish no data from no matching results and failed requests."],
+      "customization": ["Heading", "Explanation", "Action"],
+      "dependencies": ["design.css"],
+      "limitations": ["Browser and assistive-technology verification pending for this local change."],
+      "verification": ["npm run test:contracts", "npm run test:a11y"],
+      "introduced": "0.1.12-local"
+    },
+    {
+      "id": "facts",
+      "title": "Labeled facts",
+      "purpose": "Display stable details including financial and property information.",
+      "maturity": "preview",
+      "source": "site/examples/facts.html",
+      "states": ["known", "unknown", "not-applicable"],
+      "requirements": ["Unknown and missing are not zero.", "Keep units and estimated values explicit."],
+      "customization": ["Labels", "Values", "Units"],
+      "dependencies": ["design.css"],
+      "limitations": ["Browser and assistive-technology verification pending for this local change."],
+      "verification": ["npm run test:contracts", "npm run test:a11y"],
+      "introduced": "0.1.12-local"
+    },
+    {
+      "id": "progress",
+      "title": "Progress",
+      "purpose": "Show task completion without relying on color.",
+      "maturity": "preview",
+      "source": "site/examples/progress.html",
+      "states": ["incomplete", "complete", "reduced-motion"],
+      "requirements": [
+        "Use accessible progress values and text.",
+        "Respect reduced motion. For animated native progress, use optional UniformInteractions.setProgress(element, value); accessible values update immediately.",
+        "Progress is not license approval."
+      ],
+      "customization": ["Label", "Value", "Maximum"],
+      "dependencies": ["design.css"],
+      "limitations": ["Browser and assistive-technology verification pending for this local change."],
+      "verification": ["npm run test:contracts", "npm run test:a11y"],
+      "introduced": "0.1.12-local"
+    },
+    {
+      "id": "navigation",
+      "title": "Navigation",
+      "purpose": "Locate the current view and expose destinations.",
+      "maturity": "preview",
+      "source": "site/examples/navigation.html",
+      "states": ["default", "current"],
+      "requirements": [
+        "Use aria-current=page for the current route and aria-current=location for the current section.",
+        "Use aria-pressed for buttons that select an in-page preview."
+      ],
+      "customization": ["Destinations", "Labels"],
+      "dependencies": ["design.css"],
+      "limitations": ["Browser and assistive-technology verification pending for this local change."],
+      "verification": ["npm run test:contracts", "npm run test:a11y"],
+      "introduced": "0.1.12-local"
+    },
+    {
+      "id": "file",
+      "title": "Document selection",
+      "purpose": "Inspect a locally selected document before application upload.",
+      "maturity": "preview",
+      "source": "site/examples/file.html",
+      "states": ["empty", "selected", "invalid"],
+      "requirements": [
+        "This controller validates metadata only, never file contents.",
+        "Applications must validate and authorize files on the server.",
+        "Announce selection and errors."
+      ],
+      "customization": ["Label", "Help"],
+      "dependencies": ["design.css", "interactions.js", "UniformInteractions.mount(document)"],
+      "limitations": ["Browser and assistive-technology verification pending for this local change."],
+      "verification": ["npm run test:contracts", "npm run test:a11y"],
+      "introduced": "0.1.12-local"
+    },
+    {
+      "id": "identity",
+      "title": "Person or firm",
+      "purpose": "Summarize a person or organization and their relationship.",
+      "maturity": "preview",
+      "source": "site/examples/identity.html",
+      "states": ["known", "pending"],
+      "requirements": [
+        "Use placeholder identity data in fixtures.",
+        "Show role and relationship explicitly."
+      ],
+      "customization": ["Name", "Relationship", "Avatar initials"],
+      "dependencies": ["design.css"],
+      "limitations": ["Browser and assistive-technology verification pending for this local change."],
+      "verification": ["npm run test:contracts", "npm run test:a11y"],
+      "introduced": "0.1.12-local"
+    },
+    {
+      "id": "activity",
+      "title": "Activity timeline",
+      "purpose": "Display a sequence of labeled events.",
+      "maturity": "preview",
+      "source": "site/examples/activity.html",
+      "states": ["populated", "empty"],
+      "requirements": ["Use real timestamps in applications and distinguish them from due dates."],
+      "customization": ["Event labels", "Descriptions", "Times"],
+      "dependencies": ["design.css"],
+      "limitations": ["Browser and assistive-technology verification pending for this local change."],
+      "verification": ["npm run test:contracts", "npm run test:a11y"],
+      "introduced": "0.1.12-local"
+    },
+    {
+      "id": "property",
+      "title": "Property facts",
+      "purpose": "Present property information without assuming listing or map services.",
+      "maturity": "preview",
+      "source": "site/examples/property.html",
+      "states": ["known", "partial"],
+      "requirements": [
+        "Use explicit units and missing-value labels.",
+        "No geocoding or listing provider is included."
+      ],
+      "customization": ["Facts", "Address", "Units"],
+      "dependencies": ["design.css"],
+      "limitations": ["Browser and assistive-technology verification pending for this local change."],
+      "verification": ["npm run test:contracts", "npm run test:a11y"],
+      "introduced": "0.1.12-local"
+    },
+    {
+      "id": "context-menu",
+      "title": "Context menu",
+      "purpose": "Offer contextual actions through a native popover.",
+      "maturity": "preview",
+      "source": "site/examples/context-menu.html",
+      "states": ["closed", "open", "disabled"],
+      "requirements": [
+        "Load context-menu.css and context-menu.js; call UniformContextMenu.mount(root).",
+        "Use named buttons with menuitem roles and data-u-context-action. Handle uniform:context-action on the trigger.",
+        "Provide a visible opener and equivalent ordinary actions. Browser context menus remain available outside opted-in controls."
+      ],
+      "customization": ["Actions", "Labels"],
+      "dependencies": ["design.css", "context-menu.css", "context-menu.js"],
+      "limitations": ["Browser and assistive-technology verification pending."],
+      "verification": ["npm run test:contracts", "npm run test:a11y"],
+      "introduced": "0.1.12-local"
+    }
+  ],
+  "patterns": [
+    {
+      "id": "multi-step-intake",
+      "title": "Multi-step intake",
+      "purpose": "Validate before advancing; retain values on Back; focus each new step heading; announce save failure.",
+      "maturity": "preview",
+      "source": "patterns/multi-step-intake.html",
+      "components": ["field", "select", "button", "progress", "panel"],
+      "states": ["initial", "invalid", "draft-saved", "review"],
+      "requirements": [
+        "Validate before advancing; retain values on Back; focus each new step heading; announce save failure.",
+        "Replace fixture copy and persistence with application-owned data and policy.",
+        "Use data-u-stepper, data-u-step, data-u-next, data-u-back and data-u-step-count hooks. Listen to uniform:step-change to render a review and uniform:complete to submit through application code.",
+        "Mount one stepper per root; keep its data-u-step-list in that root. Application owns draft persistence and completion side effects."
+      ],
+      "customization": ["Content", "Data bindings", "Composition using documented components"],
+      "dependencies": ["design.css", "interactions.js", "UniformInteractions.mount(document)"],
+      "limitations": [
+        "Fixture controllers are examples; application backend, authorization and regulatory rules are not supplied."
+      ],
+      "verification": ["npm run test:a11y"],
+      "introduced": "0.1.12-local"
+    },
+    {
+      "id": "status-dashboard",
+      "title": "Status dashboard",
+      "purpose": "Update task counts and progress together; do not treat personal reminders as official deadlines.",
+      "maturity": "preview",
+      "source": "patterns/status-dashboard.html",
+      "components": ["progress", "status", "facts", "panel"],
+      "states": ["in-progress", "complete", "documents-empty", "deadlines-unknown"],
+      "requirements": [
+        "Update task counts and progress together; do not treat personal reminders as official deadlines.",
+        "Replace fixture copy and persistence with application-owned data and policy."
+      ],
+      "customization": ["Content", "Data bindings", "Composition using documented components"],
+      "dependencies": ["design.css"],
+      "limitations": [
+        "Fixture controllers are examples; application backend, authorization and regulatory rules are not supplied."
+      ],
+      "verification": ["npm run test:a11y"],
+      "introduced": "0.1.12-local"
+    },
+    {
+      "id": "searchable-collection",
+      "title": "Searchable collection",
+      "purpose": "Combine search and status filters; announce result count; Clear restores all records and focuses search.",
+      "maturity": "preview",
+      "source": "patterns/searchable-collection.html",
+      "components": ["table", "field", "select", "empty", "identity", "activity", "property", "facts"],
+      "states": ["populated", "filtered", "filtered-empty"],
+      "requirements": [
+        "Combine search and status filters; announce result count; Clear restores all records and focuses search.",
+        "Replace fixture copy and persistence with application-owned data and policy.",
+        "Keep data-u-collection hooks and row headers for the optional controller. Remount after replacing the collection DOM."
+      ],
+      "customization": ["Content", "Data bindings", "Composition using documented components"],
+      "dependencies": ["design.css", "interactions.js", "UniformInteractions.mount(document)"],
+      "limitations": [
+        "Fixture controllers are examples; application backend, authorization and regulatory rules are not supplied."
+      ],
+      "verification": ["npm run test:a11y"],
+      "introduced": "0.1.12-local"
+    },
+    {
+      "id": "component-states",
+      "title": "Component state fixtures",
+      "purpose": "State examples are fixtures; only labeled interactions perform local actions.",
+      "maturity": "preview",
+      "source": "patterns/component-states.html",
+      "components": ["button", "field", "select", "dialog", "file", "feedback"],
+      "states": ["invalid", "disabled", "readonly", "busy", "empty", "error", "confirmation"],
+      "requirements": [
+        "State examples are fixtures; only labeled interactions perform local actions.",
+        "Replace fixture copy and persistence with application-owned data and policy."
+      ],
+      "customization": ["Content", "Data bindings", "Composition using documented components"],
+      "dependencies": ["design.css"],
+      "limitations": [
+        "Fixture controllers are examples; application backend, authorization and regulatory rules are not supplied."
+      ],
+      "verification": ["npm run test:a11y"],
+      "introduced": "0.1.12-local"
+    },
+    {
+      "id": "map-list",
+      "title": "Map and list",
+      "purpose": "Keep property selection and filtering consistent between an accessible list and a map.",
+      "maturity": "preview",
+      "source": "patterns/map-list.html",
+      "components": ["button", "field", "select", "empty", "property", "context-menu"],
+      "states": [
+        "populated",
+        "selected",
+        "filtered",
+        "empty",
+        "location-unavailable",
+        "map-loading",
+        "map-unavailable",
+        "retry",
+        "clustered",
+        "cluster-members",
+        "shortlisted",
+        "both",
+        "list-only",
+        "map-only",
+        "gallery",
+        "compact-gallery"
+      ],
+      "requirements": [
+        "Keep records without coordinates in the list.",
+        "The optional sample shortlist is held only for the mounted page lifetime. Expose its toggle with aria-pressed and announce changes; never imply saved server data.",
+        "Clear selection when a filter removes the selected result.",
+        "Provide keyboard access and a list alternative to map markers.",
+        "Label fictional data and preserve provider attribution in any live integration.",
+        "Hover and focus preview the counterpart without changing selection.",
+        "Keep structured selection details available in both mobile views. Escape and Clear selection dismiss and restore focus to the visible initiating control.",
+        "Loading and renderer failure must preserve the list, filters and selected record. Announce renderer status separately from result counts.",
+        "Retry changes renderer state only; restore focus when the retry control is removed.",
+        "Call UniformMapList.connect(root, options) once per root; destroy the returned connection before removing its DOM.",
+        "Provide unique record ids matching data-property attributes; nullable [latitude, longitude] locations; text-only title and label.",
+        "Omit provider to use OpenFreeMap. Override provider.style or provider.lightStyle/darkStyle and optionally provider.transformRequest for another service.",
+        "Keep source attribution visible. Allow the chosen provider origins in CSP; never put secret server credentials in frontend configuration.",
+        "Group overlapping markers by default; counts include only visible located records. Activation zooms into a group; identical coordinates or maximum zoom open keyboard-accessible member choices.",
+        "Cluster selection indicators include a selected member; filtering recomputes groups and dismisses stale member choices."
+      ],
+      "customization": ["Application-owned records", "Renderer and tile service"],
+      "dependencies": [
+        "design.css",
+        "vendor/maplibre/maplibre-gl.css",
+        "map.css",
+        "maplibre.js",
+        "map-list.js",
+        "vendor/maplibre/maplibre-gl.mjs",
+        "vendor/maplibre/maplibre-gl-worker.mjs",
+        "context-menu.css",
+        "context-menu.js"
+      ],
+      "limitations": [
+        "Default OpenFreeMap basemap requests go to tiles.openfreemap.org; network access and WebGL are required.",
+        "No backend, geocoder or live listings service is included.",
+        "Only MapLibre-compatible styles work with the default adapter. Other renderer SDKs need an adapter; an explicit Leaflet option remains available.",
+        "Screen-space clustering is intended for modest frontend collections; server-scale indexing and viewport queries are outside scope.",
+        "Browser/CSP and actual provider rendering verification remain pending."
+      ],
+      "verification": ["npm run test:a11y"],
+      "introduced": "0.1.12-local",
+      "integration": {
+        "styles": ["design.css", "vendor/maplibre/maplibre-gl.css", "map.css", "context-menu.css"],
+        "scripts": ["maplibre.js", "map-list.js", "context-menu.js"],
+        "modules": ["vendor/maplibre/maplibre-gl.mjs"],
+        "workers": ["vendor/maplibre/maplibre-gl-worker.mjs"],
+        "global": "UniformMapList.connect",
+        "options": {
+          "maplibre": "import * as maplibre from the packaged vendor/maplibre/maplibre-gl.mjs module",
+          "records": "Array<{id:string,title:string,label:string,location:[latitude,longitude]|null}>",
+          "provider": "Optional {style: URL|StyleSpecification} or {lightStyle,darkStyle}; optional transformRequest for browser-safe request configuration. Default: OpenFreeMap.",
+          "renderer": "Optional adapter implementing mount(root, options); default UniformMapLibre. Use UniformMap explicitly for the separately loaded Leaflet adapter.",
+          "clustering": "Optional boolean, defaults to true. Screen-space overlap grouping; false shows individual markers."
+        },
+        "initialization": "maplibre.setWorkerUrl(new URL(\"./vendor/maplibre/maplibre-gl-worker.mjs\", import.meta.url).href); const connection = UniformMapList.connect(root, {maplibre, records});",
+        "lifecycle": "connection.reload(); connection.destroy();",
+        "csp": "script-src 'self'; style-src 'self'; worker-src 'self'; connect-src 'self' https://tiles.openfreemap.org; img-src 'self' blob: https://tiles.openfreemap.org",
+        "notes": [
+          "Serve over HTTP(S). Network map requests are enabled by the default provider.",
+          "Leaflet alternative: load vendor/leaflet.js, vendor/leaflet.css and map.js, then pass renderer: UniformMap, leaflet: L and an abortable GeoJSON source function.",
+          "Use unique HTML ids when composing multiple roots.",
+          "Provider styles are trusted application configuration. Custom providers may require public API keys, attribution and additional CSP origins.",
+          "Map libraries remain optional assets, separate from core design.css.",
+          "Call UniformContextMenu.mount(root) for optional card actions. Gallery controls preserve selection and filters; settings change columns and card density."
+        ]
+      }
+    },
+    {
+      "id": "application-shell",
+      "title": "Application Shell",
+      "purpose": "Standard layout framework for Uniform web applications, including responsive navigation and workspace areas.",
+      "maturity": "preview",
+      "source": "patterns/application-shell.html",
+      "components": ["button"],
+      "states": ["initial"],
+      "requirements": [
+        "Always use u-app as the top-level container.",
+        "Mobile navigation uses a <details> element for the collapsible menu.",
+        "Include both light and dark theme brand marks."
+      ],
+      "customization": ["Content", "Navigation links"],
+      "dependencies": ["design.css"],
+      "limitations": ["Theme toggle requires client-side JavaScript (e.g. theme.js) for logic."],
+      "verification": ["npm run test:a11y"],
+      "introduced": "0.1.12-local"
+    },
+    {
+      "id": "map-preview",
+      "title": "Map Preview",
+      "purpose": "A simple, read-only map embed for displaying a single property location.",
+      "maturity": "preview",
+      "source": "patterns/map-preview.html",
+      "components": [],
+      "states": ["ready", "loading", "error"],
+      "requirements": [
+        "Provide data-lat and data-lng attributes on the canvas.",
+        "Initialize with UniformMapLibre or Leaflet adapter."
+      ],
+      "customization": ["Coordinates", "Provider styles"],
+      "dependencies": ["design.css", "map.css"],
+      "limitations": ["Does not include clustering or linked list filtering."],
+      "verification": ["npm run test:a11y"],
+      "introduced": "0.1.12-local"
+    }
+  ],
+  "rules": [
+    "Use semantic --u-* variables and documented u-* classes.",
+    "Use the native element that supplies the required semantics.",
+    "Use textContent for user-controlled values.",
+    "Do not assume a preview component is certified or stable.",
+    "Keep application policy and server authorization out of the design package."
+  ]
+}

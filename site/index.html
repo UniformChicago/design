@@ -10,6 +10,8 @@
     />
     <script src="theme.js"></script>
     <link rel="stylesheet" href="dist/design.css" />
+    <link rel="stylesheet" href="dist/context-menu.css" />
+    <script src="dist/context-menu.js" defer></script>
     <link rel="stylesheet" href="shell.css" />
     <link rel="stylesheet" href="site.css" />
     <link rel="stylesheet" href="tokens-demo.css" />
@@ -23,13 +25,13 @@
     <div class="s-layout u-shell-layout">
       <nav class="s-side" aria-label="Documentation">
         <p class="s-group"><a href="#overview">Start</a></p>
-        <ul>
+        <ul class="u-nav">
           <li><a href="#overview">Overview</a></li>
           <li><a href="#install">Install</a></li>
           <li><a href="#usage">Usage</a></li>
         </ul>
         <p class="s-group"><a href="#color">Foundations</a></p>
-        <ul>
+        <ul class="u-nav">
           <li><a href="#color">Color</a></li>
           <li><a href="#theme">Theme variables</a></li>
           <li><a href="#type">Type</a></li>
@@ -37,7 +39,7 @@
           <li><a href="#assets">Assets</a></li>
         </ul>
         <p class="s-group"><a href="#typography">Components</a></p>
-        <ul>
+        <ul class="u-nav">
           <li><a href="#typography">Typography</a></li>
           <li><a href="#buttons">Buttons</a></li>
           <li><a href="#tags">Tags</a></li>
@@ -49,14 +51,21 @@
           <li><a href="#navigation">Navigation</a></li>
           <li><a href="#empty">Empty state</a></li>
           <li><a href="#progress">Progress and checks</a></li>
+          <li><a href="#select">Select controls</a></li>
+          <li><a href="#file">File uploads</a></li>
+          <li><a href="#dialog">Dialogs</a></li>
+          <li><a href="#context-menu">Context menus</a></li>
+          <li><a href="#identity">Identity</a></li>
+          <li><a href="#property">Property cards</a></li>
+          <li><a href="#activity">Activity</a></li>
         </ul>
         <p class="s-group"><a href="#releases">Project</a></p>
-        <ul>
+        <ul class="u-nav">
           <li><a href="#releases">Releases</a></li>
           <li><a href="#licensing">Licensing</a></li>
         </ul>
         <p class="s-group"><a href="#labs-atmosphere">Labs</a></p>
-        <ul>
+        <ul class="u-nav">
           <li><a href="#labs-atmosphere">Atmosphere</a></li>
         </ul>
       </nav>
@@ -64,10 +73,8 @@
       <main id="main" class="s-main">
         <section id="overview" class="s-hero" aria-labelledby="overview-h">
           <div class="s-hero-copy">
-            <p class="u-eyebrow">Design system</p>
-            <h1 id="overview-h" class="u-title">
-              Uniform Design<span class="u-dot" aria-hidden="true"></span>
-            </h1>
+            <p class="u-eyebrow">Uniform Design / Components</p>
+            <h1 id="overview-h" class="u-title">Components<span class="u-dot" aria-hidden="true"></span></h1>
             <p class="u-lede">
               Brand tokens, CSS components, and self-hosted fonts. One small, versioned package for websites,
               applications and documents.
@@ -81,7 +88,7 @@
             </ul>
             <p class="s-actions">
               <a class="u-button" href="#install">Get started</a>
-              <a class="u-button u-button--quiet" href="playground/">Open playground</a>
+              <a class="u-button u-button--quiet" href="playground/">Explore the playground</a>
             </p>
           </div>
         </section>
@@ -259,6 +266,41 @@ npm install --save-exact github:UniformChicago/design#v{{version}}
           <!--example:progress-->
         </section>
 
+        <section id="select" aria-labelledby="select-h">
+          <h2 id="select-h" class="s-h2">Select controls</h2>
+          <!--example:select-->
+        </section>
+
+        <section id="file" aria-labelledby="file-h">
+          <h2 id="file-h" class="s-h2">File uploads</h2>
+          <!--example:file-->
+        </section>
+
+        <section id="dialog" aria-labelledby="dialog-h">
+          <h2 id="dialog-h" class="s-h2">Dialogs</h2>
+          <!--example:dialog-->
+        </section>
+
+        <section id="context-menu" aria-labelledby="context-menu-h">
+          <h2 id="context-menu-h" class="s-h2">Context menus</h2>
+          <!--example:context-menu-->
+        </section>
+
+        <section id="identity" aria-labelledby="identity-h">
+          <h2 id="identity-h" class="s-h2">Identity</h2>
+          <!--example:identity-->
+        </section>
+
+        <section id="property" aria-labelledby="property-h">
+          <h2 id="property-h" class="s-h2">Property cards</h2>
+          <!--example:property-->
+        </section>
+
+        <section id="activity" aria-labelledby="activity-h">
+          <h2 id="activity-h" class="s-h2">Activity</h2>
+          <!--example:activity-->
+        </section>
+
         <section id="releases" aria-labelledby="releases-h">
           <h2 id="releases-h" class="s-h2">Releases</h2>
           <p>
@@ -314,6 +356,7 @@ const dispose = mountAtmosphere(document.querySelector("#atmosphere"));
     </div>
     <p class="u-sr" role="status" id="s-status"></p>
     <script type="module" src="shell.js"></script>
+    <script src="dist/interactions.js" defer></script>
     <script type="module" src="docs.js"></script>
     <script type="module" src="dist/atmosphere.js"></script>
   </body>

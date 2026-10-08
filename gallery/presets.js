@@ -1,9 +1,11 @@
+import { workflowStarters } from "./workflow-starters.js";
+
 const esc = (value) =>
   String(value).replace(
     /[&<>"']/g,
     (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c],
   );
-export const presets = [
+const components = [
   {
     id: "records",
     name: "Record list",
@@ -113,4 +115,17 @@ export const presets = [
   </form>
 </section>`,
   },
+];
+
+export const presets = [
+  ...workflowStarters.map((starter) => ({
+    ...starter,
+    states: ["Default"],
+    render: (title) =>
+      starter.markup.replace(
+        /(<h1[^>]*>)[\s\S]*?<\/h1>/,
+        (_, opening) => `${opening}${esc(title)}<span class="u-dot" aria-hidden="true"></span></h1>`,
+      ),
+  })),
+  ...components,
 ];

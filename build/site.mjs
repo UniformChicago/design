@@ -10,6 +10,8 @@ import { createHash } from "node:crypto";
 import { join, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { icon } from "../site/icons.js";
+import { routes } from "./patterns.mjs";
+import { presets } from "../gallery/presets.js";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const SITE = join(ROOT, "site");
@@ -89,25 +91,28 @@ const semantic = SEMANTIC.map(([k, note]) => {
   return `<li class="s-card"><span class="s-chip s-chip--sem-${k}"></span><div class="s-token-heading"><code>--u-${k}</code>${copyBtn(`var(--u-${k})`)}</div><span class="s-note">${note}</span></li>`;
 });
 
-const HEADER_SVG_PLAY = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>`;
-const HEADER_SVG_HOME = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>`;
 const HEADER_SVG_GH = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>`;
 
-function makeHeader(root, isPlayground) {
-  const midLink = isPlayground
-    ? `<a class="u-button u-button--quiet u-shell-icon" href="${root}" data-prefetch aria-label="Documentation" title="Documentation">${HEADER_SVG_HOME}</a>`
-    : `<a class="u-button u-button--quiet u-shell-icon" href="${root}playground/" data-prefetch aria-label="Playground" title="Playground">${HEADER_SVG_PLAY}</a>`;
-
+function makeHeader(root, isPlayground, current = isPlayground ? "playground" : "docs") {
   return `<header class="u-shell-header">
-      <a href="${root}" class="s-brand"
+      <a href="${root}" class="s-brand" aria-label="Uniform Design components" title="Components"${current === "docs" ? ' aria-current="page"' : ""}
         ><img class="s-logo s-logo--dark" src="${root}dist/svg/uniform-wordmark-on-dark.svg" alt="Uniform Design" width="124" height="27" /><img class="s-logo s-logo--light" src="${root}dist/svg/uniform-wordmark-color.svg" alt="Uniform Design" width="124" height="27" /></a>
       <span class="u-tag s-version">v${version}</span>
       <span class="u-shell-header-actions">
+        <nav class="s-pages" aria-label="Site navigation"><a class="u-button u-button--quiet u-shell-icon" href="${root}playground/" aria-label="Playground" title="Playground"${["playground", "patterns"].includes(current) ? ' aria-current="page"' : ""}>${icon("workspace")}</a></nav>
         <button type="button" class="u-button u-button--quiet s-theme u-shell-icon" id="s-theme" aria-label="Switch to light theme" title="Switch to light theme" hidden><span class="s-theme-icon" aria-hidden="true"></span></button>
-        ${midLink}
         <a class="u-button u-button--quiet u-shell-icon" href="https://github.com/UniformChicago/design" aria-label="GitHub" title="GitHub">${HEADER_SVG_GH}</a>
       </span>
+
     </header>`;
+}
+
+// Both exploration modes use one library, with full workflows remaining ordinary links.
+function workspaceNav(root, current = "lab") {
+  return `<p class="u-eyebrow">Playground</p><nav class="u-nav" aria-label="Playground library"><a href="${root}playground/"${current === "lab" ? ' aria-current="page"' : ""}>All starters</a>${routes.map((route) => `<a href="${root}playground/#${route.id}"${current === route.file ? ' aria-current="page"' : ""}>${route.title}</a>`).join("")}</nav>`;
+}
+function resourceFooter(root) {
+  return `<footer class="s-resource-footer" aria-label="Developer resources"><a href="${root}agent/">Agents</a><a href="${root}dist/catalog.json">Design catalog</a></footer>`;
 }
 
 // Shared <head> additions: preload the faces used above the fold, so text doesn't paint in a
@@ -120,13 +125,19 @@ const PRELOAD_FONTS = [
 ];
 // Also: Chrome prerenders the other page (docs <-> Playground) as soon as a tap or hover starts, so the
 // header link opens instantly; other browsers get a cache warm-up from shell.js instead.
-const headExtras = (root, other) =>
+const headExtras = (root, other, speculation = true) =>
   [
+    `<link rel="help" href="${root}agent/" title="Agents" />`,
+    `<link rel="alternate" type="application/json" href="${root}dist/catalog.json" title="Uniform design catalog" />`,
     ...PRELOAD_FONTS.map(
       (f) =>
         `<link rel="preload" href="${root}dist/fonts/${f}.woff2" as="font" type="font/woff2" crossorigin />`,
     ),
-    `<script type="speculationrules">${JSON.stringify({ prerender: [{ urls: [other], eagerness: "moderate" }] })}</script>`,
+    ...(speculation
+      ? [
+          `<script type="speculationrules">${JSON.stringify({ prerender: [{ urls: [other], eagerness: "moderate" }] })}</script>`,
+        ]
+      : []),
   ].join("\n    ") + "\n  </head>";
 
 const FACES = [
@@ -178,6 +189,7 @@ let html = readFileSync(join(SITE, "index.html"), "utf8")
   .replace("<!--radius-->", radius.join("\n"))
   .replace("<!--marks-->", marks.join("\n"))
   .replace("<!--header-->", makeHeader("./", false))
+  .replace("</body>", `${resourceFooter("./")}</body>`)
   .replace("</head>", headExtras("./", "playground/"));
 const left = html.match(/\{\{\w+\}\}|<!--[\w:-]+/);
 if (left) throw new Error(`site/index.html: unfilled placeholder ${left[0]}`);
@@ -206,16 +218,121 @@ writeFileSync(
       `<style>.i{fill:${inkLight}}.d{fill:${dotLight}}@media (prefers-color-scheme:dark){.i{fill:${inkDark}}.d{fill:${dotDark}}}</style><g `,
     ),
 );
+cpSync(join(ROOT, "agent"), join(OUT, "agent"), { recursive: true });
+cpSync(join(ROOT, "workflows"), join(OUT, "workflows"), { recursive: true });
 cpSync(join(ROOT, "gallery"), join(OUT, "gallery"), { recursive: true });
 cpSync(join(ROOT, "gallery"), join(OUT, "playground"), { recursive: true });
 
+// Ship the initial lab as HTML; enhancement must not reveal an entire hidden page.
+const initialPreset = presets[0];
+const initialCode = initialPreset.render(initialPreset.title, initialPreset.states[0]);
+const initialPreview = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../dist/design.css?v=${createHash(
+  "sha256",
+)
+  .update(readFileSync(join(ROOT, "dist/design.css")))
+  .digest("hex")
+  .slice(
+    0,
+    10,
+  )}"><link rel="stylesheet" href="../dist/map.css"><link rel="stylesheet" href="../dist/context-menu.css"><link rel="stylesheet" href="preview.css?v=${createHash(
+  "sha256",
+)
+  .update(readFileSync(join(ROOT, "gallery/preview.css")))
+  .digest("hex")
+  .slice(
+    0,
+    10,
+  )}"><title>Pattern preview</title></head><body class="u-root"><main class="p-content" aria-label="Component preview"><h1 class="u-sr">Component preview</h1><div class="u-app p-markup">${initialCode}</div></main></body></html>`;
 for (const p of ["gallery/index.html", "playground/index.html"]) {
   const path = join(OUT, p);
   const html = readFileSync(path, "utf8")
     .replaceAll("{{version}}", esc(version))
     .replace("<!--header-->", makeHeader("../", true))
+    .replace("<!--workspace-nav-->", workspaceNav("../"))
+    .replace(
+      "<!--component-presets-->",
+      presets
+        .map(
+          (preset, index) =>
+            `${index === routes.length ? '<p class="g-starter-label u-eyebrow">Component pieces</p>' : ""}<button type="button" data-preset="${esc(preset.id)}" aria-pressed="${preset === initialPreset}"><strong>${esc(preset.name)}</strong><span>${esc(preset.description)}</span></button>`,
+        )
+        .join(""),
+    )
+    .replace(
+      "<!--starter-options-->",
+      [true, false]
+        .map(
+          (live) =>
+            `<optgroup label="${live ? "Complete interfaces" : "Component pieces"}">${presets
+              .filter((preset) => Boolean(preset.live) === live)
+              .map((preset) => `<option value="${esc(preset.id)}">${esc(preset.name)}</option>`)
+              .join("")}</optgroup>`,
+        )
+        .join(""),
+    )
+    .replace(
+      "<!--initial-states-->",
+      initialPreset.states.map((state) => `<option>${esc(state)}</option>`).join(""),
+    )
+    .replace("{{initial-title}}", esc(initialPreset.title))
+    .replace("{{initial-live}}", esc(initialPreset.live))
+    .replace('srcdoc=""', `srcdoc="${esc(initialPreview)}"`)
+    .replace("<!--initial-code-->", esc(initialCode))
+    .replace("</body>", `${resourceFooter("../")}</body>`)
     .replace("</head>", headExtras("../", "../"));
   writeFileSync(path, html);
+}
+
+// Published reference pages share the docs chrome; standalone fixtures retain their app shell.
+for (const page of ["index.html", "dashboard.html", "workspace.html", "states.html", "map.html"]) {
+  const path = join(OUT, "workflows", page);
+  let source = readFileSync(path, "utf8")
+    .replace('<script src="theme.js"></script>', '<script src="../theme.js"></script>')
+    .replace(
+      "</head>",
+      `<link rel="stylesheet" href="../shell.css" />${headExtras("../", "../playground/", false)}`,
+    )
+    .replace(
+      '<div class="u-app">',
+      `${makeHeader("../", false, "patterns")}<div class="u-shell-layout u-shell-main s-explore"><div class="u-app u-workbench s-pattern-layout">`,
+    )
+    .replace(/<a class="u-app-brand"[\s\S]*?<\/a>/, '<p class="u-eyebrow">Reference patterns</p>')
+    .replace(/<div class="u-app-utility">[\s\S]*?<\/div>/, "")
+    .replace(
+      /<span class="u-eyebrow" style="[^"]*">Resources<\/span>[\s\S]*?<a href="..\/playground\/">Playground<\/a>/g,
+      "",
+    )
+    .replace(
+      /<nav class="u-nav u-desktop-nav"[\s\S]*?<\/nav>/,
+      workspaceNav("../", page).replace('class="u-nav"', 'class="u-nav u-desktop-nav"'),
+    )
+    .replace(
+      /<nav class="u-nav" aria-label="Mobile patterns">[\s\S]*?<\/nav>/,
+      workspaceNav("../", page).replace(/<p[\s\S]*?<\/p>/, ""),
+    )
+    .replace(/<p class="u-eyebrow">Reference patterns<\/p>/, "")
+    .replace(/<header class="u-page-header">[\s\S]*?<\/header>/, "")
+    .replace(
+      "</body>",
+      `</div>${resourceFooter("../")}<script type="module" src="../shell.js"></script></body>`,
+    );
+  writeFileSync(path, source);
+}
+{
+  const path = join(OUT, "agent/index.html");
+  const source = readFileSync(path, "utf8")
+    .replace('src="../workflows/theme.js"', 'src="../theme.js"')
+    .replace(
+      "</head>",
+      `<link rel="stylesheet" href="../shell.css" />${headExtras("../", "../playground/", false)}`,
+    )
+    .replace(
+      '<main class="u-workspace">',
+      `<a class="u-skip" href="#main">Skip to content</a>${makeHeader("../", false, "agent")}<main id="main" class="u-shell-layout u-shell-main s-agent-main">`,
+    )
+    .replace('<a href="../">Uniform Design</a>', '<p class="u-eyebrow">Developer resources</p>')
+    .replace("</body>", `${resourceFooter("../")}<script type="module" src="../shell.js"></script></body>`);
+  writeFileSync(path, source);
 }
 
 // Cache-busting: every local CSS/JS/SVG reference gets ?v=<content hash>. GitHub Pages caches files
@@ -233,9 +350,27 @@ const bust = (file, pattern) => {
   });
   writeFileSync(file, out);
 };
-const IMPORT = /(from ")(\.\.?\/[^"?#]+\.js)(")/g;
-const ATTR = /((?:href|src)=")([^"?#]+\.(?:css|js|svg))(")/g;
-for (const dir of [OUT, join(OUT, "gallery"), join(OUT, "playground")])
-  for (const f of readdirSync(dir).filter((f) => f.endsWith(".js"))) bust(join(dir, f), IMPORT);
-for (const p of ["index.html", "gallery/index.html", "playground/index.html"]) bust(join(OUT, p), ATTR);
+const IMPORT = /(from ")(\.\.?\/[^"?#]+\.m?js)(")/g;
+const ATTR = /((?:href|src)=")([^"?#]+\.(?:css|m?js|svg))(")/g;
+for (const dir of [
+  OUT,
+  join(OUT, "gallery"),
+  join(OUT, "playground"),
+  join(OUT, "agent"),
+  join(OUT, "workflows"),
+])
+  for (const f of readdirSync(dir).filter((f) => /\.m?js$/.test(f))) bust(join(dir, f), IMPORT);
+for (const p of [
+  "index.html",
+  "gallery/index.html",
+  "playground/index.html",
+  "workflows/index.html",
+  "workflows/dashboard.html",
+  "workflows/workspace.html",
+  "workflows/states.html",
+  "workflows/map.html",
+  "agent/index.html",
+  ...routes.map((route) => `workflows/previews/${route.file}`),
+])
+  bust(join(OUT, p), ATTR);
 console.log(`_site/ built for v${version}`);

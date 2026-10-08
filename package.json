@@ -1,6 +1,6 @@
 {
   "name": "@uniform/design",
-  "version": "0.1.12",
+  "version": "0.2.0",
   "description": "Uniform design system: tokens, brand assets, CSS components",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",
@@ -22,19 +22,27 @@
       "default": "./dist/waves.js"
     },
     "./manifest.json": "./dist/manifest.json",
-    "./*": "./dist/*"
+    "./*": "./dist/*",
+    "./catalog.json": "./dist/catalog.json",
+    "./interactions": "./dist/interactions.js",
+    "./agent-api": "./dist/agent-api.mjs"
   },
   "engines": {
     "node": ">=24"
   },
   "scripts": {
     "build": "node build/build.mjs",
-    "check": "prettier --check . && node build/build.mjs --check && node scripts/contrast.mjs && node scripts/forbidden.mjs && node scripts/svg-colors.mjs && node scripts/waves-guard.mjs",
-    "test:a11y": "playwright test"
+    "check": "prettier --check . && node build/build.mjs --check && node scripts/contrast.mjs && node scripts/forbidden.mjs && node scripts/svg-colors.mjs && node scripts/waves-guard.mjs && npm run test:contracts && npm run check:budgets",
+    "test:a11y": "playwright test",
+    "test:contracts": "node build/site.mjs && node --test tests/unit/*.test.mjs",
+    "check:budgets": "node scripts/budgets.mjs",
+    "design": "node scripts/design.mjs",
+    "lint:design": "node scripts/lint-design.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
     "@playwright/test": "1.63.0",
+    "leaflet": "1.9.4",
     "prettier": "3.9.9"
   }
 }

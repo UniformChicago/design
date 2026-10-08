@@ -2,11 +2,14 @@ import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "tests",
+  testIgnore: "**/unit/**",
   reporter: "list",
   use: { baseURL: "http://127.0.0.1:4400" },
   projects: [
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },
     { name: "mobile", use: { ...devices["Pixel 7"] } },
+    { name: "firefox-patterns", testMatch: "workflows.spec.mjs", use: { ...devices["Desktop Firefox"] } },
+    { name: "webkit-patterns", testMatch: "workflows.spec.mjs", use: { ...devices["Desktop Safari"] } },
   ],
   webServer: [
     {
