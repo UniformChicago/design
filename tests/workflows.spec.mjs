@@ -7,6 +7,12 @@ const testMapStyle = {
   sources: {},
   layers: [{ id: "background", type: "background", paint: { "background-color": "#14212b" } }],
 };
+// The map renderer needs WebGL2. GPU-less CI browsers (Linux Firefox) may lack it; real browsers have it.
+const requireWebGL2 = async (page) =>
+  test.skip(
+    !(await page.evaluate(() => Boolean(document.createElement("canvas").getContext("webgl2")))),
+    "This browser build has no WebGL2, which the map renderer needs",
+  );
 test.beforeEach(async ({ page }) => {
   // TEMP diagnostics for Linux Firefox map failures.
   if (test.info().project.name === "firefox-patterns") {
@@ -142,6 +148,7 @@ test("theme follows system until explicitly selected and persists", async ({ pag
 });
 
 test("map filtering retains unlocated records and clears hidden selection", async ({ page }) => {
+  await requireWebGL2(page);
   await page.goto(base + "map.html");
   await page.getByRole("button", { name: "Select Courtyard house" }).click();
   await expect(page.locator('[data-select="courtyard"]')).toHaveAttribute("aria-pressed", "true");
@@ -169,6 +176,7 @@ test("map filtering retains unlocated records and clears hidden selection", asyn
 });
 
 test("marker selection reveals its card without scrolling the page", async ({ page }) => {
+  await requireWebGL2(page);
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto(base + "map.html");
@@ -194,6 +202,7 @@ test("marker selection reveals its card without scrolling the page", async ({ pa
 });
 
 test("map failure and retry preserve filters and selection", async ({ page }) => {
+  await requireWebGL2(page);
   await page.goto(base + "map.html");
   await page.getByLabel("Property type").selectOption("House");
   await page.getByRole("button", { name: "Select Courtyard house", exact: true }).click();
@@ -212,6 +221,7 @@ test("map failure and retry preserve filters and selection", async ({ page }) =>
 });
 
 test("provider style failure retries the request and preserves selection", async ({ page }) => {
+  await requireWebGL2(page);
   let failed = true;
   let requests = 0;
   await page.route("https://tiles.openfreemap.org/styles/*", async (route) => {
@@ -232,6 +242,7 @@ test("provider style failure retries the request and preserves selection", async
 });
 
 test("nearby properties expand into individual markers and regroup when zoomed out", async ({ page }) => {
+  await requireWebGL2(page);
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto(base + "map.html");
@@ -438,6 +449,7 @@ test("native scrolling snaps gently, contains result scrolling and honors reduce
 });
 
 test("selection without coordinates explains the unchanged map and still opens details", async ({ page }) => {
+  await requireWebGL2(page);
   await page.goto(base + "map.html");
   await page.locator('[data-select="studio"]').click();
   await expect(page.locator("[data-selection-title]")).toHaveText("Corner studio");
