@@ -2,6 +2,14 @@
 
 Each release is a `vX.Y.Z` tag with a [GitHub Release](https://github.com/UniformChicago/design/releases): notes from this file, the npm tarball, `SHA256SUMS` and a signed build-provenance attestation. During `0.x`, any release may change markup or class names; read the notes before upgrading.
 
+## v0.2.1 — 2026-10-08
+
+- Show full-width property photos in a swipeable mobile gallery with snapping and numbered captions. Keep the dismiss control fixed while browsing images.
+- Bring property details into view on the first mobile selection from a result card or map marker, including after clearing and reopening selection.
+- Emit selection events after updating the detail content, so event listeners receive a populated panel.
+- Reuse successful CI on the tagged commit instead of rerunning browser tests for tags and releases; cache Playwright browsers in CI.
+- Check the newest CI run for a tagged commit, so older successes or failures cannot override a newer result or interrupt a running check.
+
 ## v0.2.0 — 2026-10-07
 
 - Bring five complete workflow starters into Playground, with isolated live previews and editable markup derived from canonical sources.

@@ -541,3 +541,45 @@ test("map, list and combined views retain selection and filters", async ({ page 
   await expect(page.getByLabel("Property type")).toHaveValue("House");
   await expect(page.locator('[data-select="courtyard"]')).toHaveAttribute("aria-pressed", "true");
 });
+
+test("mobile property photos stay large and scroll without moving the dismiss control", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(base + "map.html");
+  await page.locator('[data-select="courtyard"]').click();
+  const photos = page.locator(".u-property-photos");
+  await photos.scrollIntoViewIfNeeded();
+  const width = await photos.evaluate((element) => element.clientWidth);
+  const sizes = await photos
+    .locator("figure")
+    .evaluateAll((figures) => figures.map((figure) => figure.getBoundingClientRect().width));
+  expect(sizes).toHaveLength(3);
+  for (const size of sizes) expect(size).toBeCloseTo(width, 0);
+  const dismiss = page.locator(".u-property-dismiss");
+  const before = await dismiss.boundingBox();
+  await photos.evaluate((element) => {
+    element.scrollLeft = element.scrollWidth;
+  });
+  await expect.poll(() => photos.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0);
+  expect(await dismiss.boundingBox()).toEqual(before);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});
+
+test("first mobile selection in map and list reveals details and can reopen after dismiss", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto(base + "map.html");
+  await expect(page.locator(".u-map-layout")).toHaveAttribute("data-view", "both");
+  await expect(page.locator("[data-selection-facts]")).toBeHidden();
+  for (const id of ["courtyard", "studio"]) {
+    await page.locator(`[data-select="${id}"]`).click();
+    await expect(page.locator("[data-selection-facts]")).toBeVisible();
+    await expect(page.locator("#map-selection")).toBeFocused();
+    const panel = await page.locator("#map-selection").boundingBox();
+    expect(panel.y).toBeGreaterThanOrEqual(0);
+    expect(panel.y).toBeLessThan(120);
+    await page.getByRole("button", { name: "Clear selection", exact: true }).click();
+    await expect(page.locator("[data-selection-facts]")).toBeHidden();
+  }
+});

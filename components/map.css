@@ -130,7 +130,6 @@
   border-color: var(--u-link);
 }
 
-/* Switch between geographic discovery and a configurable listing gallery. */
 .u-map-views {
   display: flex;
   align-items: center;
@@ -142,9 +141,6 @@
   background: var(--u-hover);
   border-color: var(--u-link);
   color: var(--u-fg);
-}
-.u-map-narrow-label {
-  display: none;
 }
 .u-map-layout[data-view="gallery"] {
   display: block;
@@ -186,7 +182,6 @@
 .u-map-layout[data-view="gallery"] [data-density="compact"] h2 {
   font-size: 17px;
 }
-/* The view switcher shares the filter row, which keeps the top of the explorer to one line. */
 .u-map-toolbar .u-map-views {
   margin-bottom: 0;
 }
@@ -197,12 +192,6 @@
   margin-bottom: var(--u-space-5);
 }
 @media (max-width: 700px) {
-  .u-map-wide-label {
-    display: none;
-  }
-  .u-map-narrow-label {
-    display: inline;
-  }
   .u-map-layout[data-view="gallery"] .u-map-results {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -297,4 +286,43 @@
 }
 [data-state="loading"] [data-map-notice] .u-map-loading-track {
   inset: 0 0 auto;
+}
+
+.u-property-photos {
+  display: contents;
+}
+@media (max-width: 700px) {
+  .u-property-gallery {
+    display: block;
+  }
+  .u-property-photos {
+    display: flex;
+    gap: var(--u-space-3);
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    border-radius: var(--u-radius-md);
+  }
+  .u-property-photos::-webkit-scrollbar {
+    display: none;
+  }
+  .u-property-photos figure {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+  }
+  .u-property-photos figcaption {
+    right: var(--u-space-2);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .u-property-photos {
+    scroll-snap-type: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .u-map-selection {
+    scroll-margin-top: calc(var(--s-header-height, 0px) + var(--u-space-3));
+  }
 }

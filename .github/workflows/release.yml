@@ -41,10 +41,12 @@ jobs:
         run: |
           git merge-base --is-ancestor "$SHA" origin/main || { echo "::error::$SHA is not on main"; exit 1; }
           for _ in $(seq 60); do
-            runs=$(gh api "repos/$GH_REPO/actions/workflows/ci.yml/runs?head_sha=$SHA&event=push&branch=main" \
-              --jq '[.workflow_runs[] | select(.status == "completed") | .conclusion]')
-            if jq -e 'any(. == "success")' <<<"$runs" >/dev/null; then echo "CI passed for $SHA"; exit 0; fi
-            if jq -e 'length > 0' <<<"$runs" >/dev/null; then echo "::error::CI did not pass for $SHA: $runs"; exit 1; fi
+            latest=$(gh api "repos/$GH_REPO/actions/workflows/ci.yml/runs?head_sha=$SHA&event=push&branch=main" \
+              --jq '.workflow_runs | max_by(.id) // null')
+            if jq -e '.status == "completed"' <<<"$latest" >/dev/null; then
+              if jq -e '.conclusion == "success"' <<<"$latest" >/dev/null; then echo "CI passed for $SHA"; exit 0; fi
+              echo "::error::Latest CI did not pass for $SHA: $latest"; exit 1
+            fi
             echo "Waiting for CI on $SHA..."; sleep 30
           done
           echo "::error::No completed CI run for $SHA after 30 minutes"; exit 1

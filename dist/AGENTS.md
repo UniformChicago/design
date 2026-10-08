@@ -1,6 +1,6 @@
 # Uniform Design agent contract
 
-Package version: 0.2.0. Schema: 1.0.0.
+Package version: 0.2.1. Schema: 1.0.0.
 
 Read catalog.json for machine-readable contracts and exact markup. These are preview contracts.
 
@@ -1635,24 +1635,31 @@ Integration:
             <path d="M6 6L18 18M18 6L6 18" />
           </svg>
         </button>
-        <figure>
-          <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <use data-selection-photo href="#property-photo-exterior" />
-          </svg>
-          <figcaption>Exterior · Placeholder</figcaption>
-        </figure>
-        <figure>
-          <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <use href="#property-photo-interior" />
-          </svg>
-          <figcaption>Living space · Placeholder</figcaption>
-        </figure>
-        <figure>
-          <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <use href="#property-photo-outdoor" />
-          </svg>
-          <figcaption>Outdoor space · Placeholder</figcaption>
-        </figure>
+        <div
+          class="u-property-photos"
+          tabindex="0"
+          role="group"
+          aria-label="Property photos. Swipe or use arrow keys to browse three images."
+        >
+          <figure>
+            <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <use data-selection-photo href="#property-photo-exterior" />
+            </svg>
+            <figcaption>Exterior · 1 of 3 · Placeholder</figcaption>
+          </figure>
+          <figure>
+            <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <use href="#property-photo-interior" />
+            </svg>
+            <figcaption>Living space · 2 of 3 · Placeholder</figcaption>
+          </figure>
+          <figure>
+            <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <use href="#property-photo-outdoor" />
+            </svg>
+            <figcaption>Outdoor space · 3 of 3 · Placeholder</figcaption>
+          </figure>
+        </div>
       </div>
       <div class="u-property-summary">
         <div>

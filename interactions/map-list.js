@@ -31,6 +31,16 @@
           behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
         });
     }
+    function revealDetails(keyboard = false) {
+      const panel = root.querySelector(".u-map-selection");
+      const mobile = matchMedia("(max-width: 700px)").matches;
+      if (keyboard || mobile) panel.focus({ preventScroll: true });
+      if (mobile)
+        panel.scrollIntoView({
+          block: "start",
+          behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+        });
+    }
     function syncLocationView() {
       const card = cards.find((item) => item.dataset.property === selected);
       const missing = Boolean(card && !card.hasAttribute("data-lat"));
@@ -60,7 +70,6 @@
         if (pin.dataset.pin === id) pin.setAttribute("aria-current", "true");
         else pin.removeAttribute("aria-current");
       });
-      root.dispatchEvent(new CustomEvent("uniform:map-select", { detail: { id }, bubbles: true }));
       const card = cards.find((card) => card.dataset.property === id);
       syncLocationView();
       const locationNotice = root.querySelector("[data-selection-location-notice]");
@@ -100,6 +109,7 @@
         root.querySelector("[data-selection-location]").textContent =
           card.querySelector(".u-hint").textContent;
       }
+      root.dispatchEvent(new CustomEvent("uniform:map-select", { detail: { id }, bubbles: true }));
     }
     function update() {
       cards.forEach((card) => {
@@ -138,7 +148,8 @@
       if (event.detail.action === "view") {
         trigger = card.querySelector("[data-select]");
         select(id);
-        root.querySelector(".u-map-selection").focus();
+        root.querySelector(".u-map-selection").focus({ preventScroll: true });
+        revealDetails(true);
       } else if (event.detail.action === "save") {
         select(id);
         saveButton?.click();
@@ -173,7 +184,7 @@
         const id = control.dataset.select || control.dataset.pin;
         select(id);
         revealResult(cards.find((card) => card.dataset.property === id));
-        if (event.detail === 0) root.querySelector(".u-map-selection").focus({ preventScroll: true });
+        revealDetails(event.detail === 0);
       }),
     );
     root.querySelectorAll("[data-map-view]").forEach((button) =>
@@ -258,12 +269,14 @@
     });
     const api = {
       preview,
+      revealDetails,
       select(id, origin) {
         if (origin) trigger = origin;
         const card = cards.find((item) => item.dataset.property === id && !item.hidden);
         if (id !== null && !card) throw new Error("Select a visible record id");
         select(id);
         revealResult(card);
+        if (card && origin) revealDetails(false);
       },
       setState: setMapState,
       refresh: update,
@@ -289,7 +302,7 @@
         onPreview: controller.preview,
         onSelect(id, keyboard, origin) {
           controller.select(id, origin);
-          if (keyboard) root.querySelector(".u-map-selection").focus({ preventScroll: true });
+          if (keyboard) controller.revealDetails(true);
         },
       });
     } catch (error) {
