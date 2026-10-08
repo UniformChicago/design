@@ -545,6 +545,7 @@ test("map, list and combined views retain selection and filters", async ({ page 
 
 test("mobile property photos stay large and scroll without moving the dismiss control", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto(base + "map.html");
   await page.locator('[data-select="courtyard"]').click();
   const photos = page.locator(".u-property-photos");
@@ -556,12 +557,18 @@ test("mobile property photos stay large and scroll without moving the dismiss co
   expect(sizes).toHaveLength(3);
   for (const size of sizes) expect(size).toBeCloseTo(width, 0);
   const dismiss = page.locator(".u-property-dismiss");
-  const before = await dismiss.boundingBox();
+  const dismissPosition = () =>
+    dismiss.evaluate((button) => {
+      const bounds = button.getBoundingClientRect();
+      const gallery = button.closest(".u-property-gallery").getBoundingClientRect();
+      return { x: bounds.x - gallery.x, y: bounds.y - gallery.y, width: bounds.width, height: bounds.height };
+    });
+  const before = await dismissPosition();
   await photos.evaluate((element) => {
     element.scrollLeft = element.scrollWidth;
   });
   await expect.poll(() => photos.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0);
-  expect(await dismiss.boundingBox()).toEqual(before);
+  expect(await dismissPosition()).toEqual(before);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
 
