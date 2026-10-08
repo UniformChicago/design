@@ -8,15 +8,7 @@ export default defineConfig({
   projects: [
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },
     { name: "mobile", use: { ...devices["Pixel 7"] } },
-    {
-      name: "firefox-patterns",
-      testMatch: "workflows.spec.mjs",
-      // GPU-less Linux runners block Firefox's software WebGL by default, which the map renderer needs.
-      use: {
-        ...devices["Desktop Firefox"],
-        launchOptions: { firefoxUserPrefs: { "webgl.force-enabled": true } },
-      },
-    },
+    { name: "firefox-patterns", testMatch: "workflows.spec.mjs", use: { ...devices["Desktop Firefox"] } },
     { name: "webkit-patterns", testMatch: "workflows.spec.mjs", use: { ...devices["Desktop Safari"] } },
   ],
   webServer: [
