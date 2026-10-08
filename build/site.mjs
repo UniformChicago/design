@@ -308,7 +308,9 @@ for (const page of ["index.html", "dashboard.html", "workspace.html", "states.ht
     )
     .replace(
       /<nav class="u-nav" aria-label="Mobile patterns">[\s\S]*?<\/nav>/,
-      workspaceNav("../", page).replace(/<p[\s\S]*?<\/p>/, ""),
+      workspaceNav("../", page)
+        .replace(/<p[\s\S]*?<\/p>/, "")
+        .replace('aria-label="Playground library"', 'aria-label="Mobile patterns"'),
     )
     .replace(/<p class="u-eyebrow">Reference patterns<\/p>/, "")
     .replace(/<header class="u-page-header">[\s\S]*?<\/header>/, "")

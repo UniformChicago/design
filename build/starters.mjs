@@ -28,5 +28,5 @@ export function livePreview(route) {
   const scripts = route.script
     ? `<script src="../../dist/map-list.js"></script><script src="../../dist/maplibre.js"></script><script type="module" src="../../workflows/${route.script}"></script>`
     : "";
-  return `<!doctype html><html lang="en"><head>${head}<link rel="stylesheet" href="../../gallery/preview.css" /></head><body class="u-root p-live"><div class="u-app"><main class="u-workspace">${route.body}</main></div>${scripts}</body></html>`;
+  return `<!doctype html><html lang="en"><head>${head}<link rel="stylesheet" href="../../gallery/preview.css" /></head><body class="u-root p-live"><div class="u-app"><main class="u-workspace" aria-label="Live preview">${route.body}</main></div>${scripts}</body></html>`;
 }

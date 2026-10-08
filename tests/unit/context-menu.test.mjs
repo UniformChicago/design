@@ -72,6 +72,8 @@ function harness({ supported = true } = {}) {
     innerHeight: 240,
     URL,
     AbortController,
+    AbortSignal,
+    setTimeout,
     CustomEvent,
     CSS: { escape: (value) => value },
   };
@@ -85,7 +87,7 @@ function harness({ supported = true } = {}) {
     target.dispatchEvent(event);
     return event;
   };
-  return { doc, menu, trigger, items, sheet, dispatch, api: scope.UniformContextMenu };
+  return { doc, win, menu, trigger, items, sheet, dispatch, api: scope.UniformContextMenu };
 }
 test("context menu clamps to the viewport, skips disabled actions and restores keyboard focus", () => {
   const h = harness();
@@ -127,4 +129,18 @@ test("context actions retain their origin and native menus survive unsupported h
   fallback.api.mount(fallback.doc);
   assert.equal(fallback.dispatch(fallback.trigger, "contextmenu").defaultPrevented, false);
   assert.equal(fallback.trigger.hidden, true);
+});
+test("a right-click that is still held opens after release, so the release cannot light-dismiss it", async () => {
+  const h = harness();
+  const dispose = h.api.mount(h.doc);
+  const event = h.dispatch(h.trigger, "contextmenu", { clientX: 40, clientY: 50, buttons: 2 });
+  assert.equal(event.defaultPrevented, true);
+  assert.equal(h.menu.open, false);
+  h.dispatch(h.win, "pointerup");
+  assert.equal(h.menu.open, false);
+  await new Promise((resolve) => setTimeout(resolve));
+  assert.equal(h.menu.open, true);
+  assert.equal(h.sheet.cssRules[0].style.left, "40px");
+  assert.equal(h.doc.activeElement, h.items[0]);
+  dispose();
 });

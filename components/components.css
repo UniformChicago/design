@@ -225,6 +225,8 @@
    <div class="u-table" tabindex="0" role="region" aria-label="Licensee registry"><table>…</table></div> */
 .u-table {
   overflow-x: auto;
+  /* Keeps .u-sr labels from widening the page. */
+  position: relative;
 }
 .u-table:focus-visible {
   outline: 2px solid var(--u-accent);

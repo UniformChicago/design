@@ -36,6 +36,7 @@
       const missing = Boolean(card && !card.hasAttribute("data-lat"));
       const surface = root.querySelector(".u-map-surface");
       const unavailable = surface.dataset.state && surface.dataset.state !== "ready";
+      const failed = surface.dataset.state === "error";
       const notice = root.querySelector("[data-map-location-status]");
       if (notice) {
         notice.hidden = !missing || Boolean(unavailable);
@@ -43,7 +44,7 @@
         if (name) name.textContent = card ? card.querySelector("h2").textContent : "";
       }
       const canvas = root.querySelector(".u-map-canvas");
-      const obscured = Boolean(unavailable || (missing && notice));
+      const obscured = Boolean(failed || (missing && notice));
       canvas.dataset.obscured = String(obscured);
       canvas.inert = obscured;
       canvas.setAttribute("aria-hidden", String(obscured));
@@ -194,21 +195,20 @@
     const stateControl = root.querySelector("[data-map-state]");
     function setMapState(state) {
       const surface = root.querySelector(".u-map-surface");
-      const unavailable = state !== "ready";
       surface.setAttribute("aria-busy", String(state === "loading"));
       surface.dataset.state = state;
-      const canvas = root.querySelector(".u-map-canvas");
-      canvas.dataset.obscured = String(unavailable);
-      canvas.inert = unavailable;
-      canvas.setAttribute("aria-hidden", String(unavailable));
-      root.querySelector("[data-map-notice]").hidden = !unavailable;
+      // While loading the map stays in view (CSS reduces the notice to a progress track); only an
+      // error covers it. Copy changes only for a visible notice, so hiding it never shows error text.
+      root.querySelector("[data-map-notice]").hidden = state === "ready";
       root.querySelector("[data-map-retry]").hidden = state !== "error";
-      root.querySelector("[data-map-notice-title]").textContent =
-        state === "loading" ? "Bringing the map into view" : "The map couldn’t load";
-      root.querySelector("[data-map-notice-copy]").textContent =
-        state === "loading"
-          ? "Keep exploring your results while the map loads."
-          : "Your places are still here. Try again, or continue in the list.";
+      if (state !== "ready") {
+        root.querySelector("[data-map-notice-title]").textContent =
+          state === "loading" ? "Bringing the map into view" : "The map couldn’t load";
+        root.querySelector("[data-map-notice-copy]").textContent =
+          state === "loading"
+            ? "Keep exploring your results while the map loads."
+            : "Your places are still here. Try again, or continue in the list.";
+      }
       root.querySelector("[data-map-announcement]").textContent =
         state === "ready"
           ? "Map ready."

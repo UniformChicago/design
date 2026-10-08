@@ -5,8 +5,11 @@
     lightStyle: "https://tiles.openfreemap.org/styles/positron",
     darkStyle: "https://tiles.openfreemap.org/styles/dark",
   });
+  // A price marker's hit area in pixels; markers closer than this are grouped.
+  const MARKER_WIDTH = 116;
+  const MARKER_HEIGHT = 52;
   // Group intersecting marker hit areas in screen space, independent of tile provider.
-  function clusterPoints(points, width = 116, height = 52) {
+  function clusterPoints(points, width = MARKER_WIDTH, height = MARKER_HEIGHT) {
     const parents = points.map((_, index) => index);
     const find = (index) => {
       while (parents[index] !== index) {
@@ -190,9 +193,24 @@
               }
               const bounds = new M.LngLatBounds();
               for (const record of members) bounds.extend([record.location[1], record.location[0]]);
-              map.fitBounds(bounds, {
-                padding: 70,
-                maxZoom: Math.min(map.getMaxZoom(), map.getZoom() + 3),
+              // Zoom just far enough that no two members overlap, so one step back regroups them.
+              // Screen distances double with each zoom level.
+              const projected = members.map((record) =>
+                map.project([record.location[1], record.location[0]]),
+              );
+              let factor = 1;
+              for (let i = 0; i < projected.length; i++)
+                for (let j = i + 1; j < projected.length; j++) {
+                  const dx = Math.abs(projected[i].x - projected[j].x);
+                  const dy = Math.abs(projected[i].y - projected[j].y);
+                  factor = Math.max(
+                    factor,
+                    Math.min(dx ? MARKER_WIDTH / dx : Infinity, dy ? MARKER_HEIGHT / dy : Infinity),
+                  );
+                }
+              map.easeTo({
+                center: bounds.getCenter(),
+                zoom: Math.min(map.getMaxZoom(), map.getZoom() + Math.log2(factor) + 0.1),
                 duration: reduced() ? 0 : 300,
               });
               if (event.detail === 0) root.focus({ preventScroll: true });

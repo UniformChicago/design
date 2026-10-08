@@ -101,9 +101,11 @@ html {
     height: auto;
     max-height: none;
     border-right: 0;
+    padding-block: var(--u-space-3);
   }
   .s-pattern-layout > .u-app-nav > .u-eyebrow {
-    margin: 0;
+    /* The collapsed menu below already names this section; keep the mobile masthead compact. */
+    display: none;
   }
 }
 @media (max-width: 520px) {

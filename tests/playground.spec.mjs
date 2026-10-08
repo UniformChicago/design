@@ -111,7 +111,9 @@ test("switching lab starters and states keeps the frame and controls in place", 
       .evaluateAll((nodes) =>
         nodes.map((node) => {
           const rect = node.getBoundingClientRect();
-          return [rect.x, rect.y + window.scrollY, rect.width, rect.height].map(Math.round);
+          // Choosing a lower starter scrolls the library; measure its panel within that scroll.
+          const scrolled = node.closest(".g-library")?.scrollTop ?? 0;
+          return [rect.x, rect.y + window.scrollY + scrolled, rect.width, rect.height].map(Math.round);
         }),
       );
   const initial = await geometry();

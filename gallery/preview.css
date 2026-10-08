@@ -33,6 +33,12 @@ html {
 .p-live .u-workspace {
   padding: var(--u-space-5);
 }
+/* Starter markup is workspace content: match the live preview's workspace title scale. */
+.p-markup .u-page-title {
+  max-width: 19ch;
+  font-size: clamp(32px, 3.5vw, 48px);
+  letter-spacing: -0.045em;
+}
 html {
   scrollbar-width: none;
 }
