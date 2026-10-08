@@ -568,6 +568,15 @@ test("mobile property photos stay large and scroll without moving the dismiss co
     element.scrollLeft = element.scrollWidth;
   });
   await expect.poll(() => photos.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0);
+  // A partial swipe must settle on a complete photo even with reduced motion.
+  const snap = await photos.evaluate((element) => {
+    element.scrollLeft = 0;
+    const stride =
+      element.children[1].getBoundingClientRect().left - element.children[0].getBoundingClientRect().left;
+    element.scrollLeft = stride * 0.7;
+    return stride;
+  });
+  await expect.poll(() => photos.evaluate((element) => element.scrollLeft)).toBeCloseTo(snap, 0);
   expect(await dismissPosition()).toEqual(before);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });

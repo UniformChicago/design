@@ -46,6 +46,7 @@ function syncPreview() {
   if (live && liveFrame.getAttribute("src") !== active.live) liveFrame.src = active.live;
   if (liveFrame.contentDocument?.documentElement)
     liveFrame.contentDocument.documentElement.dataset.theme = theme;
+  requestAnimationFrame(() => sizePreview(live ? liveFrame : frame));
   $("preview-mode-label").textContent = live ? "Interactive preview" : "Markup preview";
   document.querySelectorAll("[data-preview-mode]").forEach((button) => {
     button.disabled = button.dataset.previewMode === "live" && !active.live;
@@ -53,6 +54,76 @@ function syncPreview() {
   });
 }
 liveFrame.addEventListener("load", syncPreview);
+// Let mobile previews grow with their content. HTML height attributes keep this CSP-safe.
+const phone = matchMedia("(max-width: 700px)");
+const previewObservers = new Map();
+function sizePreview(target) {
+  const body = target.contentDocument?.body;
+  if (!phone.matches || target.hidden || !body) return;
+  target.height = String(Math.max(240, Math.ceil(body.getBoundingClientRect().height)));
+  target.contentWindow.scrollTo({ top: 0, behavior: "instant" });
+}
+function watchPreview(target) {
+  previewObservers.get(target)?.disconnect();
+  const doc = target.contentDocument;
+  if (!doc?.body) return;
+  const observer = new ResizeObserver(() => sizePreview(target));
+  observer.observe(doc.body);
+  previewObservers.set(target, observer);
+  sizePreview(target);
+  let revealRequested = false;
+  let lastSelected;
+  const selectionControl =
+    '[data-select], [data-pin], .u-map-price, [data-map-dismiss], [data-u-context-action="view"]';
+  const intent = (event) => {
+    revealRequested = Boolean(event.target.closest(selectionControl)) || event.key === "Escape";
+  };
+  doc.addEventListener("click", intent, true);
+  doc.addEventListener("keydown", intent, true);
+  doc.addEventListener(
+    "change",
+    () => {
+      revealRequested = false;
+    },
+    true,
+  );
+  doc.addEventListener("uniform:map-select", (event) => {
+    const previous = lastSelected;
+    lastSelected = event.detail.id;
+    if (!phone.matches || target.hidden || !revealRequested) return;
+    revealRequested = false;
+    requestAnimationFrame(() => {
+      sizePreview(target);
+      requestAnimationFrame(() => {
+        const details = event.detail.id
+          ? doc.querySelector(".u-map-selection")
+          : doc.querySelector(`[data-property="${CSS.escape(previous ?? "")}"]`);
+        if (!details || details.hidden) return;
+        const header = document.querySelector(".u-shell-header")?.getBoundingClientRect().height ?? 64;
+        window.scrollTo({
+          top:
+            window.scrollY +
+            target.getBoundingClientRect().top +
+            details.getBoundingClientRect().top -
+            header -
+            12,
+          behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+        });
+      });
+    });
+  });
+}
+for (const target of [frame, liveFrame]) {
+  target.addEventListener("load", () => watchPreview(target));
+  if (target.contentDocument?.readyState === "complete") watchPreview(target);
+}
+phone.addEventListener("change", () => {
+  for (const target of [frame, liveFrame]) sizePreview(target);
+});
+window.addEventListener("resize", () => {
+  for (const target of [frame, liveFrame]) sizePreview(target);
+});
+
 function render(forceMarkup = true) {
   if (forceMarkup) mode = "markup";
   clearTimeout(renderTimer);

@@ -299,7 +299,7 @@
     display: flex;
     gap: var(--u-space-3);
     overflow-x: auto;
-    scroll-snap-type: x proximity;
+    scroll-snap-type: x mandatory;
     overscroll-behavior-x: contain;
     scrollbar-width: none;
     border-radius: var(--u-radius-md);
@@ -310,17 +310,12 @@
   .u-property-photos figure {
     flex: 0 0 100%;
     scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
   .u-property-photos figcaption {
     right: var(--u-space-2);
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  .u-property-photos {
-    scroll-snap-type: none;
-  }
-}
-
 @media (max-width: 700px) {
   .u-map-selection {
     scroll-margin-top: calc(var(--s-header-height, 0px) + var(--u-space-3));

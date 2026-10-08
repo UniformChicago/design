@@ -32,7 +32,7 @@ Uniform Design brings brand tokens, CSS components, and self-hosted typography i
 
 ### Status and scope
 
-**Early foundation · v0.2.1.** This preview supplies visual primitives, application components, agent contracts and editable workflow starters. It is not yet a complete application UI framework or an accessibility certification. Pin a release and test it in your application before upgrading.
+**Early foundation · v0.2.2.** This preview supplies visual primitives, application components, agent contracts and editable workflow starters. It is not yet a complete application UI framework or an accessibility certification. Pin a release and test it in your application before upgrading.
 
 The direction is a shared foundation for more real estate experiences. Today, routing, authentication, data handling, interactive widget behavior, and regulatory requirements belong to the consuming application. Preview additions include native dialogs and optional frontend interactions. Custom comboboxes, date pickers and application backends are outside the current scope.
 
@@ -41,7 +41,7 @@ The direction is a shared foundation for more real estate experiences. Today, ro
 ### 1. Install a pinned release
 
 ```sh
-npm install --save-exact github:UniformChicago/design#v0.2.1
+npm install --save-exact github:UniformChicago/design#v0.2.2
 ```
 
 The package name is `@uniform/design`. It installs from a Git tag; there is no registry package ([why](docs/adr/0001-releases-not-a-registry.md)). Each tag has a [GitHub Release](https://github.com/UniformChicago/design/releases) with the tarball, `SHA256SUMS` and a signed provenance attestation. The package declares Node 24 or newer; repository development uses the version in [`.nvmrc`](.nvmrc).

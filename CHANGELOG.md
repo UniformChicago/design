@@ -2,6 +2,14 @@
 
 Each release is a `vX.Y.Z` tag with a [GitHub Release](https://github.com/UniformChicago/design/releases): notes from this file, the npm tarball, `SHA256SUMS` and a signed build-provenance attestation. During `0.x`, any release may change markup or class names; read the notes before upgrading.
 
+## v0.2.2 — 2026-10-08
+
+- Give Playground a full-width mobile canvas with compact controls and optional customization. Remove nested preview borders and repeated introductory text on phones.
+- Let mobile previews grow with their content and scroll with the page, including when a property detail panel opens. Preserve the fixed desktop workspace.
+- Show large listing images and horizontally swipeable results in the combined mobile preview.
+- Snap mobile property photos to complete images, including with reduced motion enabled; keep the dismiss control outside the scrolling track.
+- Verify 320–700px layouts, first detail selection, both themes, simulated finger swipes and cross-browser photo snapping.
+
 ## v0.2.1 — 2026-10-08
 
 - Show full-width property photos in a swipeable mobile gallery with snapping and numbered captions. Keep the dismiss control fixed while browsing images.

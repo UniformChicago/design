@@ -70,10 +70,11 @@ test("all starter states render accessibly in both themes", async ({ page }) => 
   await specimen.close();
   // On phones the width toggle is hidden: the preview is already mobile width.
   const mobile = page.getByRole("button", { name: "Mobile", exact: true });
-  if (await mobile.isVisible()) await mobile.click();
+  const desktop = await mobile.isVisible();
+  if (desktop) await mobile.click();
   expect(
     await page.locator("#preview").evaluate((el) => el.getBoundingClientRect().width),
-  ).toBeLessThanOrEqual(390);
+  ).toBeLessThanOrEqual(desktop ? 390 : page.viewportSize().width);
 });
 
 test("edited HTML cannot execute scripts, navigate links, or load external resources", async ({ page }) => {
@@ -109,12 +110,24 @@ test("switching lab starters and states keeps the frame and controls in place", 
     page
       .locator(".g-stage, .g-toolbar, #canvas, .g-customize, .g-preview-footer, .g-editor")
       .evaluateAll((nodes) =>
-        nodes.map((node) => {
-          const rect = node.getBoundingClientRect();
-          // Choosing a lower starter scrolls the library; measure its panel within that scroll.
-          const scrolled = node.closest(".g-library")?.scrollTop ?? 0;
-          return [rect.x, rect.y + window.scrollY + scrolled, rect.width, rect.height].map(Math.round);
-        }),
+        nodes
+          .filter(
+            (node) =>
+              !matchMedia("(max-width: 700px)").matches || !node.matches(".g-preview-footer, .g-editor"),
+          )
+          .map((node) => {
+            const rect = node.getBoundingClientRect();
+            // Choosing a lower starter scrolls the library; measure its panel within that scroll.
+            const scrolled = node.closest(".g-library")?.scrollTop ?? 0;
+            return [
+              rect.x,
+              rect.y + window.scrollY + scrolled,
+              rect.width,
+              ...(matchMedia("(max-width: 700px)").matches && node.matches(".g-stage, #canvas")
+                ? []
+                : [rect.height]),
+            ].map(Math.round);
+          }),
       );
   const initial = await geometry();
   for (const id of await page
@@ -144,7 +157,14 @@ test("the initial lab is visible and keeps its geometry while JavaScript initial
     page.locator("#workspace, .g-library, .g-stage, #canvas, .g-customize").evaluateAll((nodes) =>
       nodes.map((node) => {
         const rect = node.getBoundingClientRect();
-        return [rect.x, rect.y + window.scrollY, rect.width, rect.height].map(Math.round);
+        return [
+          rect.x,
+          rect.y + window.scrollY,
+          rect.width,
+          ...(matchMedia("(max-width: 700px)").matches && node.matches("#workspace, .g-stage, #canvas")
+            ? []
+            : [rect.height]),
+        ].map(Math.round);
       }),
     );
   const before = await geometry();
@@ -227,3 +247,94 @@ test("phone starter picker shows full names and stacks customization fields", as
     await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth),
   ).toBe(true);
 });
+
+for (const width of [320, 390, 430, 700]) {
+  test(`phone preview uses the viewport and keeps listing content close at ${width}px`, async ({
+    page,
+  }, info) => {
+    await page.setViewportSize({ width, height: 844 });
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto(SITE + "#map-list");
+    const live = page.frameLocator("#live-preview");
+    const frame = page.locator("#live-preview");
+    const photo = live.locator(".u-property-thumbnail").first();
+    await expect(photo).toBeVisible();
+    await expect
+      .poll(() =>
+        frame.evaluate((el) =>
+          Math.abs(el.clientHeight - el.contentDocument.body.getBoundingClientRect().height),
+        ),
+      )
+      .toBeLessThanOrEqual(1);
+    const canvas = await page.locator("#canvas").boundingBox();
+    expect(canvas.y).toBeLessThan(280);
+    expect(canvas.width).toBe(width);
+    const bounds = await photo.boundingBox();
+    expect(bounds.width).toBeGreaterThanOrEqual(width - 34);
+    expect(bounds.y).toBeLessThan(500);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await page.screenshot({ path: info.outputPath("phone-preview.png") });
+    await live.locator('[data-select="courtyard"]').click();
+    const photos = live.locator(".u-property-photos");
+    await expect(photos).toBeVisible();
+    await expect.poll(async () => (await photos.boundingBox()).y).toBeGreaterThanOrEqual(64);
+    await expect.poll(async () => (await photos.boundingBox()).y).toBeLessThan(180);
+    const snap = await photos.evaluate((el) => {
+      const second = el.children[1];
+      const target = second.getBoundingClientRect().left - el.getBoundingClientRect().left + el.scrollLeft;
+      el.scrollLeft = target * 0.7;
+      return target;
+    });
+    await expect.poll(() => photos.evaluate((el) => el.scrollLeft)).toBeCloseTo(snap, 0);
+    if (width === 390) {
+      await photos.evaluate((el) => {
+        el.scrollLeft = 0;
+      });
+      await expect.poll(() => photos.evaluate((el) => el.scrollLeft)).toBe(0);
+      const box = await photos.boundingBox();
+      const session = await page.context().newCDPSession(page);
+      const y = box.y + box.height / 2;
+      const start = box.x + box.width - 24;
+      await session.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: start, y }] });
+      for (let step = 1; step <= 8; step++) {
+        await session.send("Input.dispatchTouchEvent", {
+          type: "touchMove",
+          touchPoints: [{ x: start - ((box.width - 48) * step) / 8, y }],
+        });
+        await page.waitForTimeout(16); // Simulate a finger moving over successive display frames.
+      }
+      await session.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+      await session.detach();
+      await expect.poll(() => photos.evaluate((el) => el.scrollLeft)).toBeGreaterThan(0);
+      await expect
+        .poll(() =>
+          photos.evaluate(
+            (el, stride) => Math.abs(el.scrollLeft / stride - Math.round(el.scrollLeft / stride)),
+            snap,
+          ),
+        )
+        .toBeLessThan(0.01);
+    }
+    const secondPhoto = await photos.locator("figure").nth(1).boundingBox();
+    expect(secondPhoto.width).toBeGreaterThanOrEqual(width - 34);
+    for (const theme of ["light", "dark"]) {
+      await page.locator(`[data-theme-choice="${theme}"]`).click();
+      await expect(live.locator("html")).toHaveAttribute("data-theme", theme);
+      await photos.scrollIntoViewIfNeeded();
+      await page.screenshot({ path: info.outputPath(`phone-photos-${theme}.png`) });
+    }
+    const filter = live.getByLabel("Property type", { exact: true });
+    await filter.scrollIntoViewIfNeeded();
+    const filterPosition = await page.evaluate(() => scrollY);
+    await filter.selectOption("House");
+    await expect(live.locator("[data-map-count]")).toHaveText("2 properties · 2 on map");
+    await page.evaluate(
+      () => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))),
+    );
+    expect(await page.evaluate(() => scrollY)).toBe(filterPosition);
+    await live.getByRole("button", { name: "Clear selection", exact: true }).click();
+    await expect(live.locator("[data-selection-facts]")).toBeHidden();
+    await expect.poll(async () => (await photo.boundingBox()).y).toBeGreaterThanOrEqual(64);
+    await expect.poll(async () => (await photo.boundingBox()).y).toBeLessThan(180);
+  });
+}

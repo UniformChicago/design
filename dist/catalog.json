@@ -1203,7 +1203,7 @@
     "Do not assume a preview component is certified or stable.",
     "Keep application policy and server authorization out of the design package."
   ],
-  "version": "0.2.1",
+  "version": "0.2.2",
   "tokens": {
     "color": {
       "ink": "#14212b",
