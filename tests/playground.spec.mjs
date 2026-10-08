@@ -268,7 +268,8 @@ for (const width of [320, 390, 430, 700]) {
       .toBeLessThanOrEqual(1);
     const canvas = await page.locator("#canvas").boundingBox();
     expect(canvas.y).toBeLessThan(280);
-    const availableWidth = await page.evaluate(() => document.documentElement.clientWidth);
+    // A reserved desktop scrollbar gutter can be included in html.clientWidth.
+    const availableWidth = await page.evaluate(() => document.body.getBoundingClientRect().width);
     expect(canvas.width).toBe(availableWidth);
     const bounds = await photo.boundingBox();
     expect(bounds.width).toBeGreaterThanOrEqual(availableWidth - 34);
