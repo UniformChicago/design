@@ -106,7 +106,7 @@ html {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--u-space-1) var(--u-space-2) var(--u-space-1) var(--u-space-5);
+  padding: 0 var(--u-space-2) 0 var(--u-space-5);
   border-bottom: 1px solid var(--u-line);
   color: var(--u-muted);
   font: 500 11px/1 var(--u-font-mono);

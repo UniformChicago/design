@@ -107,9 +107,24 @@
           .find((item) => !item.disabled && !item.hidden)
           ?.focus({ preventScroll: true });
       };
-      listen(trigger, "contextmenu", (event) =>
-        open(event, event.detail === 0 && event.clientX === 0 && event.clientY === 0),
-      );
+      listen(trigger, "contextmenu", (event) => {
+        const keyboard = event.detail === 0 && event.clientX === 0 && event.clientY === 0;
+        if (keyboard || !event.buttons || event.shiftKey) return open(event, keyboard);
+        // macOS, Linux and touch long-press fire contextmenu while the pointer is still down; the
+        // release would light-dismiss a popover opened now, so open once it has been handled.
+        event.preventDefault();
+        const release = new AbortController();
+        const show = () => {
+          release.abort();
+          setTimeout(() => open(event));
+        };
+        for (const type of ["pointerup", "pointercancel"])
+          listen(window, type, show, {
+            capture: true,
+            once: true,
+            signal: AbortSignal.any([abort.signal, release.signal]),
+          });
+      });
       listen(trigger, "keydown", (event) => {
         if (event.key === "ContextMenu" || (event.shiftKey && event.key === "F10")) open(event, true);
       });

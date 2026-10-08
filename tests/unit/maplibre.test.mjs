@@ -49,6 +49,9 @@ function harness() {
       this.fitOptions = options;
       this.bounds = bounds;
     }
+    easeTo(options) {
+      this.easeOptions = options;
+    }
     getCenter() {
       return { lng: 3, lat: 4 };
     }
@@ -98,6 +101,9 @@ function harness() {
     AttributionControl: class {},
     LngLatBounds: class {
       extend() {}
+      getCenter() {
+        return { lng: -87.05, lat: 41.05 };
+      }
     },
   };
   const scope = {
@@ -246,15 +252,19 @@ test("same-location group opens member choices and filtering recalculates counts
   }
 });
 
-test("separated cluster zooms on activation and clustering can be disabled", () => {
+test("separated cluster zooms just far enough to split on activation and clustering can be disabled", () => {
   const items = [records[0], { ...records[0], id: "c", location: [41.1, -87.1] }];
   const h = harness();
   const api = h.adapter.mount(h.root, { maplibre: h.M, records: items });
   try {
     assert.equal(h.markers.length, 1);
     h.markers[0].button.dispatchEvent(new Event("click"));
-    assert.equal(h.maps[0].fitOptions.maxZoom, 10);
-    assert.equal(h.maps[0].fitOptions.duration, 0);
+    // 10px apart on both axes: the 52px-tall hit area needs 5.2x, i.e. log2(5.2) levels, plus a margin.
+    const { zoom, center, duration } = h.maps[0].easeOptions;
+    assert.ok(Math.abs(zoom - (7 + Math.log2(5.2) + 0.1)) < 1e-9);
+    assert.ok(10 * 2 ** (zoom - 7 - 1) < 52, "one level back regroups the members");
+    assert.deepEqual(center, { lng: -87.05, lat: 41.05 });
+    assert.equal(duration, 0);
     assert.equal(h.root.parentElement.children.length, 0);
   } finally {
     api.destroy();

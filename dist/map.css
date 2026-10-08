@@ -186,8 +186,15 @@
 .u-map-layout[data-view="gallery"] [data-density="compact"] h2 {
   font-size: 17px;
 }
-.u-map-views > details {
-  flex-basis: 100%;
+/* The view switcher shares the filter row, which keeps the top of the explorer to one line. */
+.u-map-toolbar .u-map-views {
+  margin-bottom: 0;
+}
+[data-map-gallery-controls] {
+  margin-bottom: var(--u-space-4);
+}
+.u-page-header:has(+ [data-map-preview]) {
+  margin-bottom: var(--u-space-5);
 }
 @media (max-width: 700px) {
   .u-map-wide-label {
@@ -250,4 +257,44 @@
     grid-template-columns: 80px minmax(0, 1fr);
     padding: var(--u-space-3);
   }
+}
+@media (max-width: 700px) {
+  /* Phones: the filter and its reset share a row; views scroll as one row of chips. */
+  .u-map-toolbar .u-field {
+    flex: 1 1 0;
+  }
+  .u-map-toolbar .u-map-views {
+    flex: 1 1 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .u-map-toolbar .u-map-views::-webkit-scrollbar {
+    display: none;
+  }
+  .u-map-toolbar .u-map-views .u-button {
+    flex: none;
+    white-space: nowrap;
+  }
+}
+/* Loading keeps the map in view with only the progress track; the full card is for errors. */
+.u-map-surface[data-state="loading"] [data-map-notice] {
+  padding: 0;
+  background: none;
+  pointer-events: none;
+}
+[data-state="loading"]
+  [data-map-notice]
+  :is(.u-map-state-art, .u-map-state-icon, .u-map-state-message, .u-map-state-actions) {
+  display: none;
+}
+[data-state="loading"] [data-map-notice] .u-map-state-card {
+  position: static;
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+[data-state="loading"] [data-map-notice] .u-map-loading-track {
+  inset: 0 0 auto;
 }

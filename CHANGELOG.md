@@ -25,6 +25,12 @@ Each release is a `vX.Y.Z` tag with a [GitHub Release](https://github.com/Unifor
 - Add preview application components, native interactions, agent contracts, CLI validation and seven read-only WebMCP tools.
 - Add reference workflows for intake, dashboards, searchable collections, component states and linked maps with optional MapLibre/Leaflet assets.
 - Include Firefox and WebKit in the release workflow's browser installation, matching the configured test projects.
+- Keep the map in view while it loads, with only a progress track; the full notice is reserved for errors, and hiding it no longer shows error text.
+- Fit the view switcher into the filter row and tighten the space below the page title; phones keep the filter and reset on one row with scrolling view chips.
+- Redraw the listing placeholder photos as filled, theme-aware illustrations that cover their frames.
+- Open right-click context menus after the button is released, so the release no longer dismisses them on macOS and Linux.
+- Expand a marker group just far enough to separate its properties, so one zoom-out regroups them.
+- Contain screen-reader labels inside scrolling tables, label the workflow navigation and live preview landmarks, and make the agent commands block keyboard-scrollable.
 
 ## v0.1.12 — 2026-10-04
 

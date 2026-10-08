@@ -19,7 +19,7 @@
   <body class="u-root">
     <a class="u-skip" href="#main">Skip to content</a>
     <div class="u-app">
-      <aside class="u-app-nav">
+      <aside class="u-app-nav" aria-label="Workflows">
         <a class="u-app-brand" href="../" aria-label="Uniform Design"
           ><img
             class="u-app-brand-dark"
@@ -98,81 +98,93 @@
 <section data-map-preview aria-label="Sample property explorer">
   <svg class="u-sr" aria-hidden="true" focusable="false">
     <defs>
-      <symbol id="property-photo-exterior" viewBox="0 0 480 300">
+      <linearGradient id="property-photo-sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="var(--u-link)" stop-opacity="0.28" />
+        <stop offset="1" stop-color="var(--u-link)" stop-opacity="0.04" />
+      </linearGradient>
+      <symbol id="property-photo-exterior" viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice">
         <rect width="480" height="300" fill="var(--u-surface)" />
-        <path d="M0 225H480V300H0Z" fill="var(--u-hover)" />
-        <path d="M105 145L235 63L365 145" fill="none" stroke="var(--u-muted)" stroke-width="6" />
-        <path d="M125 147H345V247H125Z" fill="var(--u-bg)" stroke="var(--u-muted)" stroke-width="3" />
-        <path
-          d="M212 185H257V247H212Z M150 173H187V205H150Z M282 173H319V205H282Z"
-          fill="var(--u-hover)"
-          stroke="var(--u-muted)"
-          stroke-width="3"
-        />
-        <path
-          d="M386 248V168 M364 177Q386 105 408 177Z"
-          fill="var(--u-hover)"
-          stroke="var(--u-muted)"
-          stroke-width="3"
-        />
+        <rect width="480" height="300" fill="url(#property-photo-sky)" />
+        <path d="M0 200Q120 150 240 185T480 170V300H0Z" fill="var(--u-line)" opacity="0.5" />
+        <path d="M0 232H480V300H0Z" fill="var(--u-hover)" />
+        <ellipse cx="240" cy="250" rx="170" ry="9" fill="var(--u-bg)" opacity="0.5" />
+        <path d="M130 150H350V248H130Z" fill="var(--u-bg)" />
+        <path d="M290 150H350V248H290Z" fill="var(--u-fg)" opacity="0.06" />
+        <path d="M110 154L240 74L370 154Z" fill="var(--u-muted)" opacity="0.7" />
+        <path d="M240 74L370 154H330L240 98Z" fill="var(--u-fg)" opacity="0.12" />
+        <path d="M300 92H322V122L300 108Z" fill="var(--u-muted)" opacity="0.7" />
+        <path d="M156 176H196V208H156Z M284 176H324V208H284Z" fill="var(--u-accent)" opacity="0.55" />
+        <path d="M218 188H262V248H218Z" fill="var(--u-hover)" />
+        <path d="M384 250V196" stroke="var(--u-muted)" stroke-width="6" stroke-linecap="round" />
+        <circle cx="384" cy="176" r="30" fill="var(--u-ok)" opacity="0.45" />
+        <circle cx="398" cy="190" r="20" fill="var(--u-ok)" opacity="0.3" />
+        <circle cx="86" cy="206" r="24" fill="var(--u-ok)" opacity="0.35" />
       </symbol>
-      <symbol id="property-photo-apartment" viewBox="0 0 480 300">
+      <symbol id="property-photo-apartment" viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice">
         <rect width="480" height="300" fill="var(--u-surface)" />
-        <path d="M0 250H480V300H0Z" fill="var(--u-hover)" />
-        <rect
-          x="135"
-          y="50"
-          width="210"
-          height="210"
-          rx="3"
-          fill="var(--u-bg)"
-          stroke="var(--u-muted)"
-          stroke-width="3"
+        <rect width="480" height="300" fill="url(#property-photo-sky)" />
+        <path d="M30 120H120V260H30Z M360 90H450V260H360Z" fill="var(--u-line)" opacity="0.55" />
+        <path d="M0 254H480V300H0Z" fill="var(--u-hover)" />
+        <path d="M140 46H340V256H140Z" fill="var(--u-bg)" />
+        <path d="M290 46H340V256H290Z" fill="var(--u-fg)" opacity="0.06" />
+        <path d="M132 40H348V50H132Z" fill="var(--u-muted)" opacity="0.7" />
+        <path
+          d="M164 76H200V106H164Z M222 76H258V106H222Z M164 132H200V162H164Z M280 132H316V162H280Z M222 188H258V218H222Z"
+          fill="var(--u-accent)"
+          opacity="0.55"
         />
         <path
-          d="M158 83H198V114H158Z M220 83H260V114H220Z M282 83H322V114H282Z M158 139H198V170H158Z M220 139H260V170H220Z M282 139H322V170H282Z M158 195H198V226H158Z M282 195H322V226H282Z M220 210H260V260H220Z"
+          d="M280 76H316V106H280Z M222 132H258V162H222Z M164 188H200V218H164Z M280 188H316V218H280Z"
           fill="var(--u-hover)"
-          stroke="var(--u-muted)"
-          stroke-width="3"
         />
+        <path d="M218 230H262V256H218Z" fill="var(--u-hover)" />
+        <path d="M210 226H270V232H210Z" fill="var(--u-muted)" opacity="0.7" />
       </symbol>
-      <symbol id="property-photo-interior" viewBox="0 0 480 300">
-        <rect width="480" height="300" fill="var(--u-surface)" />
-        <path
-          d="M60 50H420V235H60Z M60 235L0 300H480L420 235"
-          fill="var(--u-bg)"
-          stroke="var(--u-muted)"
-          stroke-width="3"
-        />
-        <path
-          d="M98 85H200V175H98Z M149 85V175 M98 130H200"
-          fill="var(--u-hover)"
-          stroke="var(--u-muted)"
-          stroke-width="3"
-        />
-        <path
-          d="M242 158H370V215H242Z M232 212H380V240H232Z M250 240V260 M364 240V260"
-          fill="var(--u-hover)"
-          stroke="var(--u-muted)"
-          stroke-width="3"
-        />
-      </symbol>
-      <symbol id="property-photo-outdoor" viewBox="0 0 480 300">
+      <symbol id="property-photo-interior" viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice">
         <rect width="480" height="300" fill="var(--u-surface)" />
         <path d="M0 220H480V300H0Z" fill="var(--u-hover)" />
+        <path d="M0 220H480" stroke="var(--u-line)" stroke-width="4" />
+        <path d="M80 50H220V170H80Z" fill="url(#property-photo-sky)" />
         <path
-          d="M45 225V135H435V225 M95 135V225 M145 135V225 M335 135V225 M385 135V225"
+          d="M80 50H220V170H80Z M150 50V170 M80 110H220"
           fill="none"
-          stroke="var(--u-muted)"
-          stroke-width="3"
+          stroke="var(--u-line)"
+          stroke-width="6"
+        />
+        <path d="M60 170H240V178H60Z" fill="var(--u-muted)" opacity="0.5" />
+        <path d="M352 52V96" stroke="var(--u-muted)" stroke-width="3" />
+        <path d="M330 96H374L364 120H340Z" fill="var(--u-accent)" opacity="0.6" />
+        <ellipse cx="300" cy="258" rx="130" ry="8" fill="var(--u-bg)" opacity="0.5" />
+        <path
+          d="M200 176Q200 160 216 160H384Q400 160 400 176V214H200Z"
+          fill="var(--u-muted)"
+          opacity="0.55"
         />
         <path
-          d="M150 216H330L360 275H120Z M192 190H287V215H192Z M209 215V248 M270 215V248 M86 218V110"
-          fill="var(--u-bg)"
-          stroke="var(--u-muted)"
-          stroke-width="3"
+          d="M184 206Q184 194 196 194H404Q416 194 416 206V246H184Z"
+          fill="var(--u-muted)"
+          opacity="0.75"
         />
-        <circle cx="86" cy="94" r="38" fill="var(--u-hover)" stroke="var(--u-muted)" stroke-width="3" />
+        <path d="M200 246V258 M400 246V258" stroke="var(--u-muted)" stroke-width="6" />
+        <rect x="222" y="172" width="44" height="30" rx="8" fill="var(--u-accent)" opacity="0.45" />
+        <path d="M60 230H130V244H60Z" fill="var(--u-bg)" />
+        <circle cx="95" cy="214" r="18" fill="var(--u-ok)" opacity="0.4" />
+      </symbol>
+      <symbol id="property-photo-outdoor" viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice">
+        <rect width="480" height="300" fill="var(--u-surface)" />
+        <rect width="480" height="300" fill="url(#property-photo-sky)" />
+        <circle cx="390" cy="70" r="26" fill="var(--u-accent)" opacity="0.45" />
+        <path d="M0 214H480V300H0Z" fill="var(--u-ok)" opacity="0.22" />
+        <path d="M30 214V140H450V214Z" fill="var(--u-line)" opacity="0.35" />
+        <path d="M30 140H450 M30 160H450" stroke="var(--u-muted)" stroke-width="4" opacity="0.6" />
+        <path d="M150 232H330L362 280H118Z" fill="var(--u-hover)" />
+        <path d="M188 196H292V224H188Z" fill="var(--u-muted)" opacity="0.7" />
+        <path d="M200 224V256 M280 224V256" stroke="var(--u-muted)" stroke-width="6" />
+        <path d="M240 120V196" stroke="var(--u-muted)" stroke-width="4" />
+        <path d="M186 132Q240 96 294 132Z" fill="var(--u-accent)" opacity="0.5" />
+        <path d="M86 218V140" stroke="var(--u-muted)" stroke-width="6" stroke-linecap="round" />
+        <circle cx="86" cy="116" r="40" fill="var(--u-ok)" opacity="0.45" />
+        <circle cx="62" cy="134" r="24" fill="var(--u-ok)" opacity="0.35" />
       </symbol>
     </defs>
   </svg>
@@ -189,47 +201,47 @@
       >
     </div>
     <button type="button" class="u-button u-button--quiet" data-map-clear>Clear filter</button>
+    <div class="u-map-views" role="group" aria-label="View">
+      <button type="button" class="u-button u-button--quiet" data-map-view="both" aria-pressed="true">
+        Map and list
+      </button>
+      <button type="button" class="u-button u-button--quiet" data-map-view="list" aria-pressed="false">
+        List only
+      </button>
+      <button type="button" class="u-button u-button--quiet" data-map-view="map" aria-pressed="false">
+        Map only
+      </button>
+      <button type="button" class="u-button u-button--quiet" data-map-view="gallery" aria-pressed="false">
+        Gallery
+      </button>
+    </div>
     <p class="u-hint" data-map-count role="status">5 properties · 4 on map</p>
   </div>
   <p class="u-sr" data-map-announcement role="status"></p>
-  <div class="u-map-views" role="group" aria-label="View">
-    <button type="button" class="u-button u-button--quiet" data-map-view="both" aria-pressed="true">
-      Map and list
-    </button>
-    <button type="button" class="u-button u-button--quiet" data-map-view="list" aria-pressed="false">
-      List only
-    </button>
-    <button type="button" class="u-button u-button--quiet" data-map-view="map" aria-pressed="false">
-      Map only
-    </button>
-    <button type="button" class="u-button u-button--quiet" data-map-view="gallery" aria-pressed="false">
-      Gallery
-    </button>
-    <details data-map-gallery-controls hidden>
-      <summary>Gallery settings</summary>
-      <div class="u-toolbar">
-        <div class="u-field">
-          <label for="gallery-columns">Columns</label
-          ><span class="u-select"
-            ><select id="gallery-columns" data-map-columns>
-              <option value="auto">Automatic</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select></span
-          >
-        </div>
-        <div class="u-field">
-          <label for="gallery-density">Card style</label
-          ><span class="u-select"
-            ><select id="gallery-density" data-map-density>
-              <option value="roomy">Photo cards</option>
-              <option value="compact">Compact cards</option>
-            </select></span
-          >
-        </div>
+  <details data-map-gallery-controls hidden>
+    <summary>Gallery settings</summary>
+    <div class="u-toolbar">
+      <div class="u-field">
+        <label for="gallery-columns">Columns</label
+        ><span class="u-select"
+          ><select id="gallery-columns" data-map-columns>
+            <option value="auto">Automatic</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select></span
+        >
       </div>
-    </details>
-  </div>
+      <div class="u-field">
+        <label for="gallery-density">Card style</label
+        ><span class="u-select"
+          ><select id="gallery-density" data-map-density>
+            <option value="roomy">Photo cards</option>
+            <option value="compact">Compact cards</option>
+          </select></span
+        >
+      </div>
+    </div>
+  </details>
   <div class="u-map-layout" data-view="both">
     <div class="u-map-results" aria-label="Property results" data-columns="auto" data-density="roomy">
       <article
@@ -243,7 +255,9 @@
         data-kind="House"
       >
         <figure class="u-property-thumbnail">
-          <svg viewBox="0 0 480 300" aria-hidden="true"><use href="#property-photo-exterior" /></svg>
+          <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <use href="#property-photo-exterior" />
+          </svg>
           <figcaption>Exterior · Placeholder</figcaption>
         </figure>
         <span class="u-eyebrow">House</span>
@@ -282,7 +296,9 @@
         data-kind="Apartment"
       >
         <figure class="u-property-thumbnail">
-          <svg viewBox="0 0 480 300" aria-hidden="true"><use href="#property-photo-apartment" /></svg>
+          <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <use href="#property-photo-apartment" />
+          </svg>
           <figcaption>Exterior · Placeholder</figcaption>
         </figure>
         <span class="u-eyebrow">Apartment</span>
@@ -321,7 +337,9 @@
         data-kind="House"
       >
         <figure class="u-property-thumbnail">
-          <svg viewBox="0 0 480 300" aria-hidden="true"><use href="#property-photo-exterior" /></svg>
+          <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <use href="#property-photo-exterior" />
+          </svg>
           <figcaption>Exterior · Placeholder</figcaption>
         </figure>
         <span class="u-eyebrow">House</span>
@@ -360,7 +378,9 @@
         data-kind="Apartment"
       >
         <figure class="u-property-thumbnail">
-          <svg viewBox="0 0 480 300" aria-hidden="true"><use href="#property-photo-apartment" /></svg>
+          <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <use href="#property-photo-apartment" />
+          </svg>
           <figcaption>Exterior · Placeholder</figcaption>
         </figure>
         <span class="u-eyebrow">Apartment</span>
@@ -397,7 +417,9 @@
         data-kind="Apartment"
       >
         <figure class="u-property-thumbnail">
-          <svg viewBox="0 0 480 300" aria-hidden="true"><use href="#property-photo-apartment" /></svg>
+          <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <use href="#property-photo-apartment" />
+          </svg>
           <figcaption>Exterior · Placeholder</figcaption>
         </figure>
         <span class="u-eyebrow">Apartment</span>
@@ -549,17 +571,21 @@
           </svg>
         </button>
         <figure>
-          <svg viewBox="0 0 480 300" aria-hidden="true">
+          <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
             <use data-selection-photo href="#property-photo-exterior" />
           </svg>
           <figcaption>Exterior · Placeholder</figcaption>
         </figure>
         <figure>
-          <svg viewBox="0 0 480 300" aria-hidden="true"><use href="#property-photo-interior" /></svg>
+          <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <use href="#property-photo-interior" />
+          </svg>
           <figcaption>Living space · Placeholder</figcaption>
         </figure>
         <figure>
-          <svg viewBox="0 0 480 300" aria-hidden="true"><use href="#property-photo-outdoor" /></svg>
+          <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <use href="#property-photo-outdoor" />
+          </svg>
           <figcaption>Outdoor space · Placeholder</figcaption>
         </figure>
       </div>

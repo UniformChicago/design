@@ -73,7 +73,8 @@ test("mobile masthead stays compact and exposes navigation on demand", async ({ 
     .getByRole("navigation", { name: "Mobile patterns" })
     .getByRole("link", { name: "Searchable collection", exact: true })
     .click();
-  await expect(page).toHaveURL(/workspace.html/);
+  // The pattern library opens each starter in the Playground.
+  await expect(page).toHaveURL(/playground\/#searchable-collection$/);
 });
 
 test("native dialog cancels with Escape, restores focus and confirms explicitly", async ({ page }) => {
@@ -138,6 +139,8 @@ test("map filtering retains unlocated records and clears hidden selection", asyn
   await page.setViewportSize({ width: 390, height: 844 });
   await page.getByRole("button", { name: "Map only", exact: true }).click();
   await expect(page.locator(".u-map-results")).toBeHidden();
+  // Selecting Courtyard house zoomed in to it; bring every result back into view first.
+  await page.getByRole("button", { name: "Fit all results" }).click();
   await page.getByRole("button", { name: "Select Terrace apartment, $310,000" }).click();
   await expect(page.locator("#map-selection")).not.toBeFocused();
   await page.getByRole("button", { name: "Clear selection" }).click();
@@ -176,7 +179,7 @@ test("marker selection reveals its card without scrolling the page", async ({ pa
 test("map failure and retry preserve filters and selection", async ({ page }) => {
   await page.goto(base + "map.html");
   await page.getByLabel("Property type").selectOption("House");
-  await page.getByRole("button", { name: "Select Courtyard house" }).click();
+  await page.getByRole("button", { name: "Select Courtyard house", exact: true }).click();
   await page.getByText("Pattern reference", { exact: true }).click();
   await page.getByLabel("Simulated renderer state").selectOption("loading");
   await expect(page.locator(".u-map-surface")).toHaveAttribute("aria-busy", "true");
@@ -236,12 +239,15 @@ for (const width of [390, 1280]) {
     await page.setViewportSize({ width, height: 900 });
     for (const path of ["map.html", "workspace.html"]) {
       await page.goto(base + path);
-      const boxes = await page.locator(".u-toolbar").evaluate((toolbar) =>
-        [...toolbar.querySelectorAll("input, select, button")].map((control) => {
-          const { top, bottom, height } = control.getBoundingClientRect();
-          return { top, bottom, height };
-        }),
-      );
+      const boxes = await page
+        .locator(".u-toolbar")
+        .first()
+        .evaluate((toolbar) =>
+          [...toolbar.querySelectorAll("input, select, button")].map((control) => {
+            const { top, bottom, height } = control.getBoundingClientRect();
+            return { top, bottom, height };
+          }),
+        );
       for (const box of boxes) expect(box.height).toBeCloseTo(48, 0);
       if (width === 1280) {
         for (const box of boxes) {
@@ -402,9 +408,10 @@ test("native scrolling snaps gently, contains result scrolling and honors reduce
         behavior: style.scrollBehavior,
       };
     });
-  expect(await scrolling()).toEqual({ snap: "y proximity", chaining: "contain", behavior: "smooth" });
+  // Browsers serialize the default proximity strictness as just the axis.
+  expect(await scrolling()).toEqual({ snap: "y", chaining: "contain", behavior: "smooth" });
   await expect(page.locator(".u-map-card").first()).toHaveCSS("scroll-snap-align", "start");
-  await expect(page.locator(".s-pages")).toHaveCSS("scroll-snap-type", "x proximity");
+  await expect(page.locator(".s-pages")).toHaveCSS("scroll-snap-type", "x");
   await page.emulateMedia({ reducedMotion: "reduce" });
   expect(await scrolling()).toEqual({ snap: "none", chaining: "contain", behavior: "auto" });
   await expect(page.locator(".s-pages")).toHaveCSS("scroll-snap-type", "none");
@@ -496,7 +503,8 @@ test("expanding document details preserves every column position and width", asy
     page.locator(".u-table thead th").evaluateAll((cells) =>
       cells.map((cell) => {
         const { x, width } = cell.getBoundingClientRect();
-        return { x, width };
+        // Reaching a row can scroll the table sideways; measure columns within that scroll.
+        return { x: x + cell.closest(".u-table").scrollLeft, width };
       }),
     );
   const before = await geometry();
