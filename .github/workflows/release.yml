@@ -1,5 +1,6 @@
 name: Release
-# A vX.Y.Z tag becomes a GitHub Release and a docs deploy, but only after every check passes.
+# A vX.Y.Z tag becomes a GitHub Release and a docs deploy, but only after every check passes:
+# the browser suite via CI on main for the same commit, the fast checks again here.
 # See docs/adr/0001 (Releases, not a registry) and docs/adr/0002 (docs on GitHub Pages).
 on:
   push:
@@ -17,9 +18,10 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      actions: read # look up the CI run for the tagged commit
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with: { persist-credentials: false }
+        with: { persist-credentials: false, fetch-depth: 0 }
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with: { node-version-file: .nvmrc, package-manager-cache: false }
       - name: Tag matches package.json
@@ -29,10 +31,26 @@ jobs:
           [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "::error::not a release tag: $TAG"; exit 1; }
           version=$(node -p 'require("./package.json").version')
           [ "v$version" = "$TAG" ] || { echo "::error::tag $TAG but package.json is $version"; exit 1; }
+      # The browser suite already ran on this exact commit when it reached main; don't run it again.
+      # Require that: the tag is on main and CI passed for it (waiting if it's still running).
+      - name: Tagged commit is on main and passed CI
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+        run: |
+          git merge-base --is-ancestor "$SHA" origin/main || { echo "::error::$SHA is not on main"; exit 1; }
+          for _ in $(seq 60); do
+            runs=$(gh api "repos/$GH_REPO/actions/workflows/ci.yml/runs?head_sha=$SHA&event=push&branch=main" \
+              --jq '[.workflow_runs[] | select(.status == "completed") | .conclusion]')
+            if jq -e 'any(. == "success")' <<<"$runs" >/dev/null; then echo "CI passed for $SHA"; exit 0; fi
+            if jq -e 'length > 0' <<<"$runs" >/dev/null; then echo "::error::CI did not pass for $SHA: $runs"; exit 1; fi
+            echo "Waiting for CI on $SHA..."; sleep 30
+          done
+          echo "::error::No completed CI run for $SHA after 30 minutes"; exit 1
       - run: npm ci
+      # Fast checks still rerun: they also build _site/ for the docs deploy.
       - run: npm run check
-      - run: npx playwright install --with-deps chromium firefox webkit
-      - run: npm run test:a11y
       # After the checks, so nothing generated here is linted as source.
       - name: Changelog notes, pack and checksum
         env:

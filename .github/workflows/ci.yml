@@ -3,7 +3,7 @@ on:
   pull_request:
   push:
     branches: [main]
-    tags: ["v*"]
+    # Not on tags: release.yml requires this workflow to have passed on the tagged commit instead.
 
 permissions:
   contents: read # checkout only
@@ -33,6 +33,15 @@ jobs:
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with: { node-version-file: .nvmrc, package-manager-cache: false }
       - run: npm ci
+      # Browsers are ~400 MB per run. Keyed on the exact Playwright version, so an upgrade fetches fresh
+      # ones. CI only: release.yml publishes and keeps no caches (cache-poisoning boundary).
+      - id: playwright
+        run: echo "version=$(node -p 'require("@playwright/test/package.json").version')" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}
+      # Still runs on a cache hit: it skips cached browsers and installs only the system packages.
       - run: npx playwright install --with-deps chromium firefox webkit
       - run: npm run test:a11y
 
