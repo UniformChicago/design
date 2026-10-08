@@ -149,7 +149,8 @@ test("map filtering retains unlocated records and clears hidden selection", asyn
   // Selecting Courtyard house zoomed in to it; bring every result back into view first.
   await page.getByRole("button", { name: "Fit all results" }).click();
   await page.getByRole("button", { name: "Select Terrace apartment, $310,000" }).click();
-  await expect(page.locator("#map-selection")).not.toBeFocused();
+  // Mobile pointer selection reveals and focuses details, just like keyboard selection.
+  await expect(page.locator("#map-selection")).toBeFocused();
   await page.getByRole("button", { name: "Clear selection" }).click();
   await expect(page.locator("[data-selection-empty]")).toBeVisible();
   await page.getByRole("button", { name: "Select Terrace apartment, $310,000" }).focus();
