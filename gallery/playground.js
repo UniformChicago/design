@@ -82,6 +82,7 @@ const phone = matchMedia("(max-width: 700px)");
 const previewObservers = new Map();
 function syncMobileOverlay() {
   let open = false;
+  let locked = false;
   for (const target of document.querySelectorAll("#canvas iframe")) {
     const doc = target.contentDocument;
     const expanded =
@@ -90,10 +91,21 @@ function syncMobileOverlay() {
       Boolean(
         doc?.querySelector(".u-gallery-modal[open], .u-map-selection [data-selection-facts]:not([hidden])"),
       );
+    locked ||= !target.hidden && Boolean(doc?.querySelector("dialog[open], [popover]:popover-open"));
+    if (expanded && !target.classList.contains("g-preview-fullscreen")) {
+      const spacer = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      spacer.setAttribute("height", String(target.getBoundingClientRect().height));
+      spacer.setAttribute("width", "1");
+      spacer.setAttribute("aria-hidden", "true");
+      spacer.classList.add("g-overlay-spacer");
+      target.before(spacer);
+    } else if (!expanded && target.classList.contains("g-preview-fullscreen")) {
+      target.previousElementSibling?.matches(".g-overlay-spacer") && target.previousElementSibling.remove();
+    }
     target.classList.toggle("g-preview-fullscreen", expanded);
     open ||= expanded;
   }
-  document.body.classList.toggle("g-preview-open", open);
+  document.body.classList.toggle("g-preview-open", open || locked);
 }
 function sizePreview(target) {
   const body = target.contentDocument?.body;
@@ -116,53 +128,12 @@ function watchPreview(target) {
     disconnect() {
       observer.disconnect();
       overlayObserver.disconnect();
+      doc.removeEventListener("toggle", syncMobileOverlay, true);
     },
   });
+  doc.addEventListener("toggle", syncMobileOverlay, true);
   syncMobileOverlay();
   sizePreview(target);
-  let revealRequested = false;
-  let lastSelected;
-  const selectionControl =
-    '[data-select], [data-pin], .u-map-price, [data-map-dismiss], [data-u-context-action="view"]';
-  const intent = (event) => {
-    revealRequested = Boolean(event.target.closest(selectionControl)) || event.key === "Escape";
-  };
-  doc.addEventListener("click", intent, true);
-  doc.addEventListener("keydown", intent, true);
-  doc.addEventListener(
-    "change",
-    () => {
-      revealRequested = false;
-    },
-    true,
-  );
-  doc.addEventListener("uniform:map-select", (event) => {
-    const previous = lastSelected;
-    lastSelected = event.detail.id;
-
-    if (!phone.matches || target.hidden || !revealRequested) return;
-    revealRequested = false;
-    requestAnimationFrame(() => {
-      if (!event.detail.id) sizePreview(target);
-      requestAnimationFrame(() => {
-        const details = event.detail.id
-          ? doc.querySelector(".u-map-selection")
-          : doc.querySelector(`[data-property="${CSS.escape(previous ?? "")}"]`);
-        if (!details || details.hidden) return;
-        if (event.detail.id) return;
-        const header = document.querySelector(".u-shell-header")?.getBoundingClientRect().height ?? 64;
-        const absoluteTop =
-          window.scrollY + target.getBoundingClientRect().top + details.getBoundingClientRect().top;
-        const scrollToTop = event.detail.id
-          ? absoluteTop + details.getBoundingClientRect().height - window.innerHeight + 24
-          : absoluteTop - header - 12;
-        window.scrollTo({
-          top: Math.max(0, scrollToTop),
-          behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
-        });
-      });
-    });
-  });
 }
 for (const target of [frame, liveFrame]) {
   target.addEventListener("load", () => watchPreview(target));

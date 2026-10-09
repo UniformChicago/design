@@ -2,6 +2,14 @@
 
 Each release is a `vX.Y.Z` tag with a [GitHub Release](https://github.com/UniformChicago/design/releases): notes from this file, the npm tarball, `SHA256SUMS` and a signed build-provenance attestation. During `0.x`, any release may change markup or class names; read the notes before upgrading.
 
+## v0.3.2 — 2026-10-09
+
+- Keep the Playground background stationary while mobile listing details dismiss; gallery photos slide down independently of the modal background.
+- Toggle property context menus closed on repeated taps. Replace Copy price with native Share property, with a copy-link fallback and links that open the matching sample listing.
+- Lock background scrolling while dialogs and popovers are open, including inside Playground previews. Add swipe dismissal to the component gallery example.
+- Keep keyboard focus indicators while removing lingering pointer focus outlines and touch-only map preview outlines.
+- Correct single-line documentation code font sizing and remove the duplicate left border from activity timelines.
+
 ## v0.3.1 — 2026-10-09
 
 - Make mobile property details and photo viewers fill the phone viewport. Show all photos in a vertical list, disable image selection and touch callouts, and keep desktop photo navigation.

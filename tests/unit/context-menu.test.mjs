@@ -144,3 +144,18 @@ test("a right-click that is still held opens after release, so the release canno
   assert.equal(h.doc.activeElement, h.items[0]);
   dispose();
 });
+
+test("the same trigger closes an open menu even after native pointer light-dismiss", () => {
+  const h = harness();
+  h.api.mount(h.doc);
+  h.dispatch(h.trigger, "click", { detail: 1 });
+  assert.equal(h.menu.open, true);
+  h.dispatch(h.trigger, "pointerdown");
+  h.menu.hidePopover();
+  h.dispatch(h.trigger, "click", { detail: 1 });
+  assert.equal(h.menu.open, false);
+  assert.equal(h.trigger.attrs["aria-expanded"], "false");
+  h.dispatch(h.trigger, "pointerdown");
+  h.dispatch(h.trigger, "click", { detail: 1 });
+  assert.equal(h.menu.open, true);
+});

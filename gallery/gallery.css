@@ -405,6 +405,14 @@
   }
 }
 
+.g-overlay-spacer {
+  display: block;
+  visibility: hidden;
+}
+body.g-preview-open {
+  overflow: hidden;
+}
+
 /* Mobile overlays use the phone viewport, not the expanded document height. */
 @media (max-width: 700px) {
   body.g-preview-open {

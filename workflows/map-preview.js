@@ -113,7 +113,7 @@ if (modal) {
       return;
     }
     const finish = (event) => {
-      if (event && event.target !== modal) return;
+      if (event && event.target !== modal.querySelector(".u-gallery-modal-content")) return;
       clearTimeout(timer);
       modal.removeEventListener("animationend", finish);
       modal.close();

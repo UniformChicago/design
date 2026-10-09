@@ -54,6 +54,33 @@
       const dialog = scope.querySelector(`#${CSS.escape(trigger.dataset.uDialogOpen)}`);
       if (!dialog || typeof dialog.showModal !== "function") continue;
       trigger.hidden = false;
+      if (dialog.classList.contains("u-gallery-modal")) {
+        let start;
+        listen(dialog, "touchstart", (event) => {
+          start = dialog.scrollTop <= 1 && event.touches.length === 1 ? event.touches[0] : null;
+        });
+        listen(dialog, "touchcancel", () => {
+          start = null;
+        });
+        listen(dialog, "touchend", (event) => {
+          const end = event.changedTouches[0];
+          const swipe = start;
+          start = null;
+          if (!swipe || !end || !root.matchMedia("(max-width: 700px)").matches) return;
+          if (end.clientY - swipe.clientY <= 80 || Math.abs(end.clientX - swipe.clientX) >= 50) return;
+          if (root.matchMedia("(prefers-reduced-motion: reduce)").matches) return dialog.close();
+          if (dialog.classList.contains("u-swipe-dismiss")) return;
+          const finish = () => {
+            clearTimeout(timer);
+            dialog.removeEventListener("animationend", finish);
+            dialog.close();
+            dialog.classList.remove("u-swipe-dismiss");
+          };
+          dialog.addEventListener("animationend", finish);
+          const timer = setTimeout(finish, 400);
+          dialog.classList.add("u-swipe-dismiss");
+        });
+      }
       listen(trigger, "click", () => {
         dialog.returnValue = "";
         dialog.showModal();

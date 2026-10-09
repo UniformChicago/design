@@ -1,6 +1,6 @@
 # Uniform Design agent contract
 
-Package version: 0.3.1. Schema: 1.0.0.
+Package version: 0.3.2. Schema: 1.0.0.
 
 Read catalog.json for machine-readable contracts and exact markup. These are preview contracts.
 
@@ -1733,7 +1733,7 @@ Integration:
   <div id="property-context" class="u-context-menu" popover="auto" role="menu" aria-label="Property actions">
     <button type="button" role="menuitem" tabindex="-1" data-u-context-action="view">View details</button>
     <button type="button" role="menuitem" tabindex="-1" data-u-context-action="save">Save property</button>
-    <button type="button" role="menuitem" tabindex="-1" data-u-context-action="copy">Copy price</button>
+    <button type="button" role="menuitem" tabindex="-1" data-u-context-action="share">Share property</button>
   </div>
   <p class="u-hint">Fictional listings with illustrative state-of-the-art AI-generated placeholder images.</p>
   <details class="u-panel u-map-guide">

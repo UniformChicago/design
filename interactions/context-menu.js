@@ -33,6 +33,7 @@
           [...menu.querySelectorAll('[role="menuitem"]')].filter((item) => !item.disabled && !item.hidden);
         const close = (restore = false) => {
           if (menu.matches(":popover-open")) menu.hidePopover();
+          state.trigger?.setAttribute("aria-expanded", "false");
           if (restore && state.trigger?.isConnected) state.trigger.focus({ preventScroll: true });
         };
         state.close = close;
@@ -85,7 +86,7 @@
       trigger.setAttribute("aria-haspopup", "menu");
       trigger.setAttribute("aria-controls", menu.id);
       if (trigger.hasAttribute("data-u-context-open")) trigger.hidden = false;
-      const open = (event, keyboard = false) => {
+      const open = (event, keyboard = false, focus = true) => {
         if (event.shiftKey && event.type === "contextmenu") return;
         event.preventDefault();
         for (const other of menus.values()) other.close();
@@ -103,9 +104,10 @@
         state.rule.style.left = `${Math.max(8, Math.min(x, innerWidth - box.width - 8))}px`;
         state.rule.style.top = `${Math.max(8, Math.min(y, innerHeight - box.height - 8))}px`;
         trigger.setAttribute("aria-expanded", "true");
-        [...menu.querySelectorAll('[role="menuitem"]')]
-          .find((item) => !item.disabled && !item.hidden)
-          ?.focus({ preventScroll: true });
+        if (focus)
+          [...menu.querySelectorAll('[role="menuitem"]')]
+            .find((item) => !item.disabled && !item.hidden)
+            ?.focus({ preventScroll: true });
       };
       listen(trigger, "contextmenu", (event) => {
         const keyboard = event.detail === 0 && event.clientX === 0 && event.clientY === 0;
@@ -128,7 +130,20 @@
       listen(trigger, "keydown", (event) => {
         if (event.key === "ContextMenu" || (event.shiftKey && event.key === "F10")) open(event, true);
       });
-      if (trigger.hasAttribute("data-u-context-open")) listen(trigger, "click", (event) => open(event, true));
+      if (trigger.hasAttribute("data-u-context-open")) {
+        let wasOpen = false;
+        listen(trigger, "pointerdown", () => {
+          wasOpen = state.trigger === trigger && menu.matches(":popover-open");
+        });
+        listen(trigger, "click", (event) => {
+          if (wasOpen || (state.trigger === trigger && menu.matches(":popover-open"))) {
+            wasOpen = false;
+            event.preventDefault();
+            state.close();
+          } else
+            open(event, true, event.detail === 0 || !globalThis.matchMedia?.("(pointer: coarse)").matches);
+        });
+      }
       cleanups.push(() => {
         trigger.removeAttribute("aria-haspopup");
         trigger.removeAttribute("aria-controls");

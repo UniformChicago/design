@@ -91,6 +91,9 @@ html {
   border-radius: var(--u-radius-lg);
   background: var(--u-surface);
 }
+.s-code code {
+  font: inherit;
+}
 .s-code pre {
   margin: 0;
   overflow-x: auto;
@@ -511,8 +514,8 @@ html {
 }
 .s-code--single pre {
   padding: var(--u-space-2) var(--u-space-3);
-  display: flex;
-  align-items: center;
+  min-width: 0;
+  flex: 1;
 }
 .s-code--single .s-copy {
   margin-left: auto;

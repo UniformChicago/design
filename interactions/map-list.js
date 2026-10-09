@@ -141,8 +141,8 @@
       )
         ? "Remove from shortlist"
         : "Save property";
-      event.detail.menu.querySelector('[data-u-context-action="copy"]').disabled =
-        !navigator.clipboard?.writeText;
+      event.detail.menu.querySelector('[data-u-context-action="share"]').disabled =
+        !navigator.share && !navigator.clipboard?.writeText;
     });
     listen(root, "uniform:context-action", (event) => {
       const card = event.detail.trigger.closest("[data-property]");
@@ -156,13 +156,23 @@
       } else if (event.detail.action === "save") {
         select(id);
         saveButton?.click();
-      } else if (event.detail.action === "copy") {
-        navigator.clipboard.writeText(card.querySelector("strong").textContent).then(
+      } else if (event.detail.action === "share") {
+        const url = new URL(location.href);
+        url.pathname = url.pathname.replace("/previews/", "/");
+        url.hash = `property=${encodeURIComponent(id)}`;
+        const data = {
+          title: card.querySelector("h2").textContent,
+          text: `${card.querySelector("h2").textContent} · ${card.querySelector("strong").textContent} · Sample property`,
+          url: url.href,
+        };
+        const native = typeof navigator.share === "function";
+        const result = native ? navigator.share(data) : navigator.clipboard.writeText(data.url);
+        result.then(
           () => {
-            summary.textContent = "Property price copied.";
+            summary.textContent = native ? "Property shared." : "Property link copied.";
           },
-          () => {
-            summary.textContent = "Price could not be copied.";
+          (error) => {
+            if (error.name !== "AbortError") summary.textContent = "Property could not be shared.";
           },
         );
       }
@@ -358,6 +368,18 @@
     };
     mounts.set(root, api);
     update();
+    const openShared = () => {
+      const shared = new URLSearchParams(globalThis.location?.hash.slice(1)).get("property");
+      const card = cards.find((card) => card.dataset.property === shared);
+      if (!card) return;
+      if (card.hidden) {
+        filter.value = "all";
+        update();
+      }
+      select(shared);
+    };
+    listen(globalThis, "hashchange", openShared);
+    openShared();
     return api;
   }
   const connections = new WeakMap();
@@ -389,6 +411,8 @@
     ])
       root.addEventListener(event, callback, { signal: abort.signal });
     controller.refresh();
+    const initial = root.querySelector('[data-select][aria-pressed="true"]');
+    if (initial) renderer.select(initial.dataset.select);
     const connection = {
       reload: renderer.reload,
       destroy() {

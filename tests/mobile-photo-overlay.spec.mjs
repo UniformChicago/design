@@ -49,7 +49,8 @@ test("mobile Playground overlays fit the phone and all photos scroll without arr
   await page.screenshot({ path: test.info().outputPath("mobile-gallery.png") });
   expect(await swipeDown(modal)).toEqual({ animating: true, open: true });
   await page.waitForTimeout(80);
-  expect((await modal.boundingBox()).y).toBeGreaterThan(5);
+  expect((await modal.locator(".u-gallery-modal-content").boundingBox()).y).toBeGreaterThan(5);
+  expect((await modal.boundingBox()).y).toBe(0);
   await expect(modal).toBeHidden();
   await expect(frame).toHaveClass(/g-preview-fullscreen/);
   const details = live.locator(".u-map-selection");

@@ -7,6 +7,7 @@ class Element extends EventTarget {
   constructor() {
     super();
     this.dataset = {};
+    this.classList = { contains: () => false };
     this.attributes = {};
     this.hidden = true;
     this.focused = false;
