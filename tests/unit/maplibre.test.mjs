@@ -152,6 +152,9 @@ test("default provider needs no key; theme/retry retain camera, filter and selec
     assert.equal(h.markers.length, 1);
     h.maps[0].fire("idle");
     assert.equal(states.at(-1), "ready");
+    const readyCount = states.length;
+    h.maps[0].fire("idle");
+    assert.equal(states.length, readyCount, "later idle frames do not overwrite the controller state");
     api.select("a");
     assert.equal(h.markers[0].button.attrs["aria-pressed"], "true");
     h.themeRoot.dataset.theme = "light";

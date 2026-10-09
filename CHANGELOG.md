@@ -8,6 +8,7 @@ Each release is a `vX.Y.Z` tag with a [GitHub Release](https://github.com/Unifor
 - Apply hover treatments only to fine pointers that support hover. Hide focus outlines after touch input and restore them on keyboard input.
 - Give sample listings shareable HTML pages with property-specific Open Graph photos, a subtle Uniform watermark, and an AI-generated sample disclosure. Generic pages retain the default share image.
 - Support optional `data-share-url` on property cards so consumers can share their own listing pages with server-rendered preview metadata.
+- Announce renderer readiness once per load, so later idle frames do not clear simulated loading or error states.
 
 ## v0.3.2 — 2026-10-09
 

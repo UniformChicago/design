@@ -261,6 +261,7 @@
       onState("loading");
       currentStyle = style();
       let failed = false;
+      let ready = false;
       const fail = (error) => {
         if (!disposed && epoch === generation) {
           failed = true;
@@ -339,7 +340,8 @@
         });
         map.on("error", (event) => fail(event.error));
         map.on("idle", () => {
-          if (!disposed && epoch === generation && !failed) {
+          if (!disposed && epoch === generation && !failed && !ready) {
+            ready = true;
             clearTimeout(timer);
             onState("ready");
           }
