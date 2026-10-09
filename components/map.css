@@ -314,11 +314,9 @@
     scroll-snap-stop: always;
   }
   .u-property-photos figcaption {
+    left: auto;
     right: var(--u-space-2);
   }
 }
 @media (max-width: 700px) {
-  .u-map-selection {
-    scroll-margin-top: calc(var(--s-header-height, 0px) + var(--u-space-3));
-  }
 }

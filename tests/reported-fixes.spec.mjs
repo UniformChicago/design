@@ -81,7 +81,7 @@ test("docs slider fill updates and map demo has working price markers", async ({
   await page.evaluate(() => document.fonts.ready);
   for (const theme of ["dark", "light"]) {
     await page.evaluate((value) => (document.documentElement.dataset.theme = value), theme);
-    await page.locator("#overview").screenshot({ path: test.info().outputPath(`overview-${theme}.png`) });
+    await page.locator("#install").screenshot({ path: test.info().outputPath(`overview-${theme}.png`) });
   }
   const slider = page.locator("#slider-demo");
   await slider.evaluate((input) => {
@@ -90,6 +90,7 @@ test("docs slider fill updates and map demo has working price markers", async ({
   });
   await expect(slider).toHaveCSS("--progress", "25%");
   const map = page.locator("[data-doc-map]");
+  await map.scrollIntoViewIfNeeded();
   await expect(map.locator(".u-map-price")).toHaveCount(3);
   await map.getByRole("button", { name: /Select Courtyard/ }).click();
   await expect(page.locator("[data-doc-map-status]")).toHaveText(/Selected Courtyard/);
@@ -108,9 +109,12 @@ test("fullscreen sample photos remain labeled and captions clear the viewport ed
   const gallery = page.getByRole("dialog", { name: "Property photo gallery" });
   await expect(gallery).toBeVisible();
   await expect(page.locator("#gallery-caption")).toHaveText(/AI-generated sample/);
-  const clearance = await page
-    .locator("#gallery-caption")
-    .evaluate((caption) => innerHeight - caption.getBoundingClientRect().bottom);
+  const caption =
+    page.viewportSize().width <= 700
+      ? gallery.locator(".u-gallery-mobile figcaption").first()
+      : page.locator("#gallery-caption");
+  await expect(caption).toHaveText(/AI-generated sample/);
+  const clearance = await caption.evaluate((caption) => innerHeight - caption.getBoundingClientRect().bottom);
   expect(clearance).toBeGreaterThanOrEqual(24);
   await page.keyboard.press("Escape");
   await expect(gallery).toBeHidden();

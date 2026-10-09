@@ -151,7 +151,7 @@ test("code headers retain their height when copy controls are revealed", async (
   await page.goto(SITE + "/");
   await expect(page.locator(".s-code-bar .s-copy").first()).toBeVisible();
   const heights = await page
-    .locator(".s-code-bar")
+    .locator(".s-code-bar:has(.s-copy)")
     .first()
     .evaluate((bar) => {
       const control = bar.querySelector("button");

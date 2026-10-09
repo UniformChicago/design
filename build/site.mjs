@@ -64,7 +64,11 @@ function highlight(code, lang) {
 }
 let codeId = 0;
 const codeBlock = (code, lang) => {
+  const isSingle = !code.includes("\n");
   const id = `code-${++codeId}`;
+  if (isSingle) {
+    return `<div class="s-code s-code--single"><div class="s-code-bar"><span>${lang}</span></div><pre tabindex="0" aria-label="${lang} code"><code id="${id}">${highlight(code, lang)}</code></pre><button type="button" class="s-copy" data-copy data-copy-from="${id}" aria-label="Copy code" title="Copy code" hidden>${icon("copy")}</button></div>`;
+  }
   return `<div class="s-code"><div class="s-code-bar"><span>${lang}</span><button type="button" class="s-copy" data-copy data-copy-from="${id}" aria-label="Copy code" title="Copy code" hidden>${icon("copy")}</button></div><pre tabindex="0" aria-label="${lang} code"><code id="${id}">${highlight(code, lang)}</code></pre></div>`;
 };
 
@@ -88,7 +92,7 @@ const SEMANTIC = [
 ];
 const semantic = SEMANTIC.map(([k, note]) => {
   demoCss.push(`.s-chip--sem-${k} {\n  background: var(--u-${k});\n}`);
-  return `<li class="s-card"><span class="s-chip s-chip--sem-${k}"></span><div class="s-token-heading"><code>--u-${k}</code>${copyBtn(`var(--u-${k})`)}</div><span class="s-note">${note}</span></li>`;
+  return `<tr>\n    <td><div class="s-chip--sem-${k} s-table-chip" ></div></td>\n    <td><div class="s-token-heading"><code>--u-${k}</code>${copyBtn(`var(--u-${k})`)}</div></td>\n    <td class="u-muted">${note}</td>\n  </tr>`;
 });
 
 const HEADER_SVG_GH = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>`;

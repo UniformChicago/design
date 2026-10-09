@@ -17,7 +17,7 @@
         for (const candidate of document.styleSheets) {
           try {
             // Keep dynamic positions in a linked, same-origin sheet; never add inline styles.
-            if (!candidate.href || !new URL(candidate.href).pathname.endsWith("/context-menu.css")) continue;
+            if (!candidate.href || !new URL(candidate.href).pathname.endsWith(".css")) continue;
             const index = candidate.insertRule(`#${CSS.escape(menu.id)} {}`, candidate.cssRules.length);
             sheet = candidate;
             rule = candidate.cssRules[index];

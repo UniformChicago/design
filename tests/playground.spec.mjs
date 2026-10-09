@@ -279,8 +279,8 @@ for (const width of [320, 390, 430, 700]) {
     await live.locator('[data-select="courtyard"]').click();
     const photos = live.locator(".u-property-photos");
     await expect(photos).toBeVisible();
-    await expect.poll(async () => (await photos.boundingBox()).y).toBeGreaterThanOrEqual(64);
-    await expect.poll(async () => (await photos.boundingBox()).y).toBeLessThan(180);
+    await expect.poll(async () => (await photos.boundingBox()).y).toBeGreaterThanOrEqual(0);
+    await expect.poll(async () => (await photos.boundingBox()).y).toBeLessThan(32);
     const snap = await photos.evaluate((el) => {
       const second = el.children[1];
       const target = second.getBoundingClientRect().left - el.getBoundingClientRect().left + el.scrollLeft;
@@ -319,11 +319,18 @@ for (const width of [320, 390, 430, 700]) {
     }
     const secondPhoto = await photos.locator("figure").nth(1).boundingBox();
     expect(secondPhoto.width).toBeGreaterThanOrEqual(availableWidth - 34);
+    await live.locator("#map-selection").focus();
+    await page.keyboard.press("Escape");
+    await expect(frame).not.toHaveClass(/g-preview-fullscreen/);
     for (const theme of ["light", "dark"]) {
       await page.locator(`[data-theme-choice="${theme}"]`).click();
+      await live.locator('[data-select="courtyard"]').click();
       await expect(live.locator("html")).toHaveAttribute("data-theme", theme);
       await photos.scrollIntoViewIfNeeded();
       await page.screenshot({ path: info.outputPath(`phone-photos-${theme}.png`) });
+      await live.locator("#map-selection").focus();
+      await page.keyboard.press("Escape");
+      await expect(frame).not.toHaveClass(/g-preview-fullscreen/);
     }
     const filter = live.getByLabel("Property type", { exact: true });
     await filter.scrollIntoViewIfNeeded();
@@ -334,9 +341,6 @@ for (const width of [320, 390, 430, 700]) {
       () => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))),
     );
     expect(await page.evaluate(() => scrollY)).toBe(filterPosition);
-    await live.getByRole("button", { name: "Clear selection", exact: true }).click();
     await expect(live.locator("[data-selection-facts]")).toBeHidden();
-    await expect.poll(async () => (await photo.boundingBox()).y).toBeGreaterThanOrEqual(64);
-    await expect.poll(async () => (await photo.boundingBox()).y).toBeLessThan(180);
   });
 }

@@ -98,7 +98,7 @@
       const next = form.querySelector("[data-u-next]"),
         back = form.querySelector("[data-u-back]");
       const counter = form.querySelector("[data-u-step-count]");
-      const markers = [...scope.querySelectorAll("[data-u-step-list] li")];
+      const markers = [...form.querySelectorAll("[data-u-step-list] li")];
       if (!steps.length || !next || !back || !counter) continue;
       let index = 0;
       const show = (focus = true) => {
@@ -116,7 +116,7 @@
         form.dispatchEvent(
           new CustomEvent("uniform:step-change", { bubbles: true, detail: { index, total: steps.length } }),
         );
-        if (focus) steps[index].querySelector("h2, h3, [tabindex]")?.focus();
+        if (focus) steps[index].querySelector("[tabindex='-1']")?.focus();
       };
       listen(back, "click", () => {
         index = Math.max(0, index - 1);

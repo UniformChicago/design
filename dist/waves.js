@@ -74,13 +74,47 @@ export function mountAtmosphere(canvas) {
     frame = 0,
     last = 0,
     time = 0;
+
+  let targetX = 0,
+    targetY = 0;
+  let currentX = 0,
+    currentY = 0;
+
+  const handlePointer = (x, y) => {
+    targetX = (x / innerWidth) * 2 - 1;
+    targetY = (y / innerHeight) * 2 - 1;
+  };
+
+  const onMouseMove = (e) => handlePointer(e.clientX, e.clientY);
+  const onDeviceOrientation = (e) => {
+    if (e.gamma === null || e.beta === null) return;
+    let x = e.gamma / 45;
+    let y = (e.beta - 45) / 45;
+    targetX = Math.max(-1, Math.min(1, x));
+    targetY = Math.max(-1, Math.min(1, y));
+  };
+
+  window.addEventListener("mousemove", onMouseMove, { passive: true });
+  window.addEventListener("deviceorientation", onDeviceOrientation, { passive: true });
+
   const draw = () => {
     ctx.clearRect(0, 0, width, height);
     const gradient = ctx.createLinearGradient(0, height, width, 0);
     gradient.addColorStop(0, signal);
     gradient.addColorStop(0.38, lake);
     gradient.addColorStop(1, lake);
-    for (const l of contours(width, height, time)) {
+
+    // Smooth interpolation for mouse tracking
+    currentX += (targetX - currentX) * 0.1;
+    currentY += (targetY - currentY) * 0.1;
+
+    // Perturb the waves based on mouse position
+    const options = {
+      center: 0.5 + currentY * 0.15, // tilt up/down
+      spread: 0.48 + currentX * 0.2, // spread left/right
+    };
+
+    for (const l of contours(width, height, time, options)) {
       ctx.beginPath();
       l.points.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)));
       ctx.strokeStyle = gradient;
@@ -125,5 +159,7 @@ export function mountAtmosphere(canvas) {
     reduce.removeEventListener("change", sync);
     document.removeEventListener("visibilitychange", sync);
     removeEventListener("resize", resize);
+    window.removeEventListener("mousemove", onMouseMove);
+    window.removeEventListener("deviceorientation", onDeviceOrientation);
   };
 }

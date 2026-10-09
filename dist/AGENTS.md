@@ -1,6 +1,6 @@
 # Uniform Design agent contract
 
-Package version: 0.3.0. Schema: 1.0.0.
+Package version: 0.3.1. Schema: 1.0.0.
 
 Read catalog.json for machine-readable contracts and exact markup. These are preview contracts.
 
@@ -110,7 +110,7 @@ Limitations: Browser and assistive-technology verification pending for this loca
     <h3 class="u-section-heading">Review a sample action</h3>
     <p class="u-hint">Open a confirmation dialog. Cancel returns you to the preview; confirm updates its status.</p>
   </div>
-  <div><button type="button" class="u-button" data-u-dialog-open="example-dialog" hidden>Review action</button></div>
+  <div><button type="button" class="u-button" data-u-dialog-open="example-dialog">Review action</button></div>
   <p class="u-hint" id="example-dialog-status" role="status">No action taken.</p>
   <noscript><p class="u-hint">Enable JavaScript to try the confirmation.</p></noscript>
 </div>
@@ -480,7 +480,7 @@ Customization: Actions, Labels.
 Limitations: Browser and assistive-technology verification pending.
 
 ```html
-<button type="button" class="u-button" data-u-context-menu="example-context" data-u-context-open hidden>Open actions</button>
+<button type="button" class="u-button" data-u-context-menu="example-context" data-u-context-open>Open actions</button>
 <div id="example-context" class="u-context-menu" popover="auto" role="menu" aria-label="Example actions">
   <button type="button" role="menuitem" tabindex="-1" data-u-context-action="review">Review sample</button>
   <button type="button" role="menuitem" tabindex="-1" disabled>Unavailable action</button>
@@ -1081,7 +1081,7 @@ Limitations: Fixture controllers are examples; application backend, authorizatio
     <div class="u-actions">
       <button type="button" class="u-button">Primary action</button
       ><button type="button" class="u-button u-button--quiet">Secondary action</button
-      ><button type="button" class="u-button u-button--danger" data-u-dialog-open="confirm-example" hidden>
+      ><button type="button" class="u-button u-button--danger" data-u-dialog-open="confirm-example">
         Remove sample</button
       ><button type="button" class="u-button" disabled>Unavailable</button
       ><button type="button" class="u-button" disabled aria-busy="true">Saving…</button>
@@ -1392,7 +1392,6 @@ Integration:
           data-u-context-menu="property-context"
           data-u-context-open
           aria-label="Actions for Courtyard house"
-          hidden
         >
           <span aria-hidden="true">⋯</span>
         </button>
@@ -1431,7 +1430,6 @@ Integration:
           data-u-context-menu="property-context"
           data-u-context-open
           aria-label="Actions for Terrace apartment"
-          hidden
         >
           <span aria-hidden="true">⋯</span>
         </button>
@@ -1470,7 +1468,6 @@ Integration:
           data-u-context-menu="property-context"
           data-u-context-open
           aria-label="Actions for Garden house"
-          hidden
         >
           <span aria-hidden="true">⋯</span>
         </button>
@@ -1509,7 +1506,6 @@ Integration:
           data-u-context-menu="property-context"
           data-u-context-open
           aria-label="Actions for Courtyard flat"
-          hidden
         >
           <span aria-hidden="true">⋯</span>
         </button>
@@ -1546,7 +1542,6 @@ Integration:
           data-u-context-menu="property-context"
           data-u-context-open
           aria-label="Actions for Corner studio"
-          hidden
         >
           <span aria-hidden="true">⋯</span>
         </button>

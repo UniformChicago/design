@@ -43,11 +43,33 @@ if (!frame.getAttribute("srcdoc"))
 function syncPreview() {
   const live = Boolean(active.live && mode === "live");
   frame.hidden = live;
-  liveFrame.hidden = !live;
-  if (live && liveFrame.getAttribute("src") !== active.live) liveFrame.src = active.live;
-  if (liveFrame.contentDocument?.documentElement)
-    liveFrame.contentDocument.documentElement.dataset.theme = theme;
-  requestAnimationFrame(() => sizePreview(live ? liveFrame : frame));
+
+  let targetFrame = frame;
+  if (live) {
+    targetFrame = document.querySelector(`iframe[src="${active.live}"]`);
+    if (!targetFrame) {
+      targetFrame = document.createElement("iframe");
+      targetFrame.src = active.live;
+      targetFrame.title = "Interactive starter preview";
+      targetFrame.referrerPolicy = "no-referrer";
+      targetFrame.id = "live-preview-" + active.id;
+      targetFrame.addEventListener("load", syncPreview);
+      targetFrame.addEventListener("load", () => watchPreview(targetFrame));
+      $("canvas").appendChild(targetFrame);
+    }
+    document.querySelectorAll("#canvas iframe:not(#preview)").forEach((f, index) => {
+      f.hidden = f !== targetFrame;
+      f.id = f === targetFrame ? "live-preview" : "live-preview-cache-" + index;
+    });
+    if (targetFrame.contentDocument?.documentElement)
+      targetFrame.contentDocument.documentElement.dataset.theme = theme;
+  } else {
+    document.querySelectorAll("#canvas iframe:not(#preview)").forEach((f) => {
+      f.hidden = true;
+    });
+  }
+  syncMobileOverlay();
+  requestAnimationFrame(() => sizePreview(targetFrame));
   $("preview-mode-label").textContent = live ? "Interactive preview" : "Markup preview";
   document.querySelectorAll("[data-preview-mode]").forEach((button) => {
     button.disabled = button.dataset.previewMode === "live" && !active.live;
@@ -58,9 +80,24 @@ liveFrame.addEventListener("load", syncPreview);
 // Let mobile previews grow with their content. HTML height attributes keep this CSP-safe.
 const phone = matchMedia("(max-width: 700px)");
 const previewObservers = new Map();
+function syncMobileOverlay() {
+  let open = false;
+  for (const target of document.querySelectorAll("#canvas iframe")) {
+    const doc = target.contentDocument;
+    const expanded =
+      phone.matches &&
+      !target.hidden &&
+      Boolean(
+        doc?.querySelector(".u-gallery-modal[open], .u-map-selection [data-selection-facts]:not([hidden])"),
+      );
+    target.classList.toggle("g-preview-fullscreen", expanded);
+    open ||= expanded;
+  }
+  document.body.classList.toggle("g-preview-open", open);
+}
 function sizePreview(target) {
   const body = target.contentDocument?.body;
-  if (!phone.matches || target.hidden || !body) return;
+  if (!phone.matches || target.hidden || !body || target.classList.contains("g-preview-fullscreen")) return;
   target.height = String(Math.max(240, Math.ceil(body.getBoundingClientRect().height)));
   target.contentWindow.scrollTo({ top: 0, behavior: "instant" });
 }
@@ -69,8 +106,19 @@ function watchPreview(target) {
   const doc = target.contentDocument;
   if (!doc?.body) return;
   const observer = new ResizeObserver(() => sizePreview(target));
+  const overlayObserver = new MutationObserver(() => {
+    syncMobileOverlay();
+    sizePreview(target);
+  });
+  overlayObserver.observe(doc.body, { subtree: true, attributes: true, attributeFilter: ["hidden", "open"] });
   observer.observe(doc.body);
-  previewObservers.set(target, observer);
+  previewObservers.set(target, {
+    disconnect() {
+      observer.disconnect();
+      overlayObserver.disconnect();
+    },
+  });
+  syncMobileOverlay();
   sizePreview(target);
   let revealRequested = false;
   let lastSelected;
@@ -91,23 +139,25 @@ function watchPreview(target) {
   doc.addEventListener("uniform:map-select", (event) => {
     const previous = lastSelected;
     lastSelected = event.detail.id;
+
     if (!phone.matches || target.hidden || !revealRequested) return;
     revealRequested = false;
     requestAnimationFrame(() => {
-      sizePreview(target);
+      if (!event.detail.id) sizePreview(target);
       requestAnimationFrame(() => {
         const details = event.detail.id
           ? doc.querySelector(".u-map-selection")
           : doc.querySelector(`[data-property="${CSS.escape(previous ?? "")}"]`);
         if (!details || details.hidden) return;
+        if (event.detail.id) return;
         const header = document.querySelector(".u-shell-header")?.getBoundingClientRect().height ?? 64;
+        const absoluteTop =
+          window.scrollY + target.getBoundingClientRect().top + details.getBoundingClientRect().top;
+        const scrollToTop = event.detail.id
+          ? absoluteTop + details.getBoundingClientRect().height - window.innerHeight + 24
+          : absoluteTop - header - 12;
         window.scrollTo({
-          top:
-            window.scrollY +
-            target.getBoundingClientRect().top +
-            details.getBoundingClientRect().top -
-            header -
-            12,
+          top: Math.max(0, scrollToTop),
           behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
         });
       });
@@ -119,10 +169,11 @@ for (const target of [frame, liveFrame]) {
   if (target.contentDocument?.readyState === "complete") watchPreview(target);
 }
 phone.addEventListener("change", () => {
-  for (const target of [frame, liveFrame]) sizePreview(target);
+  syncMobileOverlay();
+  for (const target of document.querySelectorAll("#canvas iframe")) sizePreview(target);
 });
 window.addEventListener("resize", () => {
-  for (const target of [frame, liveFrame]) sizePreview(target);
+  for (const target of document.querySelectorAll("#canvas iframe")) sizePreview(target);
 });
 
 function render(forceMarkup = true) {

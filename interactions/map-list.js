@@ -35,11 +35,6 @@
       const panel = root.querySelector(".u-map-selection");
       const mobile = matchMedia("(max-width: 700px)").matches;
       if (keyboard || mobile) panel.focus({ preventScroll: true });
-      if (mobile)
-        panel.scrollIntoView({
-          block: "start",
-          behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
-        });
     }
     function syncLocationView() {
       const card = cards.find((item) => item.dataset.property === selected);
@@ -256,6 +251,45 @@
       else filter.focus({ preventScroll: true });
     }
     listen(root.querySelector("[data-map-dismiss]"), "click", dismiss);
+    const details = root.querySelector(".u-map-selection");
+    function dismissWithMotion() {
+      if (details.classList.contains("u-swipe-dismiss")) return;
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        dismiss();
+        return;
+      }
+      const id = selected;
+      const finish = (event) => {
+        if (event && event.target !== details) return;
+        clearTimeout(timer);
+        details.removeEventListener("animationend", finish);
+        if (!abort.signal.aborted && selected === id) dismiss();
+        details.classList.remove("u-swipe-dismiss");
+      };
+      details.addEventListener("animationend", finish);
+      const timer = setTimeout(finish, 400);
+      details.classList.add("u-swipe-dismiss");
+    }
+    let swipeStart;
+    listen(details, "touchstart", (event) => {
+      swipeStart =
+        selected &&
+        matchMedia("(max-width: 700px)").matches &&
+        details.scrollTop <= 1 &&
+        event.touches.length === 1
+          ? { x: event.touches[0].clientX, y: event.touches[0].clientY }
+          : null;
+    });
+    listen(details, "touchcancel", () => {
+      swipeStart = null;
+    });
+    listen(details, "touchend", (event) => {
+      const start = swipeStart;
+      swipeStart = null;
+      const end = event.changedTouches[0];
+      if (start && end && end.clientY - start.y > 80 && Math.abs(end.clientX - start.x) < 50)
+        dismissWithMotion();
+    });
     listen(root, "keydown", (event) => {
       if (event.target.closest("dialog[open]")) return;
       if (event.key === "Escape" && selected) {
@@ -297,7 +331,9 @@
     }
     [...cards, ...pins].forEach((item) => {
       const id = item.dataset.property || item.dataset.pin;
-      listen(item, "pointerenter", () => preview(id));
+      listen(item, "pointerenter", (event) => {
+        if (event.pointerType !== "touch") preview(id);
+      });
       listen(item, "pointerleave", () => preview(null));
       listen(item, "focusin", () => preview(id));
       listen(item, "focusout", () => preview(null));

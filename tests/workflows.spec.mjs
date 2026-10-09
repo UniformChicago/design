@@ -1,6 +1,15 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 const base = "http://127.0.0.1:4401/workflows/";
+const dismissSelection = async (page) => {
+  if (page.viewportSize().width <= 700) {
+    await page.locator("#map-selection").focus();
+    await page.keyboard.press("Escape");
+  } else await page.getByRole("button", { name: "Clear selection", exact: true }).click();
+};
+const leaveMobileDetails = async (page) => {
+  if (page.viewportSize().width <= 700) await dismissSelection(page);
+};
 // Deterministic renderer tests do not depend on or consume the public tile service.
 const testMapStyle = {
   version: 8,
@@ -153,8 +162,8 @@ test("map filtering retains unlocated records and clears hidden selection", asyn
   await page.getByRole("button", { name: "Select Terrace apartment, $310,000" }).click();
   // Mobile pointer selection reveals and focuses details, just like keyboard selection.
   await expect(page.locator("#map-selection")).toBeFocused();
-  await page.getByRole("button", { name: "Clear selection" }).click();
-  await expect(page.locator("[data-selection-empty]")).toBeVisible();
+  await dismissSelection(page);
+  await expect(page.locator("[data-selection-facts]")).toBeHidden();
   await page.getByRole("button", { name: "Select Terrace apartment, $310,000" }).focus();
   await page.keyboard.press("Enter");
   await expect(page.locator("#map-selection")).toBeFocused();
@@ -189,6 +198,7 @@ test("marker selection reveals its card without scrolling the page", async ({ pa
 
 test("map failure and retry preserve filters and selection", async ({ page }) => {
   await requireWebGL2(page);
+  await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto(base + "map.html");
   await page.getByLabel("Property type").selectOption("House");
   await page.getByRole("button", { name: "Select Courtyard house", exact: true }).click();
@@ -196,14 +206,18 @@ test("map failure and retry preserve filters and selection", async ({ page }) =>
   await page.getByLabel("Simulated renderer state").selectOption("loading");
   await expect(page.locator(".u-map-surface")).toHaveAttribute("aria-busy", "true");
   await page.getByLabel("Simulated renderer state").selectOption("error");
+  await expect(page.locator('[data-select="courtyard"]')).toHaveAttribute("aria-pressed", "true");
   await page.setViewportSize({ width: 390, height: 844 });
+  await dismissSelection(page);
   await page.getByRole("button", { name: "Map only", exact: true }).click();
   await expect(page.locator(".u-map-canvas")).toBeHidden();
   await page.getByRole("button", { name: "Retry map" }).click();
   await expect(page.locator(".u-map-canvas")).toBeVisible();
   await expect(page.getByLabel("Property type")).toHaveValue("House");
-  await expect(page.locator('[data-select="courtyard"]')).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByLabel("Simulated renderer state")).toBeFocused();
+  await page.getByRole("button", { name: "Map and list", exact: true }).click();
+  await page.locator('[data-select="courtyard"]').click();
+  await expect(page.locator('[data-select="courtyard"]')).toHaveAttribute("aria-pressed", "true");
 });
 
 test("provider style failure retries the request and preserves selection", async ({ page }) => {
@@ -299,12 +313,14 @@ test("property summary shows matching details and remembers shortlist choices ac
     "aria-pressed",
     "true",
   );
+  await leaveMobileDetails(page);
   await page.locator('[data-select="terrace"]').click();
   await expect(page.locator("[data-selection-area]")).toHaveText("1,260 sq ft");
   await expect(page.getByRole("button", { name: "Save property", exact: true })).toHaveAttribute(
     "aria-pressed",
     "false",
   );
+  await leaveMobileDetails(page);
   await page.locator('[data-select="courtyard"]').click();
   await page.getByRole("button", { name: "Saved to shortlist" }).click();
   await expect(page.locator("[data-map-selection]")).toContainText(
@@ -345,21 +361,25 @@ test("workspace cards stack independently without gaps from the neighboring colu
 });
 
 for (const width of [390, 1280]) {
-  test(`listing photos and complete details remain visible without internal scrolling at ${width}px`, async ({
-    page,
-  }) => {
+  test(`listing photos and complete details remain accessible at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto(base + "map.html");
     for (const id of ["courtyard", "courtyard-flat", "studio"]) {
       await page.locator(`[data-select="${id}"]`).click();
       await expect(page.locator(".u-property-gallery figure")).toHaveCount(3);
-      expect(await page.locator("#map-selection").evaluate((el) => el.scrollHeight <= el.clientHeight)).toBe(
-        true,
-      );
-      await expect(page.locator("[data-selection-review]")).toBeVisible();
-      expect(await page.locator("#map-selection").evaluate((el) => el.scrollHeight <= el.clientHeight)).toBe(
-        true,
-      );
+      if (width > 700)
+        expect(
+          await page.locator("#map-selection").evaluate((el) => el.scrollHeight <= el.clientHeight),
+        ).toBe(true);
+      else expect((await page.locator("#map-selection").boundingBox()).height).toBeCloseTo(900, 2);
+      await page.locator("[data-selection-review]").scrollIntoViewIfNeeded();
+      await expect(page.locator("[data-selection-review]")).toBeInViewport();
+      if (width > 700)
+        expect(
+          await page.locator("#map-selection").evaluate((el) => el.scrollHeight <= el.clientHeight),
+        ).toBe(true);
+      else expect((await page.locator("#map-selection").boundingBox()).height).toBeCloseTo(900, 2);
+      await leaveMobileDetails(page);
     }
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   });
@@ -391,7 +411,7 @@ test("property cards select from their photo or text and support keyboard activa
   const buttonBox = await button.boundingBox();
   expect(buttonBox.width).toBeGreaterThan(box.width - 3);
   expect(buttonBox.height).toBeGreaterThan(box.height - 3);
-  await page.getByRole("button", { name: "Clear selection" }).click();
+  await dismissSelection(page);
   await button.focus();
   await page.keyboard.press("Space");
   await expect(button).toHaveAttribute("aria-pressed", "true");
@@ -445,6 +465,7 @@ test("selection without coordinates explains the unchanged map and still opens d
   await expect(page.locator(".u-map-canvas")).toHaveAttribute("aria-hidden", "true");
   await expect(page.locator("[data-selection-location-notice]")).toBeVisible();
   await expect(page.locator('[data-property="studio"] .u-tag')).toHaveText("Location unknown");
+  await leaveMobileDetails(page);
   await page.locator('[data-select="courtyard"]').click();
   await expect(page.locator("[data-map-location-status]")).toBeHidden();
   await expect(page.locator("[data-selection-location-notice]")).toBeHidden();
@@ -488,6 +509,7 @@ test("property context actions support right-click, keyboard navigation and touc
   await page.keyboard.press("Escape");
   await expect(trigger).toBeFocused();
   await expect(trigger).toHaveAttribute("aria-pressed", "true");
+  await leaveMobileDetails(page);
   await page.locator('[data-property="courtyard"] .u-context-trigger').click();
   await menu.getByRole("menuitem", { name: "View details" }).click();
   await expect(page.locator("#map-selection")).toBeFocused();
@@ -530,7 +552,8 @@ test("expanding document details preserves every column position and width", asy
   expect(await geometry()).toEqual(before);
 });
 
-test("map, list and combined views retain selection and filters", async ({ page }) => {
+test("desktop map, list and combined views retain selection and filters", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto(base + "map.html");
   await expect(page.locator(".u-map-layout")).toHaveAttribute("data-view", "both");
   await page.locator('[data-select="courtyard"]').click();
@@ -601,7 +624,7 @@ test("first mobile selection in map and list reveals details and can reopen afte
     const panel = await page.locator("#map-selection").boundingBox();
     expect(panel.y).toBeGreaterThanOrEqual(0);
     expect(panel.y).toBeLessThan(120);
-    await page.getByRole("button", { name: "Clear selection", exact: true }).click();
+    await dismissSelection(page);
     await expect(page.locator("[data-selection-facts]")).toBeHidden();
   }
 });

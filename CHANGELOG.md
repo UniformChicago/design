@@ -2,6 +2,14 @@
 
 Each release is a `vX.Y.Z` tag with a [GitHub Release](https://github.com/UniformChicago/design/releases): notes from this file, the npm tarball, `SHA256SUMS` and a signed build-provenance attestation. During `0.x`, any release may change markup or class names; read the notes before upgrading.
 
+## v0.3.1 — 2026-10-09
+
+- Make mobile property details and photo viewers fill the phone viewport. Show all photos in a vertical list, disable image selection and touch callouts, and keep desktop photo navigation.
+- Replace the mobile X with swipe-down dismissal. Animate the exit before restoring the Playground, prevent the closing flash, and respect reduced motion. Keep keyboard and screen-reader dismissal available.
+- Align mobile property facts and descriptions, tighten filters and actions, and keep theme-variable names readable with accessible copy controls.
+- Preserve starter state between previews and expand the documentation examples for charts, activity and native progress. Load the docs map when it approaches the viewport.
+- Restore initialization of progressively enhanced dialog and context-menu buttons, retain legacy progress styling, and fix copy feedback reset.
+
 ## v0.3.0 — 2026-10-08
 
 - Add a financial calculator starter with configurable HOA fees, stable mortgage math, filled SVG donut sectors and rounded down-payment labels. Demonstration estimates are not offers of credit.

@@ -1,1 +1,52 @@
-<svg viewBox="0 0 100 100" width="100" height="100" class="u-donut-chart" role="img" aria-label="30 percent completed"><path class="u-donut-chart-segment" fill="var(--u-link)" d="M50.000000 0.000000 A50 50 0 0 1 97.552826 65.450850 L82.335922 60.506578 A34 34 0 0 0 50.000000 16.000000 Z"></path><path class="u-donut-chart-segment" fill="var(--u-muted)" d="M97.552826 65.450850 A50 50 0 1 1 50.000000 0.000000 L50.000000 16.000000 A34 34 0 1 0 82.335922 60.506578 Z"></path><text x="50" y="50" class="u-donut-chart-text">30%</text></svg>
+
+<div class="s-chart-grid">
+  <div>
+    <h3 class="u-section-heading">Donut</h3>
+    <div class="u-stack s-mt-3">
+      <svg viewBox="0 0 100 100" class="u-donut-chart s-m-0" role="img" aria-label="30 percent completed">
+        <path class="u-donut-chart-segment" fill="var(--u-link)" d="M50.000000 0.000000 A50 50 0 0 1 97.552826 65.450850 L82.335922 60.506578 A34 34 0 0 0 50.000000 16.000000 Z"></path>
+        <path class="u-donut-chart-segment" fill="var(--u-line)" d="M97.552826 65.450850 A50 50 0 1 1 50.000000 0.000000 L50.000000 16.000000 A34 34 0 1 0 82.335922 60.506578 Z"></path>
+        <text x="50" y="50" class="u-donut-chart-text s-text-lg">30%</text>
+      </svg>
+      <ul class="u-legend s-legend-w">
+        <li><span class="u-meta"><span class="u-legend-color u-legend-color--pi"></span>Primary</span> <strong>30%</strong></li>
+        <li><span class="u-meta"><span class="u-legend-color s-bg-line"></span>Remaining</span> <strong>70%</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="s-chart-stack">
+    <div>
+      <h3 class="u-section-heading">Distribution</h3>
+      <div class="u-bar-chart" role="img" aria-label="Monthly sample revenue: January 40, February 75, March 55, April 90, May 60, June 50.">
+        <div class="u-bar-chart-col"><span class="s-bar-val">40</span><div class="u-bar-chart-bar-wrap"><div class="u-bar s-bar-chart-1" aria-hidden="true"></div></div><span class="u-bar-chart-label">Jan</span></div>
+        <div class="u-bar-chart-col"><span class="s-bar-val">75</span><div class="u-bar-chart-bar-wrap"><div class="u-bar s-bar-chart-2" aria-hidden="true"></div></div><span class="u-bar-chart-label">Feb</span></div>
+        <div class="u-bar-chart-col"><span class="s-bar-val">55</span><div class="u-bar-chart-bar-wrap"><div class="u-bar s-bar-chart-3" aria-hidden="true"></div></div><span class="u-bar-chart-label">Mar</span></div>
+        <div class="u-bar-chart-col"><span class="s-bar-val">90</span><div class="u-bar-chart-bar-wrap"><div class="u-bar s-bar-chart-4" aria-hidden="true"></div></div><span class="u-bar-chart-label">Apr</span></div>
+        <div class="u-bar-chart-col"><span class="s-bar-val">60</span><div class="u-bar-chart-bar-wrap"><div class="u-bar s-bar-chart-5" aria-hidden="true"></div></div><span class="u-bar-chart-label">May</span></div>
+        <div class="u-bar-chart-col"><span class="s-bar-val">50</span><div class="u-bar-chart-bar-wrap"><div class="u-bar s-bar-chart-3" aria-hidden="true"></div></div><span class="u-bar-chart-label">Jun</span></div>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="u-section-heading">Trend</h3>
+      <div class="s-mt-3">
+        <div class="s-trend-header">
+          <span class="s-trend-val">24,592</span>
+          <span class="s-trend-change">↑ 12%</span>
+        </div>
+        <svg viewBox="0 0 400 60" class="u-sparkline s-sparkline-lg s-block-w-full" role="img" aria-label="Trend over time">
+          <defs>
+            <linearGradient id="spark-fade" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--u-link)" stop-opacity="0.2" />
+              <stop offset="100%" stop-color="var(--u-link)" stop-opacity="0" />
+            </linearGradient>
+          </defs>
+          <path d="M0,50 L40,40 L80,45 L120,30 L160,35 L200,15 L240,25 L280,10 L320,20 L360,5 L400,8 L400,60 L0,60 Z" fill="url(#spark-fade)" stroke="none" />
+          <path d="M0,50 L40,40 L80,45 L120,30 L160,35 L200,15 L240,25 L280,10 L320,20 L360,5 L400,8" fill="none" stroke="var(--u-link)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="400" cy="8" r="4" fill="var(--u-link)" />
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>

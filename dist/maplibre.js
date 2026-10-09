@@ -280,6 +280,11 @@
           fadeDuration: reduced() ? 0 : 200,
           transformRequest: provider.transformRequest,
         });
+        map.on("styleimagemissing", (event) => {
+          // External styles (like OpenFreeMap) sometimes reference missing sprite patterns
+          // like "wood-pattern". Provide an empty 1x1 image to silence console warnings.
+          map.addImage(event.id, { width: 1, height: 1, data: new Uint8Array(4) });
+        });
         map.addControl(new M.AttributionControl({ compact: false }), "bottom-right");
         const controls = {
           onAdd(instance) {
