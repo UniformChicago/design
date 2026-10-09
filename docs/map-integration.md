@@ -80,3 +80,11 @@ Context actions are optional. Load `context-menu.css` after `design.css`, load `
 Menus use native auto popovers, viewport-clamped cursor placement, arrow/Home/End navigation and Escape dismissal. Their position lives in the linked stylesheet through CSSOM; no inline style attribute or style element is added. Menu items dispatch `uniform:context-action` with `{action, trigger}`. Consumers provide the action handlers. The property fixture implements detail navigation, shortlist toggling and price copying, with clipboard failure announcements. Dispose the function returned by `mount` before removing a root.
 
 Selecting a record without coordinates replaces the geographic view with an explicit unknown-location panel. The listing, photos and facts remain available. Renderer loading and failure states remain separate and take precedence while the provider is unavailable.
+
+## Listing share previews
+
+Set `data-share-url` on each `[data-property]` card to its public listing page. The Share property action uses that URL with the native share sheet, or copies the link when native sharing is unavailable. Without this attribute, it uses the current page with a property-selection hash.
+
+The destination page must serve Open Graph metadata in its initial HTML: an absolute `og:url`, `og:title`, and an absolute `og:image` pointing to the property photo, with a default branded image when no photo is available. A hash selects a record in the browser but does not provide distinct metadata to share crawlers. The docs build demonstrates this with five static sample listing pages and labeled, watermarked photo cards. Consumers provide their own listing routes and image assets.
+
+To regenerate the docs photo cards after changing sample photos or branding, run `node scripts/render-property-share.mjs`. Generated files in `site/share/` are committed; releases do not rerender them.

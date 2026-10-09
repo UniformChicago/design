@@ -25,9 +25,7 @@
   color: var(--u-muted);
   font-weight: 400;
 }
-.g-segment button:hover {
-  background: var(--u-hover);
-}
+
 .g-library > .u-eyebrow:not(:first-child) {
   margin-top: var(--u-space-5);
 }
@@ -409,6 +407,9 @@
   display: block;
   visibility: hidden;
 }
+.g-canvas {
+  overflow-anchor: none;
+}
 body.g-preview-open {
   overflow: hidden;
 }
@@ -427,5 +428,11 @@ body.g-preview-open {
     border: 0;
     border-radius: 0;
     z-index: 1000;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .g-segment button:hover {
+    background: var(--u-hover);
   }
 }

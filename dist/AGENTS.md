@@ -1,6 +1,6 @@
 # Uniform Design agent contract
 
-Package version: 0.3.2. Schema: 1.0.0.
+Package version: 0.3.3. Schema: 1.0.0.
 
 Read catalog.json for machine-readable contracts and exact markup. These are preview contracts.
 

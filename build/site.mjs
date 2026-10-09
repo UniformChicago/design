@@ -355,6 +355,49 @@ for (const page of routes.map((route) => route.file)) {
 // scripts/render-share.mjs and need absolute URLs.
 const SITE_URL = "https://design.uniformrealestate.com";
 const metaDescription = (html) => html.match(/<meta\s+name="description"\s+content="([^"]*)"/)?.[1];
+const propertyShares = new Map();
+cpSync(join(SITE, "share"), join(OUT, "share"), { recursive: true });
+const mapFile = join(OUT, "workflows/map.html");
+let mapPage = readFileSync(mapFile, "utf8");
+for (const match of mapPage.matchAll(/<article\b[\s\S]*?<\/article>/g)) {
+  const card = match[0];
+  const id = card.match(/data-property="([^"]+)"/)?.[1];
+  if (!id) continue;
+  const title = card.match(/<h2[^>]*>([^<]+)<\/h2>/)[1];
+  const price = card.match(/<strong>([^<]+)<\/strong>/)[1];
+  const photo = card.match(/<img[^>]+src="[^"]*\/([^/]+)\.jpg"/)?.[1];
+  const image = photo && existsSync(join(SITE, "share", `${photo}.jpg`)) ? `share/${photo}.jpg` : "og.png";
+  propertyShares.set(`workflows/property-${id}.html`, {
+    image,
+    alt: `${title} · AI-generated sample photo`,
+    title,
+    price,
+    id,
+  });
+}
+for (const [path, property] of propertyShares) {
+  const link = `/${path}`;
+  for (const file of [mapFile, join(OUT, "workflows/previews/map.html")]) {
+    const source = readFileSync(file, "utf8").replace(
+      `data-property="${property.id}"`,
+      `data-property="${property.id}" data-share-url="${link}"`,
+    );
+    writeFileSync(file, source);
+  }
+}
+mapPage = readFileSync(mapFile, "utf8");
+for (const [path, property] of propertyShares) {
+  writeFileSync(
+    join(OUT, path),
+    mapPage
+      .replace(/<title>[^<]*<\/title>/, `<title>${esc(property.title)} · Uniform Design</title>`)
+      .replace(
+        "</head>",
+        `<meta name="description" content="${esc(`${property.title} · ${property.price}. Fictional listing with an AI-generated sample photo.`)}"></head>`,
+      )
+      .replace("data-map-preview", `data-map-preview data-initial-property="${property.id}"`),
+  );
+}
 for (const f of ["og.png", "apple-touch-icon.png"]) cpSync(join(SITE, f), join(OUT, f));
 for (const p of [
   "index.html",
@@ -367,6 +410,7 @@ for (const p of [
   "workflows/map.html",
   "workflows/calculator.html",
   "agent/index.html",
+  ...propertyShares.keys(),
 ]) {
   const file = join(OUT, p);
   const html = readFileSync(file, "utf8");
@@ -374,7 +418,8 @@ for (const p of [
   // Pages without their own description share the home page's.
   const description = metaDescription(html) ?? metaDescription(readFileSync(join(OUT, "index.html"), "utf8"));
   const url = `${SITE_URL}/${p.replace(/index\.html$/, "")}`;
-  const image = `${SITE_URL}/og.png`;
+  const image = `${SITE_URL}/${propertyShares.get(p)?.image || "og.png"}`;
+  const imageAlt = propertyShares.get(p)?.alt || "Uniform Design logo";
   const tags = [
     `<link rel="canonical" href="${url}" />`,
     `<link rel="apple-touch-icon" href="/apple-touch-icon.png" />`,
@@ -387,7 +432,7 @@ for (const p of [
     `<meta property="og:image" content="${image}" />`,
     `<meta property="og:image:width" content="1200" />`,
     `<meta property="og:image:height" content="630" />`,
-    `<meta property="og:image:alt" content="Uniform Design logo" />`,
+    `<meta property="og:image:alt" content="${esc(imageAlt)}" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
     `<meta name="twitter:site" content="@UniformChicago" />`,
     `<meta name="twitter:title" content="${title}" />`,

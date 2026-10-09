@@ -80,6 +80,7 @@ liveFrame.addEventListener("load", syncPreview);
 // Let mobile previews grow with their content. HTML height attributes keep this CSP-safe.
 const phone = matchMedia("(max-width: 700px)");
 const previewObservers = new Map();
+const overlayPositions = new WeakMap();
 function syncMobileOverlay() {
   let open = false;
   let locked = false;
@@ -93,6 +94,11 @@ function syncMobileOverlay() {
       );
     locked ||= !target.hidden && Boolean(doc?.querySelector("dialog[open], [popover]:popover-open"));
     if (expanded && !target.classList.contains("g-preview-fullscreen")) {
+      overlayPositions.set(target, {
+        height: target.height,
+        x: target.contentWindow.scrollX,
+        y: target.contentWindow.scrollY,
+      });
       const spacer = document.createElementNS("http://www.w3.org/2000/svg", "svg");
       spacer.setAttribute("height", String(target.getBoundingClientRect().height));
       spacer.setAttribute("width", "1");
@@ -100,6 +106,14 @@ function syncMobileOverlay() {
       spacer.classList.add("g-overlay-spacer");
       target.before(spacer);
     } else if (!expanded && target.classList.contains("g-preview-fullscreen")) {
+      // Restore the embedded viewport before returning the frame to document flow.
+      const position = overlayPositions.get(target);
+      doc.querySelector(".u-map-selection")?.scrollTo({ top: 0, behavior: "instant" });
+      if (position) {
+        target.height = position.height;
+        target.contentWindow.scrollTo({ left: position.x, top: position.y, behavior: "instant" });
+        overlayPositions.delete(target);
+      }
       target.previousElementSibling?.matches(".g-overlay-spacer") && target.previousElementSibling.remove();
     }
     target.classList.toggle("g-preview-fullscreen", expanded);

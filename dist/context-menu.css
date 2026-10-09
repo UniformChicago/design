@@ -29,7 +29,7 @@
   text-align: start;
   cursor: pointer;
 }
-.u-context-menu [role="menuitem"]:is(:hover, :focus-visible) {
+.u-context-menu [role="menuitem"]:focus-visible {
   background: var(--u-hover);
 }
 .u-context-menu [role="menuitem"]:disabled {
@@ -56,4 +56,10 @@
 
 .u-context-menu:popover-open {
   display: block;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .u-context-menu [role="menuitem"]:hover {
+    background: var(--u-hover);
+  }
 }

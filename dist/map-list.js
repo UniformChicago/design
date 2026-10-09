@@ -157,9 +157,11 @@
         select(id);
         saveButton?.click();
       } else if (event.detail.action === "share") {
-        const url = new URL(location.href);
-        url.pathname = url.pathname.replace("/previews/", "/");
-        url.hash = `property=${encodeURIComponent(id)}`;
+        const url = new URL(card.dataset.shareUrl || location.href, location.href);
+        if (!card.dataset.shareUrl) {
+          url.pathname = url.pathname.replace("/previews/", "/");
+          url.hash = `property=${encodeURIComponent(id)}`;
+        }
         const data = {
           title: card.querySelector("h2").textContent,
           text: `${card.querySelector("h2").textContent} · ${card.querySelector("strong").textContent} · Sample property`,
@@ -345,7 +347,9 @@
         if (event.pointerType !== "touch") preview(id);
       });
       listen(item, "pointerleave", () => preview(null));
-      listen(item, "focusin", () => preview(id));
+      listen(item, "focusin", () =>
+        preview(root.ownerDocument.documentElement.hasAttribute("data-u-touch") ? null : id),
+      );
       listen(item, "focusout", () => preview(null));
     });
     const api = {
@@ -369,7 +373,9 @@
     mounts.set(root, api);
     update();
     const openShared = () => {
-      const shared = new URLSearchParams(globalThis.location?.hash.slice(1)).get("property");
+      const shared =
+        new URLSearchParams(globalThis.location?.hash.slice(1)).get("property") ||
+        root.dataset.initialProperty;
       const card = cards.find((card) => card.dataset.property === shared);
       if (!card) return;
       if (card.hidden) {

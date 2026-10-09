@@ -2,6 +2,13 @@
 
 Each release is a `vX.Y.Z` tag with a [GitHub Release](https://github.com/UniformChicago/design/releases): notes from this file, the npm tarball, `SHA256SUMS` and a signed build-provenance attestation. During `0.x`, any release may change markup or class names; read the notes before upgrading.
 
+## v0.3.3 — 2026-10-09
+
+- Restore the embedded viewport before closing scrolled mobile listing details, and disable scroll anchoring in the Playground preview.
+- Apply hover treatments only to fine pointers that support hover. Hide focus outlines after touch input and restore them on keyboard input.
+- Give sample listings shareable HTML pages with property-specific Open Graph photos, a subtle Uniform watermark, and an AI-generated sample disclosure. Generic pages retain the default share image.
+- Support optional `data-share-url` on property cards so consumers can share their own listing pages with server-rendered preview metadata.
+
 ## v0.3.2 — 2026-10-09
 
 - Keep the Playground background stationary while mobile listing details dismiss; gallery photos slide down independently of the modal background.

@@ -125,9 +125,7 @@
   color: var(--u-link);
   text-underline-offset: 4px;
 }
-.u-root a:hover {
-  color: var(--u-fg);
-}
+
 .u-root :focus-visible {
   outline: 2px solid var(--u-accent);
   outline-offset: 4px;
@@ -384,22 +382,11 @@
 .u-root a.u-button--quiet {
   color: var(--u-muted);
 }
-.u-root a.u-button--quiet:hover {
-  color: var(--u-fg);
-}
-.u-button:hover {
-  background: var(--u-fg);
-  color: var(--u-bg);
-}
+
 .u-button--quiet {
   background: transparent;
   border-color: var(--u-line);
   color: var(--u-muted);
-}
-.u-button--quiet:hover {
-  background: transparent;
-  color: var(--u-fg);
-  border-color: var(--u-muted);
 }
 
 
@@ -513,10 +500,7 @@
   text-decoration: none;
   cursor: pointer;
 }
-.u-nav :is(a, button):hover {
-  background: var(--u-hover);
-  color: var(--u-fg);
-}
+
 .u-nav :is([aria-current="page"], [aria-current="location"], [aria-pressed="true"]) {
   border-left-color: var(--u-accent);
   background: var(--u-hover);
@@ -934,9 +918,7 @@
   border-color: transparent;
   border-radius: 50%;
 }
-.u-icon-button:hover {
-  background: var(--u-hover);
-}
+
 .u-workspace > header {
   padding-bottom: var(--u-space-4);
   border-bottom: 1px solid var(--u-line);
@@ -1244,10 +1226,7 @@
   border-color: var(--u-accent);
   color: var(--u-fg);
 }
-.u-button--danger:hover {
-  background: var(--u-hover);
-  color: var(--u-fg);
-}
+
 .u-button[aria-busy="true"] {
   cursor: progress;
 }
@@ -1470,7 +1449,7 @@
   fill: var(--u-fg);
   font: 600 14px var(--u-font-sans);
 }
-.u-map-canvas a:is(:hover, :focus, [aria-current="true"]) rect {
+.u-map-canvas a:is(:focus-visible, [aria-current="true"]) rect {
   stroke-width: 5;
 }
 .u-map-selection {
@@ -1839,9 +1818,7 @@
   z-index: 1;
   background: var(--u-bg);
 }
-.u-property-dismiss:hover {
-  background: var(--u-surface);
-}
+
 .u-map-selection > [data-selection-empty] {
   margin: 0;
 }
@@ -1865,9 +1842,6 @@
 }
 .u-map-card-select:focus-visible {
   outline-offset: -3px;
-}
-.u-map-card:hover {
-  background: var(--u-hover);
 }
 
 @media (max-width: 700px) {
@@ -2050,9 +2024,7 @@
   border-radius: var(--u-radius-sm) var(--u-radius-sm) 0 0;
   transition: background-color 0.2s;
 }
-.u-bar:hover {
-  background: var(--u-accent);
-}
+
 .u-bar-chart-label {
   margin-top: var(--u-space-2);
   font-size: 11px;
@@ -2115,4 +2087,48 @@ html:has(dialog[open], [popover]:popover-open) {
 }
 .u-root :focus:not(:focus-visible) {
   outline: none;
+}
+html[data-u-touch] .u-root :focus-visible {
+  outline: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .u-root a:hover {
+    color: var(--u-fg);
+  }
+  .u-root a.u-button--quiet:hover {
+    color: var(--u-fg);
+  }
+  .u-button:hover {
+    background: var(--u-fg);
+    color: var(--u-bg);
+  }
+  .u-button--quiet:hover {
+    background: transparent;
+    color: var(--u-fg);
+    border-color: var(--u-muted);
+  }
+  .u-nav :is(a, button):hover {
+    background: var(--u-hover);
+    color: var(--u-fg);
+  }
+  .u-icon-button:hover {
+    background: var(--u-hover);
+  }
+  .u-button--danger:hover {
+    background: var(--u-hover);
+    color: var(--u-fg);
+  }
+  .u-map-canvas a:hover rect {
+    stroke-width: 5;
+  }
+  .u-property-dismiss:hover {
+    background: var(--u-surface);
+  }
+  .u-map-card:hover {
+    background: var(--u-hover);
+  }
+  .u-bar:hover {
+    background: var(--u-accent);
+  }
 }

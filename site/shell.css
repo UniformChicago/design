@@ -288,10 +288,6 @@ html {
   min-width: 0;
   color: var(--u-muted);
 }
-.u-shell-header-actions .u-button.u-shell-icon:hover {
-  color: var(--u-fg);
-  background: transparent;
-}
 
 /* Command Palette */
 .s-palette-backdrop {
@@ -358,6 +354,13 @@ html {
 .s-side-search {
   cursor: pointer;
 }
-.s-side-search:hover {
-  background: var(--u-surface);
+
+@media (hover: hover) and (pointer: fine) {
+  .u-shell-header-actions .u-button.u-shell-icon:hover {
+    color: var(--u-fg);
+    background: transparent;
+  }
+  .s-side-search:hover {
+    background: var(--u-surface);
+  }
 }

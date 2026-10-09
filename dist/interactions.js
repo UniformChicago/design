@@ -38,6 +38,14 @@
       target.addEventListener(event, fn);
       cleanups.push(() => target.removeEventListener(event, fn));
     };
+    const doc = scope.ownerDocument || scope;
+    if (doc.documentElement) {
+      listen(doc, "pointerdown", (event) => {
+        doc.documentElement.toggleAttribute("data-u-touch", event.pointerType === "touch");
+      });
+      listen(doc, "keydown", () => doc.documentElement.removeAttribute("data-u-touch"));
+      cleanups.push(() => doc.documentElement.removeAttribute("data-u-touch"));
+    }
     for (const slider of scope.querySelectorAll('input.u-slider[type="range"]')) {
       const update = () => {
         const min = Number(slider.min) || 0;

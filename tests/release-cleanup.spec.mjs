@@ -61,7 +61,7 @@ test("context trigger toggles, native sharing uses the selected property and fal
   await menu.getByRole("menuitem", { name: "Share property" }).click();
   const data = await page.evaluate(() => window.shared);
   expect(data.title).toBe("Courtyard house");
-  expect(data.url).toBe("http://127.0.0.1:4401/workflows/map.html#property=courtyard");
+  expect(data.url).toBe("http://127.0.0.1:4401/workflows/property-courtyard.html");
   await expect(menu).toBeHidden();
   await page.evaluate(() => Object.defineProperty(navigator, "share", { value: undefined }));
   await trigger.click();

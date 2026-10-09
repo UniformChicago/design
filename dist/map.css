@@ -41,9 +41,7 @@
   height: 44px;
   line-height: 44px;
 }
-.u-geo-map .leaflet-bar a:hover {
-  background: var(--u-hover);
-}
+
 .u-geo-map .leaflet-control-attribution {
   background: var(--u-bg);
   color: var(--u-muted);
@@ -93,9 +91,7 @@
 .u-map-zoom button + button {
   border-top: 1px solid var(--u-line);
 }
-.u-map-zoom button:hover {
-  background: var(--u-hover);
-}
+
 .u-geo-map .maplibregl-ctrl-attrib {
   background: var(--u-bg);
   color: var(--u-muted);
@@ -324,5 +320,14 @@
 @media (hover: none) and (pointer: coarse) {
   .u-map-price[data-preview="true"] {
     outline: none;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .u-geo-map .leaflet-bar a:hover {
+    background: var(--u-hover);
+  }
+  .u-map-zoom button:hover {
+    background: var(--u-hover);
   }
 }

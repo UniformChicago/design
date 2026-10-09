@@ -2,13 +2,13 @@
   "name": "@uniform/design",
   "files": {
     "agent-api.mjs": "2ba579769f96a6a22a79fa9867deebae6323f7db7011c7316c086c99b6b553b6",
-    "AGENTS.md": "6e7fdaaa7f41cabf59b0d48789e8494643881f99f78b668707a2d7592000ae6b",
+    "AGENTS.md": "b889195b5e1a478c715a2a1a733206879c67cf97064e0aff3b787d4c861c0064",
     "atmosphere.js": "2975faaf299d17a906f14fc1f70e06db72559063b1fe7ff80b89bcb4b4d36306",
-    "catalog.js": "a3c680b46137dac8360bed410d5d29cb8e82b2d893d1f57b95c9755154912991",
-    "catalog.json": "78643745b1edebf0a71fdee1643022f73923bfea2613d14b6d2ae91b2b6de31e",
-    "context-menu.css": "a077be0f94b58dce15c72e1fdf9c312a766baeeb43ae196aaa8b5defe617caaa",
+    "catalog.js": "ac1ed587c9780c7b013e2a359aaf765039fa022a18d0849d6c09efc5b3a9713d",
+    "catalog.json": "872b73fd1334e260677719a3fe49ea9dee02e329df2e79301fc47ea1726718b2",
+    "context-menu.css": "ad00c63b7dd86129ee65832e2be13c2931bb841470504942c9b4fd0f76f9f103",
     "context-menu.js": "eb00ff05cc7939f4c8ebf6df24f650115794c772bd354d213b84a7ba930797d7",
-    "design.css": "aba4b29c876fd330d37e461d5dcfb5dd637f7f968d1f8079a2c1342ff042bf4e",
+    "design.css": "08e22c5dbb13090c4ad324bfd662c2d2a88a5783698d56f2af21e0cb1d3a7dcd",
     "fonts/ibm-plex-mono-latin-500-normal.woff2": "01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22",
     "fonts/OFL-IBMPlexMono.txt": "23b0a9d0c6d3f140a0b77e483c5cfa6bba574325ef5cb189ed9f2fec4884533f",
     "fonts/OFL-PublicSans.txt": "157a9e77f7580246e97c769490e2e977ae94399f9d30f4556015c41fe8c28bac",
@@ -22,10 +22,10 @@
     "gallery/img/house_exterior.jpg": "f57f03305fed01ae1f267300c968bdc51bb5e410dc1e5e4db670d1d4c3327a94",
     "gallery/img/modern_interior.jpg": "378bef0b3fc65d972e5abe7733fd3e3ecdb82f778bc6f9bd4eddc6c6a6eb7952",
     "gallery/img/outdoor_space.jpg": "be9043fa4530dfaf4b20d7b52aab61a4c89bf12be277bff220434ca2f1bd7bd0",
-    "interactions.js": "e65f44a8c461673cf557dfc3021c7c859535efe2b57ef95570b87703acfccc64",
+    "interactions.js": "a6fc697d134717f6fe01c2993e99dab6c82d677850c4a952c90b9a5cc37e39d7",
     "lint.mjs": "a02d3672aa8fab09ec5bf8093270204a8a00fbc96911bca5c7d0a021b045ebfe",
-    "map-list.js": "a2078b8583241a4d53e9e96497b543f46447a3f28d33c658a14566e7212083ca",
-    "map.css": "3796c571b69c42821bc0bf84cf6dac292d260bf6ceb3d7b5105d5ee42886fca8",
+    "map-list.js": "8c2bb4a58429e2fc7baa21287eb2eba95ad52aacf315e23a3bb99a60a49600bf",
+    "map.css": "2a8c5d65ad839f98290e10f5303b95d8a2e414fe3cea7b9d20daca5e061ed727",
     "map.js": "8e3ca92bcb15664c72d0ea2ac414b883e444a5ffd2a987ac2d3f6add7a3fe1df",
     "maplibre.js": "628b2ae6ecd29072fe535a2c7885a8aa9c67a8e2769605624e54e36e747cfff7",
     "patterns/calculator.html": "65bbc3443e66b8c3ea2168f4bc32184ea557bf22c347a38fb264b42b2a36d280",
@@ -81,6 +81,6 @@
     "waves.js": "624a1527da8d5ef74190cab67d3d12b6eeb2d09c59e42187bd73e38a7c3448b9",
     "waves/band-light.svg": "0c5ae745d05929b9429d8b0e2961610fc8c013f309670e13a4aa0b21393ce501",
     "waves/cover-dark.svg": "4807ea6c62fcd519ac842e4ce20a28b3480fb59986101a306b89bf77487f6ba5",
-    "widgets.css": "6fbe338e0f483bd32b685c95b57eadb1267d8d01833dde642adbb82eb5c0a3e9"
+    "widgets.css": "b207671dfe47eb23b6e4fbd132539cc51a01e5efe4069121e1b050fde305913f"
   }
 }

@@ -8,8 +8,16 @@ export default defineConfig({
   projects: [
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },
     { name: "mobile", use: { ...devices["Pixel 7"] } },
-    { name: "firefox-patterns", testMatch: "workflows.spec.mjs", use: { ...devices["Desktop Firefox"] } },
-    { name: "webkit-patterns", testMatch: "workflows.spec.mjs", use: { ...devices["Desktop Safari"] } },
+    {
+      name: "firefox-patterns",
+      testMatch: ["workflows.spec.mjs", "scrolled-detail-close.spec.mjs"],
+      use: { ...devices["Desktop Firefox"] },
+    },
+    {
+      name: "webkit-patterns",
+      testMatch: ["workflows.spec.mjs", "scrolled-detail-close.spec.mjs"],
+      use: { ...devices["Desktop Safari"] },
+    },
   ],
   webServer: [
     {
