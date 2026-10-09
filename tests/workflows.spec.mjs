@@ -200,6 +200,7 @@ test("map failure and retry preserve filters and selection", async ({ page }) =>
   await requireWebGL2(page);
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto(base + "map.html");
+  await expect(page.locator(".u-map-surface")).toHaveAttribute("data-state", "ready");
   await page.getByLabel("Property type").selectOption("House");
   await page.getByRole("button", { name: "Select Courtyard house", exact: true }).click();
   await page.getByText("Pattern reference", { exact: true }).click();
