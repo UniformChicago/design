@@ -175,3 +175,13 @@ test("map recipes include the optional context menu assets used by their markup"
   assert.ok(serialized.includes("context-menu.css"));
   assert.ok(serialized.includes("context-menu.js"));
 });
+
+test("agent examples use shared classes and packaged sample-photo assets", () => {
+  for (const item of [...catalog.components, ...catalog.patterns]) {
+    assert.ok(!/class="[^"]*\b(?:s|g|p)-/.test(item.markup), item.id);
+    assert.ok(!/href="(?:\.\.\/)?playground\//.test(item.markup), item.id);
+    assert.ok(!/src="(?:\.\.\/)?gallery\/img\//.test(item.markup), item.id);
+    for (const [, asset] of item.markup.matchAll(/src="\/design\/(gallery\/img\/[^"]+)"/g))
+      assert.ok(existsSync(`${root}/dist/${asset}`), `${item.id}: ${asset}`);
+  }
+});

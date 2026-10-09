@@ -14,6 +14,7 @@ $("customize-toggle").addEventListener("click", () => {
   $("starter-settings").classList.toggle("g-settings--open", open);
 });
 const css = new URL("../dist/design.css", location.href).href;
+const widgetsCss = new URL("../dist/widgets.css", location.href).href;
 const mapCss = new URL("../dist/map.css", location.href).href;
 const contextCss = new URL("../dist/context-menu.css", location.href).href;
 const previewCss = new URL("preview.css", location.href).href;
@@ -35,9 +36,9 @@ frame.addEventListener("load", () => {
   previewReady = true;
   updatePreview();
 });
-const policy = `default-src 'none'; style-src ${css} ${previewCss} ${mapCss} ${contextCss}; font-src ${new URL("../dist/fonts/", location.href).href}; base-uri 'none'; form-action 'none'`;
+const policy = `default-src 'none'; img-src 'self' ${new URL("../gallery/img/", location.href).href}; style-src ${css} ${previewCss} ${mapCss} ${contextCss} ${widgetsCss}; font-src ${new URL("../dist/fonts/", location.href).href}; base-uri 'none'; form-action 'none'`;
 if (!frame.getAttribute("srcdoc"))
-  frame.srcdoc = `<!doctype html><html lang="en" data-theme="${theme}"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="${escapeAttribute(policy)}"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="${css}"><link rel="stylesheet" href="${previewCss}"><link rel="stylesheet" href="${mapCss}"><link rel="stylesheet" href="${contextCss}"><title>Pattern preview</title></head><body class="u-root"><main class="p-content" aria-label="Component preview"></main></body></html>`;
+  frame.srcdoc = `<!doctype html><html lang="en" data-theme="${theme}"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="${escapeAttribute(policy)}"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="${css}"><link rel="stylesheet" href="${widgetsCss}"><link rel="stylesheet" href="${previewCss}"><link rel="stylesheet" href="${mapCss}"><link rel="stylesheet" href="${contextCss}"><title>Pattern preview</title></head><body class="u-root"><main class="p-content" aria-label="Component preview"></main></body></html>`;
 
 function syncPreview() {
   const live = Boolean(active.live && mode === "live");
@@ -133,6 +134,15 @@ function render(forceMarkup = true) {
     .forEach((node) => node.remove());
   parsed.querySelectorAll("*").forEach((node) => {
     for (const attr of [...node.attributes]) {
+      if (attr.name === "src" && node.localName === "img") {
+        const match = attr.value.match(
+          /(?:^|\/)gallery\/img\/(house_exterior|apartment_exterior|modern_interior|outdoor_space)\.jpg$/,
+        );
+        if (match && !/^[a-z]+:/i.test(attr.value) && !attr.value.startsWith("//")) {
+          node.setAttribute("src", new URL(`../gallery/img/${match[1]}.jpg`, location.href).href);
+          continue;
+        }
+      }
       if (
         /^on/i.test(attr.name) ||
         ["style", "src", "srcset", "action", "formaction", "target", "ping", "autofocus"].includes(
@@ -184,6 +194,16 @@ function select(preset) {
   $("editor").value = draft?.code ?? active.render(active.title, active.states[0]);
   $("component-docs").href = `../#${active.section}`;
   $("preview-caption").textContent = active.name;
+
+  const headingEl = document.querySelector(".g-heading h1");
+  const hintEl = document.querySelector(".g-heading .u-hint");
+  if (headingEl) {
+    const dot = document.createElement("span");
+    dot.className = "u-dot";
+    dot.setAttribute("aria-hidden", "true");
+    headingEl.replaceChildren(document.createTextNode(active.name), dot);
+  }
+  if (hintEl) hintEl.textContent = active.description;
   document
     .querySelectorAll("[data-preset]")
     .forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.preset === active.id)));

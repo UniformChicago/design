@@ -85,20 +85,24 @@
 .g-canvas {
   display: flex;
   justify-content: center;
-  padding: var(--u-space-6);
   background: var(--u-bg);
   min-height: 704px;
+}
+.g-canvas[data-width="mobile"] {
+  padding: var(--u-space-6);
 }
 .g-canvas iframe {
   display: block;
   width: 100%;
-  border: 1px solid var(--u-line);
-  border-radius: var(--u-radius-lg);
+  border: 0;
   background: var(--u-bg);
 }
 .g-canvas[data-width="mobile"] iframe {
   max-width: 390px;
+  border: 1px solid var(--u-line);
+  border-radius: var(--u-radius-lg);
 }
+
 .g-preview-footer {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;

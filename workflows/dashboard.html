@@ -10,6 +10,7 @@
     <title>Status dashboard · Uniform Design</title>
     <script src="theme.js"></script>
     <link rel="stylesheet" href="../dist/design.css" />
+    <link rel="stylesheet" href="../dist/widgets.css" />
     
     <script src="../dist/interactions.js" defer></script>
     <link rel="stylesheet" href="../dist/context-menu.css" />
@@ -38,7 +39,8 @@
 <a href="index.html">Multi-step intake</a>
 <a href="dashboard.html" aria-current="page">Status dashboard</a>
 <a href="workspace.html">Searchable collection</a>
-<a href="states.html">Component states</a><span class="u-eyebrow" style="padding: var(--u-space-4) var(--u-space-3) var(--u-space-1); display: block; color: var(--u-muted);">Resources</span><a href="../">Components</a><a href="../agent/">Agents</a><a href="../playground/">Playground</a></nav>
+<a href="states.html">Component states</a>
+<a href="calculator.html">Financial calculator</a><span class="u-eyebrow">Resources</span><a href="../">Components</a><a href="../agent/">Agents</a><a href="../playground/">Playground</a></nav>
         <details class="u-mobile-nav">
           <summary aria-label="Workflow navigation">
             <svg
@@ -57,7 +59,8 @@
 <a href="index.html">Multi-step intake</a>
 <a href="dashboard.html" aria-current="page">Status dashboard</a>
 <a href="workspace.html">Searchable collection</a>
-<a href="states.html">Component states</a><span class="u-eyebrow" style="padding: var(--u-space-4) var(--u-space-3) var(--u-space-1); display: block; color: var(--u-muted);">Resources</span><a href="../">Components</a><a href="../agent/">Agents</a><a href="../playground/">Playground</a></nav>
+<a href="states.html">Component states</a>
+<a href="calculator.html">Financial calculator</a><span class="u-eyebrow">Resources</span><a href="../">Components</a><a href="../agent/">Agents</a><a href="../playground/">Playground</a></nav>
         </details>
         <div class="u-app-utility">
           <span class="u-app-utility-label">Appearance</span>
@@ -97,25 +100,23 @@
   <a href="index.html" class="u-button u-button--quiet">Edit sample plan</a>
 </div>
 <div class="u-stack">
-  <section class="u-stats" aria-label="At a glance">
-    <div class="u-panel">
-      <dl class="u-stat">
-        <dt>Plan status</dt>
-        <dd>In progress</dd>
-      </dl>
-    </div>
-    <div class="u-panel">
-      <dl class="u-stat">
-        <dt>Sample tasks complete</dt>
-        <dd id="task-count">1 of 3</dd>
-      </dl>
-    </div>
-    <div class="u-panel">
-      <dl class="u-stat">
-        <dt>Personal check-in</dt>
-        <dd id="checkin-display">Not set</dd>
-      </dl>
-    </div>
+  <section class="u-panel u-stats" aria-label="At a glance">
+    <dl class="u-stat">
+      <dt>Plan status</dt>
+      <dd>In progress</dd>
+    </dl>
+    <dl class="u-stat">
+      <dt>Sample tasks</dt>
+      <dd id="task-count">1 of 3</dd>
+    </dl>
+    <dl class="u-stat">
+      <dt>Personal check-in</dt>
+      <dd id="checkin-display">Not set</dd>
+    </dl>
+    <dl class="u-stat">
+      <dt>Next milestone</dt>
+      <dd>Oct 24</dd>
+    </dl>
   </section>
   <div class="u-columns">
     <div class="u-stack">

@@ -50,7 +50,7 @@ html {
 }
 /* The first section starts where .u-shell-main content starts on other pages. */
 .s-main > .s-hero {
-  padding-top: var(--u-space-7);
+  padding-top: var(--u-space-5);
 }
 .s-main > section > p {
   max-width: 68ch;
@@ -70,6 +70,7 @@ html {
 }
 .s-actions {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   gap: var(--u-space-3);
   margin: var(--u-space-5) 0 0;
@@ -153,7 +154,7 @@ html {
   padding: var(--u-space-6);
   background: var(--u-bg);
 }
-.s-preview > * {
+.s-preview > :not(dialog) {
   margin: 0;
 }
 .s-preview--stack {
@@ -421,4 +422,34 @@ html {
   justify-content: space-between;
   align-items: center;
   min-height: 36px;
+}
+
+.u-root .s-map-demo {
+  width: 100%;
+  height: 320px;
+  min-height: 320px;
+}
+
+.s-property-demo {
+  width: 100%;
+  max-width: 400px;
+  padding: 0;
+  overflow: hidden;
+}
+.s-property-demo .u-property-thumbnail {
+  border: 0;
+  border-radius: 0;
+  aspect-ratio: 16 / 10;
+  margin: 0;
+}
+.s-property-content {
+  padding: var(--u-space-4);
+  gap: var(--u-space-2);
+}
+.s-property-content > * {
+  margin: 0;
+}
+.s-property-content .u-button {
+  margin-top: var(--u-space-2);
+  align-self: flex-start;
 }

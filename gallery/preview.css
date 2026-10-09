@@ -132,3 +132,16 @@ html::-webkit-scrollbar {
     display: none;
   }
 }
+
+/* Hide repetitive headers inside the playground preview since the parent window will show the title */
+.p-live .u-page-header,
+.p-markup .u-page-header {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>Financial calculator · Uniform Design</title>
+    <script src="theme.js"></script>
+    <link rel="stylesheet" href="../dist/design.css" />
+    <link rel="stylesheet" href="../dist/widgets.css" />
+    
+    <script src="../dist/interactions.js" defer></script>
+    <link rel="stylesheet" href="../dist/context-menu.css" />
+    <script src="../dist/context-menu.js" defer></script>
+    <script src="workflow.js" defer></script>
+  </head>
+  <body class="u-root">
+    <a class="u-skip" href="#main">Skip to content</a>
+    <div class="u-app">
+      <aside class="u-app-nav" aria-label="Workflows">
+        <a class="u-app-brand" href="../" aria-label="Uniform Design"
+          ><img
+            class="u-app-brand-dark"
+            src="../dist/svg/uniform-wordmark-on-dark.svg"
+            width="136"
+            height="30"
+            alt="Uniform" /><img
+            class="u-app-brand-light"
+            src="../dist/svg/uniform-wordmark-color.svg"
+            width="136"
+            height="30"
+            alt="Uniform"
+        /></a>
+
+        <nav class="u-nav u-desktop-nav" aria-label="Reference patterns"><a href="map.html">Map and list</a>
+<a href="index.html">Multi-step intake</a>
+<a href="dashboard.html">Status dashboard</a>
+<a href="workspace.html">Searchable collection</a>
+<a href="states.html">Component states</a>
+<a href="calculator.html" aria-current="page">Financial calculator</a><span class="u-eyebrow">Resources</span><a href="../">Components</a><a href="../agent/">Agents</a><a href="../playground/">Playground</a></nav>
+        <details class="u-mobile-nav">
+          <summary aria-label="Workflow navigation">
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              aria-hidden="true"
+            >
+              <path d="M4 6h16M4 12h16M4 18h16" /></svg
+            ><span class="u-sr">Patterns</span>
+          </summary>
+          <nav class="u-nav" aria-label="Mobile patterns"><a href="map.html">Map and list</a>
+<a href="index.html">Multi-step intake</a>
+<a href="dashboard.html">Status dashboard</a>
+<a href="workspace.html">Searchable collection</a>
+<a href="states.html">Component states</a>
+<a href="calculator.html" aria-current="page">Financial calculator</a><span class="u-eyebrow">Resources</span><a href="../">Components</a><a href="../agent/">Agents</a><a href="../playground/">Playground</a></nav>
+        </details>
+        <div class="u-app-utility">
+          <span class="u-app-utility-label">Appearance</span>
+          <button
+            type="button"
+            class="u-button u-button--quiet u-icon-button"
+            data-theme-toggle
+            aria-label="Switch to light theme"
+            title="Switch to light theme"
+            hidden
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5" />
+            </svg>
+          </button>
+        </div>
+      </aside>
+      <main id="main" class="u-workspace">
+        <header class="u-page-header">
+          <span class="u-eyebrow">Reference patterns / Financial calculator</span>
+        </header>
+        <div class="u-page-header">
+  <div>
+    <span class="u-tag">Pattern · components</span>
+    <h1 class="u-page-title">Financial calculator<span class="u-dot" aria-hidden="true"></span></h1>
+    <p class="u-lede">Interactive estimation for monthly costs with dynamic charting.</p>
+  </div>
+</div>
+<section data-calculator aria-label="Sample calculator">
+  <div class="u-columns">
+    <div class="u-stack">
+      <section class="u-panel u-panel--accent">
+        <h2 class="u-section-heading">Estimate your payments</h2>
+        <p class="u-hint">
+          Adjust the variables to explore an illustrative monthly payment. Estimate only, not an offer of
+          credit.
+        </p>
+
+        <div class="u-field">
+          <label for="calc-price">Home price</label>
+          <div class="u-calc-input-wrapper">
+            <span class="u-calc-input-prefix">$</span>
+            <input
+              type="number"
+              min="0"
+              max="1000000000000"
+              id="calc-price"
+              value="450000"
+              step="5000"
+              class="u-calc-input-with-prefix"
+            />
+          </div>
+        </div>
+
+        <div class="u-field">
+          <div class="u-calc-label-row">
+            <label for="calc-down">Down payment</label>
+            <span class="u-hint" id="calc-down-percent">20% ($90,000)</span>
+          </div>
+          <input type="range" class="u-slider" id="calc-down" min="0" max="100" value="20" step="1" />
+        </div>
+
+        <div class="u-form-grid">
+          <div class="u-field">
+            <label for="calc-term">Loan program</label>
+            <span class="u-select">
+              <select id="calc-term">
+                <option value="30">30-year fixed</option>
+                <option value="15">15-year fixed</option>
+                <option value="5">5 years</option>
+              </select>
+            </span>
+          </div>
+          <div class="u-field">
+            <label for="calc-rate">Interest rate (%)</label>
+            <input type="number" min="0" max="100" id="calc-rate" value="6.5" step="0.1" />
+          </div>
+        </div>
+
+        <div class="u-field">
+          <label for="calc-hoa-input">Monthly HOA fees ($)</label>
+          <input type="number" id="calc-hoa-input" min="0" max="1000000" step="25" value="250" />
+        </div>
+        <label class="u-choice u-calc-choice">
+          <input type="checkbox" id="calc-taxes" checked />
+          Include taxes and insurance
+        </label>
+      </section>
+    </div>
+
+    <div class="u-stack">
+      <section class="u-panel">
+        <h3 class="u-section-heading">Payment breakdown</h3>
+        <p class="u-hint">
+          Estimated monthly total: <strong id="calc-payment" class="u-calc-total-strong">$3,200</strong>
+        </p>
+
+        <div class="u-calculator-breakdown">
+          <svg
+            class="u-donut-chart"
+            role="img"
+            aria-label="Estimated monthly payment breakdown"
+            viewBox="0 0 100 100"
+          >
+            <circle class="u-donut-chart-track" cx="50" cy="50" r="42"></circle>
+            <!-- Principal & Interest (Blue) -->
+            <path class="u-donut-chart-segment" fill="var(--u-link)" fill-rule="evenodd" d=""></path>
+            <!-- Taxes & Insurance (Green/Accent) -->
+            <path class="u-donut-chart-segment" fill="var(--u-accent)" fill-rule="evenodd" d=""></path>
+            <!-- HOA (Gray) -->
+            <path class="u-donut-chart-segment" fill="var(--u-fg)" fill-rule="evenodd" d=""></path>
+
+            <text class="u-donut-chart-text" x="50" y="47">$0</text>
+            <text class="u-donut-chart-label" x="50" y="62">/ month</text>
+          </svg>
+
+          <ul class="u-legend">
+            <li>
+              <span><span class="u-legend-color u-legend-color--pi"></span> Principal & interest</span>
+              <strong id="calc-principal">$0</strong>
+            </li>
+            <li id="calc-taxes-label">
+              <span><span class="u-legend-color u-legend-color--taxes"></span> Taxes & insurance</span>
+              <strong id="calc-taxes-val">$0</strong>
+            </li>
+            <li>
+              <span><span class="u-legend-color u-legend-color--hoa"></span> HOA fees</span>
+              <strong id="calc-hoa">$250</strong>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>
+
+      </main>
+    </div>
+    <script type="module" src="calculator-preview.js"></script>
+  </body>
+</html>

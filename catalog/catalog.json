@@ -171,7 +171,7 @@
       "title": "Progress",
       "purpose": "Show task completion without relying on color.",
       "maturity": "preview",
-      "source": "site/examples/progress.html",
+      "source": "catalog/examples/progress.html",
       "states": ["incomplete", "complete", "reduced-motion"],
       "requirements": [
         "Use accessible progress values and text.",
@@ -241,7 +241,7 @@
       "title": "Activity timeline",
       "purpose": "Display a sequence of labeled events.",
       "maturity": "preview",
-      "source": "site/examples/activity.html",
+      "source": "catalog/examples/activity.html",
       "states": ["populated", "empty"],
       "requirements": ["Use real timestamps in applications and distinguish them from due dates."],
       "customization": ["Event labels", "Descriptions", "Times"],
@@ -255,15 +255,19 @@
       "title": "Property facts",
       "purpose": "Present property information without assuming listing or map services.",
       "maturity": "preview",
-      "source": "site/examples/property.html",
+      "source": "catalog/examples/property.html",
       "states": ["known", "partial"],
       "requirements": [
         "Use explicit units and missing-value labels.",
-        "No geocoding or listing provider is included."
+        "No geocoding or listing provider is included.",
+        "Self-host dist/ at /design/ or change the sample image URL to your asset mount. Replace the illustrative photo for real listings."
       ],
       "customization": ["Facts", "Address", "Units"],
       "dependencies": ["design.css"],
-      "limitations": ["Browser and assistive-technology verification pending for this local change."],
+      "limitations": [
+        "Browser and assistive-technology verification pending for this local change.",
+        "Photos are AI-generated samples, not real listings."
+      ],
       "verification": ["npm run test:contracts", "npm run test:a11y"],
       "introduced": "0.1.12-local"
     },
@@ -343,7 +347,7 @@
         "Keep data-u-collection hooks and row headers for the optional controller. Remount after replacing the collection DOM."
       ],
       "customization": ["Content", "Data bindings", "Composition using documented components"],
-      "dependencies": ["design.css", "interactions.js", "UniformInteractions.mount(document)"],
+      "dependencies": ["design.css", "widgets.css", "interactions.js", "UniformInteractions.mount(document)"],
       "limitations": [
         "Fixture controllers are examples; application backend, authorization and regulatory rules are not supplied."
       ],
@@ -434,7 +438,13 @@
       "verification": ["npm run test:a11y"],
       "introduced": "0.1.12-local",
       "integration": {
-        "styles": ["design.css", "vendor/maplibre/maplibre-gl.css", "map.css", "context-menu.css"],
+        "styles": [
+          "design.css",
+          "vendor/maplibre/maplibre-gl.css",
+          "map.css",
+          "context-menu.css",
+          "widgets.css"
+        ],
         "scripts": ["maplibre.js", "map-list.js", "context-menu.js"],
         "modules": ["vendor/maplibre/maplibre-gl.mjs"],
         "workers": ["vendor/maplibre/maplibre-gl-worker.mjs"],

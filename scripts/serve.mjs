@@ -15,6 +15,7 @@ const TYPES = {
   ".woff2": "font/woff2",
   ".json": "application/json",
   ".png": "image/png",
+  ".jpg": "image/jpeg",
 };
 const port = Number(process.argv[2] ?? 4400);
 createServer(async (req, res) => {

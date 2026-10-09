@@ -132,7 +132,7 @@
 /* Surfaces */
 .u-panel {
   min-width: 0;
-  padding: 28px;
+  padding: 20px;
   border: 1px solid var(--u-line);
   border-radius: var(--u-radius-lg);
   background: var(--u-surface);
@@ -240,7 +240,7 @@
 .u-table th,
 .u-table td {
   text-align: left;
-  padding: var(--u-space-4) var(--u-space-3);
+  padding: var(--u-space-2) var(--u-space-3);
   border-bottom: 1px solid var(--u-line);
   vertical-align: top;
 }
@@ -339,19 +339,20 @@
 .u-field > label {
   display: block;
 }
-.u-field input,
+.u-field input:not([type="range"]),
 .u-field select,
 .u-field textarea {
   display: block;
   width: 100%;
   min-height: 48px;
   margin-top: var(--u-space-2);
-  padding: var(--u-space-3);
+  padding: 11px var(--u-space-3);
   border: 1px solid var(--u-line);
   border-radius: var(--u-radius-md);
   background: var(--u-bg);
   color: var(--u-fg);
   font: inherit;
+  font-size: 16px; /* Prevents iOS Safari zoom shift */
   font-weight: 400;
   line-height: 1.5;
 }
@@ -614,7 +615,7 @@
 .u-app {
   display: grid;
   grid-template-columns: 220px minmax(0, 1fr);
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 .u-app-nav {
   padding: var(--u-space-6) var(--u-space-5);
@@ -657,7 +658,7 @@
 }
 .u-stats {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr));
   gap: var(--u-space-4);
 }
 .u-stat {
@@ -714,7 +715,7 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--u-space-4);
-  padding-block: var(--u-space-4);
+  padding-block: var(--u-space-3);
   border-bottom: 1px solid var(--u-line);
 }
 .u-task-list li:last-child {
@@ -816,7 +817,7 @@
     margin-bottom: var(--u-space-5);
   }
   .u-task-list li {
-    flex-wrap: wrap;
+    align-items: flex-start;
   }
 }
 
@@ -874,7 +875,7 @@
   letter-spacing: -0.045em;
 }
 .u-app .u-panel {
-  padding: var(--u-space-6);
+  padding: var(--u-space-4);
 }
 .u-app .u-columns > aside .u-panel {
   background: transparent;
@@ -1011,7 +1012,7 @@
 }
 .u-toolbar .u-field {
   margin: 0;
-  flex: 1 1 180px;
+  flex: 0 1 280px;
 }
 .u-table tbody th {
   text-transform: none;
@@ -1058,7 +1059,7 @@
 .u-property-facts {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--u-space-5);
+  gap: var(--u-space-3);
 }
 .u-property-facts dt {
   font-size: 12px;
@@ -1071,12 +1072,12 @@
 .u-activity {
   list-style: none;
   padding: 0 0 0 var(--u-space-4);
-  margin: var(--u-space-5) 0 0;
+  margin: var(--u-space-4) 0 0;
   border-left: 1px solid var(--u-line);
 }
 .u-activity li {
   position: relative;
-  padding-bottom: var(--u-space-5);
+  padding-bottom: var(--u-space-3);
 }
 .u-activity li:last-child {
   padding-bottom: 0;
@@ -1212,6 +1213,7 @@
   height: 18px;
 }
 .u-dialog {
+  margin: auto;
   max-width: min(480px, calc(100vw - 32px));
   max-height: calc(100dvh - 48px);
   overflow: auto;
@@ -1292,7 +1294,10 @@
   min-width: 0;
 }
 .u-map-toolbar [data-map-count] {
-  margin: 0 0 var(--u-space-2) auto;
+  display: flex;
+  align-items: center;
+  height: 48px;
+  margin: 0 0 0 auto;
 }
 .u-map-guide {
   margin-top: var(--u-space-5);
@@ -1328,7 +1333,7 @@
 }
 .u-map-card {
   position: relative;
-  padding: var(--u-space-5);
+  padding: var(--u-space-4);
   border: 1px solid var(--u-line);
   border-radius: var(--u-radius-md);
   background: var(--u-bg);
@@ -1348,13 +1353,6 @@
   border-radius: var(--u-radius-lg);
   overflow: hidden;
   background: var(--u-hover);
-}
-.u-map-caption {
-  margin: 0;
-  padding: var(--u-space-3) var(--u-space-4);
-  font-size: 12px;
-  color: var(--u-muted);
-  background: var(--u-bg);
 }
 .u-map-canvas {
   flex: 1;
@@ -1614,7 +1612,7 @@
   }
 }
 
-/* Property details combine the existing tag, facts, actions and disclosure primitives. */
+/* Property details */
 .u-property-summary {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -1663,7 +1661,7 @@
   }
 }
 
-/* Listing photos lead the detail view. Fixtures use clearly labeled local SVG placeholders. */
+/* Listing photos */
 .u-property-gallery {
   position: relative;
   display: grid;
@@ -1686,7 +1684,10 @@
   grid-row: span 2;
 }
 .u-property-gallery svg,
-.u-property-thumbnail svg {
+.u-property-gallery img,
+.u-property-thumbnail svg,
+.u-property-thumbnail img {
+  object-fit: cover;
   position: absolute;
   inset: 0;
   display: block;
@@ -1708,7 +1709,7 @@
   font-size: 11px;
 }
 .u-property-thumbnail {
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 4 / 3;
   margin-bottom: var(--u-space-3);
 }
 .u-property-summary .u-property-facts > div:last-child {
@@ -1721,12 +1722,12 @@
     height: auto;
   }
   .u-property-gallery figure {
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 4 / 3;
   }
   .u-property-gallery figure:first-of-type {
     grid-column: 1 / -1;
     grid-row: auto;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 4 / 3;
   }
 }
 

@@ -3,6 +3,7 @@ import { gzipSync } from "node:zlib";
 // Initial local budgets for shipped assets, not a claim about runtime latency.
 const budgets = {
   "design.css": 8000,
+  "widgets.css": 2000,
   "interactions.js": 3500,
   "context-menu.js": 3500,
   "context-menu.css": 1500,

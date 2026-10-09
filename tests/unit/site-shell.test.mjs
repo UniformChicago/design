@@ -19,13 +19,9 @@ test("all built pages expose the same page navigation and one theme control", ()
     assert.ok(!html.includes("data-theme-toggle"), page);
     const nav = html.match(/<nav class="s-pages"[\s\S]*?<\/nav>/)?.[0];
     assert.ok(nav, page);
-    assert.equal(
-      (nav.match(/aria-current="page"/g) || []).length,
-      ["index.html", "agent/index.html"].includes(page) ? 0 : 1,
-      page,
-    );
-    assert.ok(nav.includes('aria-label="Playground"'), page);
-    assert.ok(nav.includes('title="Playground"'), page);
+    const destination = ["index.html", "agent/index.html"].includes(page) ? "Playground" : "Documentation";
+    assert.ok(nav.includes(`aria-label="${destination}"`), page);
+    assert.ok(nav.includes(`title="${destination}"`), page);
     assert.ok(html.includes('aria-label="Uniform Design components"'), page);
     assert.ok(!nav.includes(">Components</a>"), page);
     for (const [, href] of nav.matchAll(/href="([^"]+)"/g)) {
@@ -64,10 +60,10 @@ test("Component Lab ships its initial workspace and preview before JavaScript", 
   }
 });
 
-test("all five full workflows are starters with canonical markup and isolated live previews", async () => {
+test("all full workflows are starters with canonical markup and isolated live previews", async () => {
   const { workflowStarters } = await import("../../gallery/workflow-starters.js");
   const { presets } = await import("../../gallery/presets.js");
-  assert.equal(workflowStarters.length, 5);
+  assert.equal(workflowStarters.length, 6);
   for (const starter of workflowStarters) {
     assert.equal(
       starter.markup,

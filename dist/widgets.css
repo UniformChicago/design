@@ -1,0 +1,293 @@
+/* Optional calculator, range and photo viewer components. Load after design.css. */
+/* Slider Component */
+.u-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  margin-block: var(--u-space-3);
+}
+.u-slider::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(
+    to right,
+    var(--u-link) var(--progress, 50%),
+    color-mix(in srgb, var(--u-fg) 20%, transparent) var(--progress, 50%)
+  );
+  border-radius: 999px;
+}
+.u-slider::-moz-range-track {
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(
+    to right,
+    var(--u-link) var(--progress, 50%),
+    color-mix(in srgb, var(--u-fg) 20%, transparent) var(--progress, 50%)
+  );
+  border-radius: 999px;
+}
+.u-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--u-link);
+  border: 2px solid var(--u-bg);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  margin-top: -9px;
+  transition: transform 0.1s;
+}
+.u-slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--u-link);
+  border: 2px solid var(--u-bg);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: transform 0.1s;
+}
+.u-slider:active::-webkit-slider-thumb {
+  transform: scale(1.1);
+}
+.u-slider:active::-moz-range-thumb {
+  transform: scale(1.1);
+}
+
+/* Donut Chart Component */
+.u-donut-chart {
+  display: block;
+  width: 100%;
+  max-width: 240px;
+  aspect-ratio: 1;
+  margin: 0 auto;
+}
+.u-donut-chart-segment {
+  stroke: none;
+}
+.u-donut-chart-track {
+  fill: transparent;
+  stroke: var(--u-line);
+  stroke-width: 16;
+}
+.u-donut-chart-text {
+  fill: var(--u-fg);
+  font-size: 18px;
+  font-weight: 600;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+.u-donut-chart-label {
+  fill: var(--u-muted);
+  font-size: 10px;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+/* Calculator specific styles */
+.u-calculator-breakdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--u-space-5);
+}
+.u-legend {
+  width: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--u-space-3);
+}
+.u-legend li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.u-legend-color {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: var(--u-space-2);
+}
+
+.u-calc-input-wrapper {
+  position: relative;
+}
+.u-calc-input-prefix {
+  position: absolute;
+  left: var(--u-space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--u-muted);
+}
+.u-calc-input-with-prefix {
+  padding-left: var(--u-space-6) !important;
+}
+.u-calc-label-row {
+  display: flex;
+  justify-content: space-between;
+}
+.u-calc-choice {
+  margin-top: var(--u-space-5);
+}
+.u-calc-total-strong {
+  color: var(--u-fg);
+}
+.u-legend-color--pi {
+  background: var(--u-link);
+}
+.u-legend-color--taxes {
+  background: var(--u-accent);
+}
+.u-legend-color--hoa {
+  background: var(--u-fg);
+}
+
+/* Full-screen Gallery Modal */
+.u-gallery-modal {
+  padding: 0;
+  border: 0;
+  margin: auto;
+  width: 100vw;
+  height: 100dvh;
+  max-width: 100vw;
+  max-height: 100dvh;
+  background: color-mix(in srgb, var(--u-bg) 95%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--u-fg);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.u-gallery-modal[open] {
+  display: flex;
+  opacity: 1;
+}
+.u-gallery-modal::backdrop {
+  background: transparent;
+}
+.u-gallery-modal-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.u-gallery-modal img {
+  max-width: 100%;
+  max-height: calc(100dvh - 144px);
+  object-fit: contain;
+}
+.u-gallery-modal-close {
+  position: absolute;
+  top: var(--u-space-5);
+  right: var(--u-space-5);
+  background: var(--u-bg);
+  border: 0;
+  color: var(--u-fg);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background 0.2s;
+}
+.u-gallery-modal-close:hover {
+  background: var(--u-surface);
+}
+.u-gallery-modal-close svg {
+  width: 24px;
+  height: 24px;
+}
+.u-gallery-modal-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--u-bg);
+  border: 0;
+  color: var(--u-fg);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background 0.2s;
+}
+.u-gallery-modal-nav:hover {
+  background: var(--u-surface);
+}
+.u-gallery-modal-nav[disabled] {
+  opacity: 0;
+  pointer-events: none;
+}
+.u-gallery-modal-prev {
+  left: var(--u-space-5);
+}
+.u-gallery-modal-next {
+  right: var(--u-space-5);
+}
+.u-gallery-modal-caption {
+  position: absolute;
+  bottom: max(var(--u-space-6), env(safe-area-inset-bottom));
+  padding: var(--u-space-3);
+  line-height: 1.5;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.u-property-thumbnail img,
+.u-property-photos img {
+  cursor: zoom-in;
+}
+
+/* Compact property rows: keep photo and metadata aligned instead of stretching grid tracks. */
+.u-map-layout[data-view="list"] .u-map-card {
+  align-content: start;
+  row-gap: var(--u-space-1);
+}
+.u-map-layout[data-view="list"] .u-map-card > :is(h2, p, strong, .u-eyebrow) {
+  margin: 0;
+}
+.u-map-layout[data-view="list"] .u-map-card h2 {
+  padding-right: 48px;
+  font-size: 17px;
+  line-height: 1.3;
+}
+.u-map-layout[data-view="list"] .u-property-thumbnail {
+  aspect-ratio: 6 / 5;
+}
+.u-map-layout[data-view="list"] .u-map-card p {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.u-table-detail {
+  width: 40px;
+  min-height: 40px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.u-legend-item--excluded {
+  opacity: 0.5;
+}

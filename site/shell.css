@@ -69,7 +69,6 @@ html {
 .u-root .s-pages a[aria-current] {
   background: var(--u-hover);
   color: var(--u-fg);
-  border-color: var(--u-accent);
 }
 .s-pattern-layout {
   min-height: 0;

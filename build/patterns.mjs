@@ -10,6 +10,12 @@ export const routes = [
     script: null,
   },
   { id: "component-states", file: "states.html", title: "Component states", script: null },
+  {
+    id: "calculator",
+    file: "calculator.html",
+    title: "Financial calculator",
+    script: "calculator-preview.js",
+  },
 ];
 export function renderPatterns(root) {
   const shell = readFileSync(`${root}/patterns/shell.html`, "utf8");
@@ -22,7 +28,7 @@ export function renderPatterns(root) {
             `<a href="${item.file}"${item.id === route.id ? ' aria-current="page"' : ""}>${item.title}</a>`,
         )
         .join("\n") +
-      '<span class="u-eyebrow" style="padding: var(--u-space-4) var(--u-space-3) var(--u-space-1); display: block; color: var(--u-muted);">Resources</span><a href="../">Components</a><a href="../agent/">Agents</a><a href="../playground/">Playground</a>';
+      '<span class="u-eyebrow">Resources</span><a href="../">Components</a><a href="../agent/">Agents</a><a href="../playground/">Playground</a>';
     return {
       ...route,
       body,
@@ -49,7 +55,7 @@ export function renderPatterns(root) {
         .replace(
           "<!--pattern-scripts-->",
           route.script
-            ? `<script src="../dist/map-list.js"></script><script src="../dist/maplibre.js"></script><script type="module" src="${route.script}"></script>`
+            ? `${route.id === "map-list" ? '<script src="../dist/map-list.js"></script><script src="../dist/maplibre.js"></script>' : ""}<script type="module" src="${route.script}"></script>`
             : "",
         ),
     };

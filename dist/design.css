@@ -76,9 +76,7 @@
   src: url(fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2");
 }
 
-/* Uniform components. Plain CSS classes (u-*), framework-agnostic: Astro, server-rendered
-   TypeScript and PDF HTML all use the same markup. Built from tokens.css (brand values) via
-   semantic variables, so every component works on dark (default) and light (data-theme="light"). */
+
 
 :root,
 [data-theme="dark"] {
@@ -112,7 +110,7 @@
   --u-button-fg: #fff;
 }
 
-/* Base */
+
 .u-root,
 .u-root * {
   box-sizing: border-box;
@@ -135,7 +133,7 @@
   outline-offset: 4px;
 }
 
-/* Accessibility helpers */
+
 .u-sr {
   position: absolute;
   width: 1px;
@@ -156,7 +154,7 @@
   background: var(--u-bg);
 }
 
-/* Type */
+
 .u-eyebrow {
   display: block;
   margin: 0 0 var(--u-space-3);
@@ -195,8 +193,7 @@
   overflow-wrap: anywhere;
 }
 
-/* The brand dot: a circle, never a typed period (Public Sans draws the period square).
-   <h1 class="u-title">Office<span class="u-dot" aria-hidden="true"></span></h1> */
+
 .u-dot {
   display: inline-block;
   width: var(--u-dot-size);
@@ -207,10 +204,10 @@
   vertical-align: baseline;
 }
 
-/* Surfaces */
+
 .u-panel {
   min-width: 0;
-  padding: 28px;
+  padding: 20px;
   border: 1px solid var(--u-line);
   border-radius: var(--u-radius-lg);
   background: var(--u-surface);
@@ -269,7 +266,7 @@
   font-size: 19px;
 }
 
-/* Definition list of facts */
+
 .u-facts {
   display: grid;
   grid-template-columns: max-content minmax(0, 1fr);
@@ -299,11 +296,10 @@
   margin-bottom: 0;
 }
 
-/* Table. The wrapper scrolls on narrow screens, so it must be keyboard-reachable:
-   <div class="u-table" tabindex="0" role="region" aria-label="Licensee registry"><table>…</table></div> */
+
 .u-table {
   overflow-x: auto;
-  /* Keeps .u-sr labels from widening the page. */
+
   position: relative;
 }
 .u-table:focus-visible {
@@ -318,7 +314,7 @@
 .u-table th,
 .u-table td {
   text-align: left;
-  padding: var(--u-space-4) var(--u-space-3);
+  padding: var(--u-space-2) var(--u-space-3);
   border-bottom: 1px solid var(--u-line);
   vertical-align: top;
 }
@@ -340,7 +336,7 @@
   border-bottom: 0;
 }
 
-/* Tag / badge */
+
 .u-tag {
   display: inline-block;
   padding: var(--u-space-1) var(--u-space-2);
@@ -359,7 +355,7 @@
   color: var(--u-warn);
 }
 
-/* Buttons */
+
 .u-actions {
   display: flex;
   align-items: center;
@@ -406,7 +402,7 @@
   border-color: var(--u-muted);
 }
 
-/* Form fields */
+
 .u-field {
   display: block;
   min-width: 0;
@@ -417,19 +413,20 @@
 .u-field > label {
   display: block;
 }
-.u-field input,
+.u-field input:not([type="range"]),
 .u-field select,
 .u-field textarea {
   display: block;
   width: 100%;
   min-height: 48px;
   margin-top: var(--u-space-2);
-  padding: var(--u-space-3);
+  padding: 11px var(--u-space-3);
   border: 1px solid var(--u-line);
   border-radius: var(--u-radius-md);
   background: var(--u-bg);
   color: var(--u-fg);
   font: inherit;
+  font-size: 16px;
   font-weight: 400;
   line-height: 1.5;
 }
@@ -455,7 +452,7 @@
   font: inherit;
   cursor: pointer;
 }
-/* Select with a CSS caret (no data: URIs, so it works under strict CSPs). */
+
 .u-select {
   position: relative;
   display: block;
@@ -489,7 +486,7 @@
   pointer-events: none;
 }
 
-/* Navigation rail */
+
 .u-nav {
   font-size: 14px;
   display: grid;
@@ -526,7 +523,7 @@
   font-weight: 600;
 }
 
-/* Bounded workspace shared by editors and full application examples. */
+
 .u-workbench,
 .u-app.u-workbench {
   display: grid;
@@ -542,7 +539,7 @@
   }
 }
 
-/* Checklist item: status, title, detail, action */
+
 .u-check {
   display: grid;
   grid-template-columns: 22px minmax(0, 1fr) auto;
@@ -579,7 +576,7 @@
   font-size: 13px;
 }
 
-/* Progress bar */
+
 .u-progress {
   height: 6px;
   border-radius: 999px;
@@ -594,7 +591,7 @@
   transition: width 360ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Atmosphere canvas (see atmosphere.js) */
+
 .u-atmosphere {
   position: fixed;
   inset: 0;
@@ -625,7 +622,7 @@
     animation: none !important;
   }
 }
-/* Shell */
+
 .u-shell-header {
   position: sticky;
   top: 0;
@@ -633,7 +630,7 @@
   display: flex;
   align-items: center;
   gap: var(--u-space-3);
-  height: 64px; /* fixed, border included: sticky elements below it use top: 64px */
+  height: 64px;
   padding: 0 var(--u-space-5);
   border-bottom: 1px solid var(--u-line);
   background: color-mix(in srgb, var(--u-bg) 86%, transparent);
@@ -688,11 +685,11 @@
   }
 }
 
-/* Application patterns (preview). Layout and state styling remain usable without JS. */
+
 .u-app {
   display: grid;
   grid-template-columns: 220px minmax(0, 1fr);
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 .u-app-nav {
   padding: var(--u-space-6) var(--u-space-5);
@@ -735,7 +732,7 @@
 }
 .u-stats {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr));
   gap: var(--u-space-4);
 }
 .u-stat {
@@ -792,7 +789,7 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--u-space-4);
-  padding-block: var(--u-space-4);
+  padding-block: var(--u-space-3);
   border-bottom: 1px solid var(--u-line);
 }
 .u-task-list li:last-child {
@@ -894,16 +891,16 @@
     margin-bottom: var(--u-space-5);
   }
   .u-task-list li {
-    flex-wrap: wrap;
+    align-items: flex-start;
   }
 }
 
-/* Author display rules must not reveal hidden workflow states or error messages. */
+
 .u-app [hidden] {
   display: none;
 }
 
-/* Workflow identity and quieter utility controls. */
+
 .u-root .u-app-brand {
   display: inline-grid;
   gap: var(--u-space-3);
@@ -952,7 +949,7 @@
   letter-spacing: -0.045em;
 }
 .u-app .u-panel {
-  padding: var(--u-space-6);
+  padding: var(--u-space-4);
 }
 .u-app .u-columns > aside .u-panel {
   background: transparent;
@@ -1054,7 +1051,7 @@
   }
 }
 
-/* Utility controls share the compact mobile masthead. */
+
 .u-app-utility {
   display: flex;
   align-items: center;
@@ -1089,7 +1086,7 @@
 }
 .u-toolbar .u-field {
   margin: 0;
-  flex: 1 1 180px;
+  flex: 0 1 280px;
 }
 .u-table tbody th {
   text-transform: none;
@@ -1136,7 +1133,7 @@
 .u-property-facts {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--u-space-5);
+  gap: var(--u-space-3);
 }
 .u-property-facts dt {
   font-size: 12px;
@@ -1149,12 +1146,12 @@
 .u-activity {
   list-style: none;
   padding: 0 0 0 var(--u-space-4);
-  margin: var(--u-space-5) 0 0;
+  margin: var(--u-space-4) 0 0;
   border-left: 1px solid var(--u-line);
 }
 .u-activity li {
   position: relative;
-  padding-bottom: var(--u-space-5);
+  padding-bottom: var(--u-space-3);
 }
 .u-activity li:last-child {
   padding-bottom: 0;
@@ -1238,7 +1235,7 @@
   }
 }
 
-/* Core state coverage. Interaction semantics remain native HTML. */
+
 .u-root [hidden] {
   display: none !important;
 }
@@ -1290,6 +1287,7 @@
   height: 18px;
 }
 .u-dialog {
+  margin: auto;
   max-width: min(480px, calc(100vw - 32px));
   max-height: calc(100dvh - 48px);
   overflow: auto;
@@ -1361,7 +1359,7 @@
   overflow-x: auto;
 }
 
-/* Provider-independent map/list preview. */
+
 .u-map-toolbar {
   margin-block: 0 var(--u-space-4);
 }
@@ -1370,7 +1368,10 @@
   min-width: 0;
 }
 .u-map-toolbar [data-map-count] {
-  margin: 0 0 var(--u-space-2) auto;
+  display: flex;
+  align-items: center;
+  height: 48px;
+  margin: 0 0 0 auto;
 }
 .u-map-guide {
   margin-top: var(--u-space-5);
@@ -1406,7 +1407,7 @@
 }
 .u-map-card {
   position: relative;
-  padding: var(--u-space-5);
+  padding: var(--u-space-4);
   border: 1px solid var(--u-line);
   border-radius: var(--u-radius-md);
   background: var(--u-bg);
@@ -1426,13 +1427,6 @@
   border-radius: var(--u-radius-lg);
   overflow: hidden;
   background: var(--u-hover);
-}
-.u-map-caption {
-  margin: 0;
-  padding: var(--u-space-3) var(--u-space-4);
-  font-size: 12px;
-  color: var(--u-muted);
-  background: var(--u-bg);
 }
 .u-map-canvas {
   flex: 1;
@@ -1529,7 +1523,7 @@
   margin: 0 0 var(--u-space-2);
 }
 
-/* Keep interactive affordances consistent outside the example app shell. */
+
 .u-root select:enabled,
 .u-root input[type="radio"]:enabled,
 .u-root input[type="checkbox"]:enabled,
@@ -1692,7 +1686,7 @@
   }
 }
 
-/* Property details combine the existing tag, facts, actions and disclosure primitives. */
+
 .u-property-summary {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -1741,7 +1735,7 @@
   }
 }
 
-/* Listing photos lead the detail view. Fixtures use clearly labeled local SVG placeholders. */
+
 .u-property-gallery {
   position: relative;
   display: grid;
@@ -1764,7 +1758,10 @@
   grid-row: span 2;
 }
 .u-property-gallery svg,
-.u-property-thumbnail svg {
+.u-property-gallery img,
+.u-property-thumbnail svg,
+.u-property-thumbnail img {
+  object-fit: cover;
   position: absolute;
   inset: 0;
   display: block;
@@ -1786,7 +1783,7 @@
   font-size: 11px;
 }
 .u-property-thumbnail {
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 4 / 3;
   margin-bottom: var(--u-space-3);
 }
 .u-property-summary .u-property-facts > div:last-child {
@@ -1799,12 +1796,12 @@
     height: auto;
   }
   .u-property-gallery figure {
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 4 / 3;
   }
   .u-property-gallery figure:first-of-type {
     grid-column: 1 / -1;
     grid-row: auto;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 4 / 3;
   }
 }
 

@@ -22,9 +22,12 @@ export function buildCatalog(root, css, tokens) {
     ])
       if (!item[key] || (Array.isArray(item[key]) && !item[key].length))
         throw new Error(`${item.id}: missing ${key}`);
-    if (!/^(site\/examples|patterns)\/[\w-]+\.html$/.test(item.source))
+    if (!/^(site\/examples|catalog\/examples|patterns)\/[\w-]+\.html$/.test(item.source))
       throw new Error(`Unsafe source: ${item.source}`);
-    item.markup = readFileSync(`${root}/${item.source}`, "utf8");
+    item.markup = readFileSync(`${root}/${item.source}`, "utf8").replaceAll(
+      "../gallery/img/",
+      "/design/gallery/img/",
+    );
     for (const match of item.markup.matchAll(/class="([^"]*)"/g))
       for (const cls of match[1].split(/\s+/))
         if (cls.startsWith("u-") && !css.includes(`.${cls}`))

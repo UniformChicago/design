@@ -85,12 +85,20 @@
       if (empty) empty.hidden = Boolean(card);
       root.querySelector("[data-map-dismiss]").hidden = !card;
       if (card) {
-        root
-          .querySelector("[data-selection-photo]")
-          ?.setAttribute(
-            "href",
-            card.dataset.kind === "Apartment" ? "#property-photo-apartment" : "#property-photo-exterior",
-          );
+        const photo = root.querySelector("[data-selection-photo]");
+        if (photo) {
+          if (photo.tagName === "IMG") {
+            photo.src = photo.src.replace(
+              /[^/]+\.jpg$/,
+              card.dataset.kind === "Apartment" ? "apartment_exterior.jpg" : "house_exterior.jpg",
+            );
+          } else {
+            photo.setAttribute(
+              "href",
+              card.dataset.kind === "Apartment" ? "#property-photo-apartment" : "#property-photo-exterior",
+            );
+          }
+        }
         for (const [field, value] of Object.entries({
           kind: card.dataset.kind,
           area: card.dataset.area || "Not provided",
@@ -249,10 +257,37 @@
     }
     listen(root.querySelector("[data-map-dismiss]"), "click", dismiss);
     listen(root, "keydown", (event) => {
+      if (event.target.closest("dialog[open]")) return;
       if (event.key === "Escape" && selected) {
         event.preventDefault();
         dismiss();
       }
+    });
+    listen(root, "keydown", (event) => {
+      if (
+        !["ArrowUp", "ArrowDown", "Home", "End"].includes(event.key) ||
+        event.altKey ||
+        event.ctrlKey ||
+        event.metaKey
+      )
+        return;
+      const control = event.target.closest("[data-select]");
+      if (!control) return;
+      const visible = cards.filter((card) => !card.hidden);
+      const index = visible.indexOf(control.closest("[data-property]"));
+      if (index < 0) return;
+      event.preventDefault();
+      const next =
+        event.key === "Home"
+          ? 0
+          : event.key === "End"
+            ? visible.length - 1
+            : Math.max(0, Math.min(visible.length - 1, index + (event.key === "ArrowDown" ? 1 : -1)));
+      const card = visible[next];
+      trigger = card.querySelector("[data-select]");
+      select(card.dataset.property);
+      revealResult(card);
+      trigger.focus({ preventScroll: true });
     });
     function preview(id) {
       root.dispatchEvent(new CustomEvent("uniform:map-preview", { detail: { id }, bubbles: true }));

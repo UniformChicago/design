@@ -38,6 +38,18 @@
       target.addEventListener(event, fn);
       cleanups.push(() => target.removeEventListener(event, fn));
     };
+    for (const slider of scope.querySelectorAll('input.u-slider[type="range"]')) {
+      const update = () => {
+        const min = Number(slider.min) || 0;
+        const max = slider.max === "" ? 100 : Number(slider.max);
+        const progress =
+          max > min ? Math.max(0, Math.min(100, ((Number(slider.value) - min) / (max - min)) * 100)) : 0;
+        slider.style.setProperty("--progress", `${progress}%`);
+      };
+      update();
+      listen(slider, "input", update);
+      listen(slider, "change", update);
+    }
     for (const trigger of scope.querySelectorAll("[data-u-dialog-open]")) {
       const dialog = scope.querySelector(`#${CSS.escape(trigger.dataset.uDialogOpen)}`);
       if (!dialog || typeof dialog.showModal !== "function") continue;

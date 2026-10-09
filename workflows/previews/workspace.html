@@ -8,6 +8,7 @@
     <title>Searchable collection · Uniform Design</title>
     <script src="../../workflows/theme.js"></script>
     <link rel="stylesheet" href="../../dist/design.css" />
+    <link rel="stylesheet" href="../../dist/widgets.css" />
     
     <script src="../../dist/interactions.js" defer></script>
     <link rel="stylesheet" href="../../dist/context-menu.css" />
@@ -68,51 +69,110 @@
         </thead>
         <tbody>
           <tr data-u-row data-state="ready">
-            <th scope="row">Education certificate</th>
-            <td>Education</td>
+            <th scope="row">
+              <span data-document-title>Education certificate</span>
+              <p class="u-hint">Sample PDF record • No file attached</p>
+            </th>
+            <td>
+              Education
+              <p class="u-hint">Pre-license requirement</p>
+            </td>
             <td><span class="u-tag u-tag--ok">Ready</span></td>
             <td>
-              <details>
-                <summary>File information<span class="u-sr">: Education certificate</span></summary>
-                <dl class="u-facts u-facts--stacked">
-                  <dt>Format</dt>
-                  <dd>PDF</dd>
-                  <dt>Version</dt>
-                  <dd>1</dd>
-                  <dt>Attachment</dt>
-                  <dd>Not supplied</dd>
-                </dl>
-              </details>
+              <button
+                type="button"
+                class="u-button u-button--quiet u-table-detail"
+                data-u-dialog-open="document-details-0"
+                title="
+                File information"
+                hidden
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="20"
+                  height="20"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M12 11v6m0-10v1" /></svg
+                ><span class="u-sr"> File information: Education certificate </span>
+              </button>
             </td>
           </tr>
           <tr data-u-row data-state="review">
-            <th scope="row">Application checklist</th>
-            <td>Application</td>
+            <th scope="row">
+              <span data-document-title>Application checklist</span>
+              <p class="u-hint">Sample internal form</p>
+            </th>
+            <td>
+              Application
+              <p class="u-hint">State documentation</p>
+            </td>
             <td><span class="u-tag u-tag--warn">Needs review</span></td>
             <td>
-              <details>
-                <summary>Review items<span class="u-sr">: Application checklist</span></summary>
-                <ul class="u-hint">
-                  <li>Confirm the document category.</li>
-                  <li>Check that every required item is complete.</li>
-                </ul>
-              </details>
+              <button
+                type="button"
+                class="u-button u-button--quiet u-table-detail"
+                data-u-dialog-open="document-details-1"
+                title="
+                Review items"
+                hidden
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="20"
+                  height="20"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="m4 6 2 2 4-4m-6 9 2 2 4-4m3-4h7m-7 7h7m-7 6h7" /></svg
+                ><span class="u-sr"> Review items: Application checklist </span>
+              </button>
             </td>
           </tr>
           <tr data-u-row data-state="requested">
-            <th scope="row">Firm confirmation</th>
-            <td>Sponsorship</td>
+            <th scope="row">
+              <span data-document-title>Firm confirmation</span>
+              <p class="u-hint">Sample request • Awaiting signature</p>
+            </th>
+            <td>
+              Sponsorship
+              <p class="u-hint">Brokerage verification</p>
+            </td>
             <td><span class="u-tag">Requested</span></td>
             <td>
-              <details>
-                <summary>Request information<span class="u-sr">: Firm confirmation</span></summary>
-                <dl class="u-facts u-facts--stacked">
-                  <dt>Contact</dt>
-                  <dd>Sample firm</dd>
-                  <dt>Next update</dt>
-                  <dd>Written confirmation</dd>
-                </dl>
-              </details>
+              <button
+                type="button"
+                class="u-button u-button--quiet u-table-detail"
+                data-u-dialog-open="document-details-2"
+                title="
+                Request information"
+                hidden
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="20"
+                  height="20"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M21 11a8 8 0 0 1-8 8H5l-3 3V11a8 8 0 0 1 8-8h3a8 8 0 0 1 8 8Z" />
+                  <path d="M7 10h10m-10 4h6" /></svg
+                ><span class="u-sr"> Request information: Firm confirmation </span>
+              </button>
             </td>
           </tr>
         </tbody>
@@ -211,4 +271,41 @@
     </div>
   </div>
 </div>
+
+<dialog id="document-details-0" class="u-dialog" aria-labelledby="document-details-0-title">
+  <h2 id="document-details-0-title" class="u-section-heading">File information — Education certificate</h2>
+  <dl class="u-facts u-facts--stacked">
+    <dt>Format</dt>
+    <dd>PDF</dd>
+    <dt>Version</dt>
+    <dd>1</dd>
+    <dt>Attachment</dt>
+    <dd>Not supplied</dd>
+  </dl>
+  <div class="u-actions">
+    <button type="button" class="u-button" data-u-dialog-close autofocus>Close</button>
+  </div>
+</dialog>
+<dialog id="document-details-1" class="u-dialog" aria-labelledby="document-details-1-title">
+  <h2 id="document-details-1-title" class="u-section-heading">Review items — Application checklist</h2>
+  <ul class="u-hint">
+    <li>Confirm the document category.</li>
+    <li>Check that every required item is complete.</li>
+  </ul>
+  <div class="u-actions">
+    <button type="button" class="u-button" data-u-dialog-close autofocus>Close</button>
+  </div>
+</dialog>
+<dialog id="document-details-2" class="u-dialog" aria-labelledby="document-details-2-title">
+  <h2 id="document-details-2-title" class="u-section-heading">Request information — Firm confirmation</h2>
+  <dl class="u-facts u-facts--stacked">
+    <dt>Contact</dt>
+    <dd>Sample firm</dd>
+    <dt>Next update</dt>
+    <dd>Written confirmation</dd>
+  </dl>
+  <div class="u-actions">
+    <button type="button" class="u-button" data-u-dialog-close autofocus>Close</button>
+  </div>
+</dialog>
 </main></div></body></html>

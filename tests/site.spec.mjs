@@ -195,27 +195,23 @@ test("dashboard task changes preserve panel positions", async ({ page }) => {
   }
 });
 
-test("repeated Playground icon activation preserves the document, draft and button geometry", async ({
+test("header switches between docs and Playground icons without changing button geometry", async ({
   page,
 }) => {
-  await page.goto(SITE + "/playground/#records");
-  if (await page.locator("#customize-toggle").isVisible()) await page.locator("#customize-toggle").click();
-  await page.getByLabel("Heading", { exact: true }).fill("Retained draft");
-  await page.evaluate(() => {
-    window.playgroundDocumentMarker = "same document";
-  });
-  const link = page.getByRole("link", { name: "Playground", exact: true });
+  await page.goto(SITE + "/");
+  const link = page.locator(".s-pages a");
   const before = await link.boundingBox();
-  for (let press = 0; press < 6; press++) {
-    await link.click();
-    expect(await page.evaluate(() => window.playgroundDocumentMarker)).toBe("same document");
-    await expect(page.getByLabel("Heading", { exact: true })).toHaveValue("Retained draft");
+  const docsIcon = await link.innerHTML();
+  for (let press = 0; press < 3; press++) {
+    await page.getByRole("link", { name: "Playground", exact: true }).click();
+    await expect(link).toHaveAttribute("aria-label", "Documentation");
+    expect(await link.innerHTML()).not.toBe(docsIcon);
+    expect(await link.boundingBox()).toEqual(before);
+    await page.getByRole("link", { name: "Documentation", exact: true }).click();
+    await expect(link).toHaveAttribute("aria-label", "Playground");
+    expect(await link.innerHTML()).toBe(docsIcon);
     expect(await link.boundingBox()).toEqual(before);
   }
-  await link.focus();
-  await page.keyboard.press("Enter");
-  expect(await page.evaluate(() => window.playgroundDocumentMarker)).toBe("same document");
-  await expect(page.getByLabel("Heading", { exact: true })).toHaveValue("Retained draft");
 });
 
 test("every docs page carries link-preview tags whose image and icon resolve", async ({ page }) => {

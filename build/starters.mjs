@@ -6,6 +6,7 @@ const descriptions = {
   "status-dashboard": ["Metrics, tasks & activity", "progress"],
   "searchable-collection": ["Search, people, records & costs", "tables"],
   "component-states": ["Forms, dialogs & recovery states", "forms"],
+  calculator: ["Dynamic financial breakdown", "property"],
 };
 export function workflowStarters(root) {
   return routes.map((route) => ({
@@ -26,7 +27,8 @@ export function livePreview(route) {
     .replace('src="theme.js"', 'src="../../workflows/theme.js"')
     .replace('src="workflow.js"', 'src="../../workflows/workflow.js"');
   const scripts = route.script
-    ? `<script src="../../dist/map-list.js"></script><script src="../../dist/maplibre.js"></script><script type="module" src="../../workflows/${route.script}"></script>`
+    ? `${route.id === "map-list" ? '<script src="../../dist/map-list.js"></script><script src="../../dist/maplibre.js"></script>' : ""}<script type="module" src="../../workflows/${route.script}"></script>`
     : "";
-  return `<!doctype html><html lang="en"><head>${head}<link rel="stylesheet" href="../../gallery/preview.css" /></head><body class="u-root p-live"><div class="u-app"><main class="u-workspace" aria-label="Live preview">${route.body}</main></div>${scripts}</body></html>`;
+  const body = route.body.replaceAll("../gallery/img/", "../../gallery/img/");
+  return `<!doctype html><html lang="en"><head>${head}<link rel="stylesheet" href="../../gallery/preview.css" /></head><body class="u-root p-live"><div class="u-app"><main class="u-workspace" aria-label="Live preview">${body}</main></div>${scripts}</body></html>`;
 }

@@ -54,7 +54,15 @@ const tokensCss = `${HEADER}:root {\n${vars.join("\n")}\n}\n${faces}\n`;
 // vars.css: variables only, for projects that self-host fonts their own way.
 put("vars.css", `${HEADER}:root {\n${vars.join("\n")}\n}\n`);
 put("tokens.css", tokensCss);
-put("design.css", tokensCss + "\n" + readFileSync(join(ROOT, "components/components.css"), "utf8"));
+// Keep explanatory comments in source; omit them from the shipped stylesheet.
+put(
+  "design.css",
+  tokensCss +
+    "\n" +
+    readFileSync(join(ROOT, "components/components.css"), "utf8")
+      .replace(/\/\*[\s\S]*?\*\//g, "")
+      .replace(/[ \t]+$/gm, ""),
+);
 
 // tokens.js/.d.ts and tokens.py for code that can't read CSS (canvas, PDF builder)
 const plain = { color, font: val("font"), radius: val("radius"), space: val("space"), dot: val("dot") };
@@ -121,6 +129,7 @@ const catalog = buildCatalog(
   ROOT,
   tokensCss +
     css +
+    readFileSync(join(ROOT, "components/widgets.css"), "utf8") +
     readFileSync(join(ROOT, "components/map.css"), "utf8") +
     readFileSync(join(ROOT, "components/context-menu.css"), "utf8"),
   plain,
@@ -143,6 +152,14 @@ for (const name of [
 ])
   put(`vendor/maplibre/${name}`, readFileSync(join(ROOT, "vendor/maplibre", name)));
 put("map.js", readFileSync(join(ROOT, "interactions/map.js")));
+for (const name of [
+  "house_exterior.jpg",
+  "apartment_exterior.jpg",
+  "modern_interior.jpg",
+  "outdoor_space.jpg",
+])
+  put(`gallery/img/${name}`, readFileSync(join(ROOT, "gallery/img", name)));
+put("widgets.css", readFileSync(join(ROOT, "components/widgets.css")));
 put("map.css", readFileSync(join(ROOT, "components/map.css")));
 put("vendor/leaflet.js", readFileSync(join(ROOT, "node_modules/leaflet/dist/leaflet.js")));
 put("vendor/leaflet.css", readFileSync(join(ROOT, "node_modules/leaflet/dist/leaflet.css")));

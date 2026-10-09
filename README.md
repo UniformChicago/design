@@ -61,6 +61,10 @@ Keep the directory structure intact: CSS references fonts through relative paths
 <link rel="stylesheet" href="/design/design.css" />
 ```
 
+Optional calculator, slider and fullscreen photo-viewer styles live in `widgets.css`; load it after `design.css`. Mount `dist/interactions.js` to keep slider fills synchronized. The bundled photos under `gallery/img/` are Google Gemini AI-generated samples of fictional properties, not real listings. Keep their sample labels or supply verified listing photos. Agent examples assume the documented `/design/` asset mount; adjust URLs when using a different mount.
+
+Before using payment estimates in brokerage marketing, have an attorney review the required advertising and lending disclosures. The calculator is a demonstration, not an offer of credit.
+
 ### 3. Compose with semantic HTML
 
 ```html

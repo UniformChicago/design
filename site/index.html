@@ -10,6 +10,9 @@
     />
     <script src="theme.js"></script>
     <link rel="stylesheet" href="dist/design.css" />
+    <link rel="stylesheet" href="dist/widgets.css" />
+    <link rel="stylesheet" href="dist/vendor/maplibre/maplibre-gl.css" />
+    <link rel="stylesheet" href="dist/map.css" />
     <link rel="stylesheet" href="dist/context-menu.css" />
     <script src="dist/context-menu.js" defer></script>
     <link rel="stylesheet" href="shell.css" />
@@ -48,6 +51,7 @@
           <li><a href="#facts">Facts</a></li>
           <li><a href="#tables">Tables</a></li>
           <li><a href="#forms">Forms</a></li>
+          <li><a href="#sliders">Sliders</a></li>
           <li><a href="#navigation">Navigation</a></li>
           <li><a href="#empty">Empty state</a></li>
           <li><a href="#progress">Progress and checks</a></li>
@@ -57,7 +61,13 @@
           <li><a href="#context-menu">Context menus</a></li>
           <li><a href="#identity">Identity</a></li>
           <li><a href="#property">Property cards</a></li>
-          <li><a href="#activity">Activity</a></li>
+          <li><a href="#activity">Activity &amp; Tasks</a></li>
+        </ul>
+        <p class="s-group"><a href="#maps">Visualizations</a></p>
+        <ul class="u-nav">
+          <li><a href="#maps">Maps</a></li>
+          <li><a href="#charts">Charts</a></li>
+          <li><a href="#gallery">Gallery</a></li>
         </ul>
         <p class="s-group"><a href="#releases">Project</a></p>
         <ul class="u-nav">
@@ -73,22 +83,12 @@
       <main id="main" class="s-main">
         <section id="overview" class="s-hero" aria-labelledby="overview-h">
           <div class="s-hero-copy">
-            <p class="u-eyebrow">Uniform Design / Components</p>
             <h1 id="overview-h" class="u-title">Components<span class="u-dot" aria-hidden="true"></span></h1>
-            <p class="u-lede">
-              Brand tokens, CSS components, and self-hosted fonts. One small, versioned package for websites,
-              applications and documents.
-            </p>
-            <ul class="s-points">
-              <li>
-                <strong>HTML first.</strong> Plain <code class="u-code">u-*</code> classes, no framework.
-              </li>
-              <li><strong>Two themes.</strong> Dark by default, light anywhere.</li>
-              <li><strong>Strict-CSP ready.</strong> No inline styles, no third-party requests.</li>
-            </ul>
+            <p class="u-lede">Reusable HTML components, brand tokens and complete interface starters.</p>
             <p class="s-actions">
-              <a class="u-button" href="#install">Get started</a>
-              <a class="u-button u-button--quiet" href="playground/">Explore the playground</a>
+              <a class="u-button" href="#install">Install the kit</a>
+              <a class="u-button u-button--quiet" href="#buttons">Browse components</a>
+              <a href="playground/">Open Playground →</a>
             </p>
           </div>
         </section>
@@ -248,6 +248,12 @@ npm install --save-exact github:UniformChicago/design#v{{version}}
           <!--example:forms-->
         </section>
 
+        <section id="sliders" aria-labelledby="sliders-h">
+          <h2 id="sliders-h" class="s-h2">Sliders</h2>
+          <p>Range inputs with dynamic progress fill capabilities.</p>
+          <!--example:sliders-->
+        </section>
+
         <section id="navigation" aria-labelledby="navigation-h">
           <h2 id="navigation-h" class="s-h2">Navigation</h2>
           <p>
@@ -294,6 +300,24 @@ npm install --save-exact github:UniformChicago/design#v{{version}}
         <section id="property" aria-labelledby="property-h">
           <h2 id="property-h" class="s-h2">Property cards</h2>
           <!--example:property-->
+        </section>
+
+        <section id="maps" aria-labelledby="maps-h">
+          <h2 id="maps-h" class="s-h2">Maps</h2>
+          <p>Interactive location-based map components and overlays.</p>
+          <!--example:maps-->
+        </section>
+
+        <section id="gallery" aria-labelledby="gallery-h">
+          <h2 id="gallery-h" class="s-h2">Gallery</h2>
+          <p>Full-screen modal viewers for property photos and assets.</p>
+          <!--example:gallery-->
+        </section>
+
+        <section id="charts" aria-labelledby="charts-h">
+          <h2 id="charts-h" class="s-h2">Charts</h2>
+          <p>SVG-based visualization components like donut charts.</p>
+          <!--example:charts-->
         </section>
 
         <section id="activity" aria-labelledby="activity-h">
@@ -358,6 +382,8 @@ const dispose = mountAtmosphere(document.querySelector("#atmosphere"));
     <script type="module" src="shell.js"></script>
     <script src="dist/interactions.js" defer></script>
     <script type="module" src="docs.js"></script>
+    <script src="dist/maplibre.js" defer></script>
+    <script type="module" src="map-demo.js"></script>
     <script type="module" src="dist/atmosphere.js"></script>
   </body>
 </html>

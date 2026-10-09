@@ -8,6 +8,7 @@
     <title>Map and list · Uniform Design</title>
     <script src="../../workflows/theme.js"></script>
     <link rel="stylesheet" href="../../dist/design.css" />
+    <link rel="stylesheet" href="../../dist/widgets.css" />
     <link rel="stylesheet" href="../../dist/vendor/maplibre/maplibre-gl.css" /><link rel="stylesheet" href="../../dist/map.css" />
     <script src="../../dist/interactions.js" defer></script>
     <link rel="stylesheet" href="../../dist/context-menu.css" />
@@ -21,98 +22,6 @@
   </div>
 </div>
 <section data-map-preview aria-label="Sample property explorer">
-  <svg class="u-sr" aria-hidden="true" focusable="false">
-    <defs>
-      <linearGradient id="property-photo-sky" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="var(--u-link)" stop-opacity="0.28" />
-        <stop offset="1" stop-color="var(--u-link)" stop-opacity="0.04" />
-      </linearGradient>
-      <symbol id="property-photo-exterior" viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice">
-        <rect width="480" height="300" fill="var(--u-surface)" />
-        <rect width="480" height="300" fill="url(#property-photo-sky)" />
-        <path d="M0 200Q120 150 240 185T480 170V300H0Z" fill="var(--u-line)" opacity="0.5" />
-        <path d="M0 232H480V300H0Z" fill="var(--u-hover)" />
-        <ellipse cx="240" cy="250" rx="170" ry="9" fill="var(--u-bg)" opacity="0.5" />
-        <path d="M130 150H350V248H130Z" fill="var(--u-bg)" />
-        <path d="M290 150H350V248H290Z" fill="var(--u-fg)" opacity="0.06" />
-        <path d="M110 154L240 74L370 154Z" fill="var(--u-muted)" opacity="0.7" />
-        <path d="M240 74L370 154H330L240 98Z" fill="var(--u-fg)" opacity="0.12" />
-        <path d="M300 92H322V122L300 108Z" fill="var(--u-muted)" opacity="0.7" />
-        <path d="M156 176H196V208H156Z M284 176H324V208H284Z" fill="var(--u-accent)" opacity="0.55" />
-        <path d="M218 188H262V248H218Z" fill="var(--u-hover)" />
-        <path d="M384 250V196" stroke="var(--u-muted)" stroke-width="6" stroke-linecap="round" />
-        <circle cx="384" cy="176" r="30" fill="var(--u-ok)" opacity="0.45" />
-        <circle cx="398" cy="190" r="20" fill="var(--u-ok)" opacity="0.3" />
-        <circle cx="86" cy="206" r="24" fill="var(--u-ok)" opacity="0.35" />
-      </symbol>
-      <symbol id="property-photo-apartment" viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice">
-        <rect width="480" height="300" fill="var(--u-surface)" />
-        <rect width="480" height="300" fill="url(#property-photo-sky)" />
-        <path d="M30 120H120V260H30Z M360 90H450V260H360Z" fill="var(--u-line)" opacity="0.55" />
-        <path d="M0 254H480V300H0Z" fill="var(--u-hover)" />
-        <path d="M140 46H340V256H140Z" fill="var(--u-bg)" />
-        <path d="M290 46H340V256H290Z" fill="var(--u-fg)" opacity="0.06" />
-        <path d="M132 40H348V50H132Z" fill="var(--u-muted)" opacity="0.7" />
-        <path
-          d="M164 76H200V106H164Z M222 76H258V106H222Z M164 132H200V162H164Z M280 132H316V162H280Z M222 188H258V218H222Z"
-          fill="var(--u-accent)"
-          opacity="0.55"
-        />
-        <path
-          d="M280 76H316V106H280Z M222 132H258V162H222Z M164 188H200V218H164Z M280 188H316V218H280Z"
-          fill="var(--u-hover)"
-        />
-        <path d="M218 230H262V256H218Z" fill="var(--u-hover)" />
-        <path d="M210 226H270V232H210Z" fill="var(--u-muted)" opacity="0.7" />
-      </symbol>
-      <symbol id="property-photo-interior" viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice">
-        <rect width="480" height="300" fill="var(--u-surface)" />
-        <path d="M0 220H480V300H0Z" fill="var(--u-hover)" />
-        <path d="M0 220H480" stroke="var(--u-line)" stroke-width="4" />
-        <path d="M80 50H220V170H80Z" fill="url(#property-photo-sky)" />
-        <path
-          d="M80 50H220V170H80Z M150 50V170 M80 110H220"
-          fill="none"
-          stroke="var(--u-line)"
-          stroke-width="6"
-        />
-        <path d="M60 170H240V178H60Z" fill="var(--u-muted)" opacity="0.5" />
-        <path d="M352 52V96" stroke="var(--u-muted)" stroke-width="3" />
-        <path d="M330 96H374L364 120H340Z" fill="var(--u-accent)" opacity="0.6" />
-        <ellipse cx="300" cy="258" rx="130" ry="8" fill="var(--u-bg)" opacity="0.5" />
-        <path
-          d="M200 176Q200 160 216 160H384Q400 160 400 176V214H200Z"
-          fill="var(--u-muted)"
-          opacity="0.55"
-        />
-        <path
-          d="M184 206Q184 194 196 194H404Q416 194 416 206V246H184Z"
-          fill="var(--u-muted)"
-          opacity="0.75"
-        />
-        <path d="M200 246V258 M400 246V258" stroke="var(--u-muted)" stroke-width="6" />
-        <rect x="222" y="172" width="44" height="30" rx="8" fill="var(--u-accent)" opacity="0.45" />
-        <path d="M60 230H130V244H60Z" fill="var(--u-bg)" />
-        <circle cx="95" cy="214" r="18" fill="var(--u-ok)" opacity="0.4" />
-      </symbol>
-      <symbol id="property-photo-outdoor" viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice">
-        <rect width="480" height="300" fill="var(--u-surface)" />
-        <rect width="480" height="300" fill="url(#property-photo-sky)" />
-        <circle cx="390" cy="70" r="26" fill="var(--u-accent)" opacity="0.45" />
-        <path d="M0 214H480V300H0Z" fill="var(--u-ok)" opacity="0.22" />
-        <path d="M30 214V140H450V214Z" fill="var(--u-line)" opacity="0.35" />
-        <path d="M30 140H450 M30 160H450" stroke="var(--u-muted)" stroke-width="4" opacity="0.6" />
-        <path d="M150 232H330L362 280H118Z" fill="var(--u-hover)" />
-        <path d="M188 196H292V224H188Z" fill="var(--u-muted)" opacity="0.7" />
-        <path d="M200 224V256 M280 224V256" stroke="var(--u-muted)" stroke-width="6" />
-        <path d="M240 120V196" stroke="var(--u-muted)" stroke-width="4" />
-        <path d="M186 132Q240 96 294 132Z" fill="var(--u-accent)" opacity="0.5" />
-        <path d="M86 218V140" stroke="var(--u-muted)" stroke-width="6" stroke-linecap="round" />
-        <circle cx="86" cy="116" r="40" fill="var(--u-ok)" opacity="0.45" />
-        <circle cx="62" cy="134" r="24" fill="var(--u-ok)" opacity="0.35" />
-      </symbol>
-    </defs>
-  </svg>
   <div class="u-toolbar u-map-toolbar">
     <div class="u-field">
       <label for="property-kind">Property type</label
@@ -180,10 +89,8 @@
         data-kind="House"
       >
         <figure class="u-property-thumbnail">
-          <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <use href="#property-photo-exterior" />
-          </svg>
-          <figcaption>Exterior · Placeholder</figcaption>
+          <img src="../../gallery/img/house_exterior.jpg" alt="" loading="lazy" />
+          <figcaption>Exterior · AI-generated sample</figcaption>
         </figure>
         <span class="u-eyebrow">House</span>
         <h2 class="u-section-heading">Courtyard house</h2>
@@ -221,10 +128,8 @@
         data-kind="Apartment"
       >
         <figure class="u-property-thumbnail">
-          <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <use href="#property-photo-apartment" />
-          </svg>
-          <figcaption>Exterior · Placeholder</figcaption>
+          <img src="../../gallery/img/apartment_exterior.jpg" alt="" loading="lazy" />
+          <figcaption>Exterior · AI-generated sample</figcaption>
         </figure>
         <span class="u-eyebrow">Apartment</span>
         <h2 class="u-section-heading">Terrace apartment</h2>
@@ -262,10 +167,8 @@
         data-kind="House"
       >
         <figure class="u-property-thumbnail">
-          <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <use href="#property-photo-exterior" />
-          </svg>
-          <figcaption>Exterior · Placeholder</figcaption>
+          <img src="../../gallery/img/house_exterior.jpg" alt="" loading="lazy" />
+          <figcaption>Exterior · AI-generated sample</figcaption>
         </figure>
         <span class="u-eyebrow">House</span>
         <h2 class="u-section-heading">Garden house</h2>
@@ -303,10 +206,8 @@
         data-kind="Apartment"
       >
         <figure class="u-property-thumbnail">
-          <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <use href="#property-photo-apartment" />
-          </svg>
-          <figcaption>Exterior · Placeholder</figcaption>
+          <img src="../../gallery/img/apartment_exterior.jpg" alt="" loading="lazy" />
+          <figcaption>Exterior · AI-generated sample</figcaption>
         </figure>
         <span class="u-eyebrow">Apartment</span>
         <h2 class="u-section-heading">Courtyard flat</h2>
@@ -342,10 +243,8 @@
         data-kind="Apartment"
       >
         <figure class="u-property-thumbnail">
-          <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <use href="#property-photo-apartment" />
-          </svg>
-          <figcaption>Exterior · Placeholder</figcaption>
+          <img src="../../gallery/img/apartment_exterior.jpg" alt="" loading="lazy" />
+          <figcaption>Exterior · AI-generated sample</figcaption>
         </figure>
         <span class="u-eyebrow">Apartment</span>
         <h2 class="u-section-heading">Corner studio</h2>
@@ -430,7 +329,6 @@
           <span class="u-map-loading-track" aria-hidden="true"></span>
         </div>
       </div>
-      <p class="u-map-caption">OpenFreeMap · Sample properties</p>
       <div
         class="u-map-notice"
         data-map-location-status
@@ -502,22 +400,16 @@
           aria-label="Property photos. Swipe or use arrow keys to browse three images."
         >
           <figure>
-            <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-              <use data-selection-photo href="#property-photo-exterior" />
-            </svg>
-            <figcaption>Exterior · 1 of 3 · Placeholder</figcaption>
+            <img data-selection-photo src="../../gallery/img/house_exterior.jpg" alt="" loading="lazy" />
+            <figcaption>Exterior · 1 of 3</figcaption>
           </figure>
           <figure>
-            <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-              <use href="#property-photo-interior" />
-            </svg>
-            <figcaption>Living space · 2 of 3 · Placeholder</figcaption>
+            <img src="../../gallery/img/modern_interior.jpg" alt="" loading="lazy" />
+            <figcaption>Living space · 2 of 3</figcaption>
           </figure>
           <figure>
-            <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-              <use href="#property-photo-outdoor" />
-            </svg>
-            <figcaption>Outdoor space · 3 of 3 · Placeholder</figcaption>
+            <img src="../../gallery/img/outdoor_space.jpg" alt="" loading="lazy" />
+            <figcaption>Outdoor space · 3 of 3</figcaption>
           </figure>
         </div>
       </div>
@@ -568,7 +460,7 @@
     <button type="button" role="menuitem" tabindex="-1" data-u-context-action="save">Save property</button>
     <button type="button" role="menuitem" tabindex="-1" data-u-context-action="copy">Copy price</button>
   </div>
-  <p class="u-hint">Fictional listings with illustrative image placeholders.</p>
+  <p class="u-hint">Fictional listings with illustrative state-of-the-art AI-generated placeholder images.</p>
   <details class="u-panel u-map-guide">
     <summary id="map-contract-title">Pattern reference</summary>
     <div class="u-columns">
@@ -615,4 +507,26 @@
     </div>
   </details>
 </section>
+
+<dialog id="gallery-modal" class="u-gallery-modal" aria-label="Property photo gallery">
+  <div class="u-gallery-modal-content">
+    <button type="button" class="u-gallery-modal-close" aria-label="Close gallery">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 6L6 18M6 6l12 12" />
+      </svg>
+    </button>
+    <button type="button" class="u-gallery-modal-nav u-gallery-modal-prev" aria-label="Previous image">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M15 18l-6-6 6-6" />
+      </svg>
+    </button>
+    <img id="gallery-image" src="" alt="" />
+    <button type="button" class="u-gallery-modal-nav u-gallery-modal-next" aria-label="Next image">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 18l6-6-6-6" />
+      </svg>
+    </button>
+    <div id="gallery-caption" class="u-gallery-modal-caption"></div>
+  </div>
+</dialog>
 </main></div><script src="../../dist/map-list.js"></script><script src="../../dist/maplibre.js"></script><script type="module" src="../../workflows/map-preview.js"></script></body></html>

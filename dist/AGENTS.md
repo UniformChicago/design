@@ -1,6 +1,6 @@
 # Uniform Design agent contract
 
-Package version: 0.2.2. Schema: 1.0.0.
+Package version: 0.3.0. Schema: 1.0.0.
 
 Read catalog.json for machine-readable contracts and exact markup. These are preview contracts.
 
@@ -299,9 +299,7 @@ Customization: Label, Value, Maximum.
 Limitations: Browser and assistive-technology verification pending for this local change.
 
 ```html
-<div class="u-progress" role="progressbar" aria-label="Example progress" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
-  <span class="s-w40"></span>
-</div>
+<progress class="u-meter" aria-label="Example progress" value="40" max="100">40%</progress>
 <div class="u-check u-check--done">
   <span class="u-check__status" aria-hidden="true"></span>
   <span>
@@ -395,7 +393,37 @@ Customization: Event labels, Descriptions, Times.
 Limitations: Browser and assistive-technology verification pending for this local change.
 
 ```html
-<ol class="u-activity"><li><strong>Sample added</strong><p>Example record</p><small>Time not provided</small></li></ol>
+<h3 class="u-section-heading">Timelines</h3>
+<ol class="u-activity">
+  <li>
+    <strong>Event completed</strong>
+    <p>Uploaded the necessary forms</p>
+    <small>Today, 9:00 AM</small>
+  </li>
+  <li>
+    <strong>Event started</strong>
+    <p>Initial processing</p>
+    <small>Yesterday</small>
+  </li>
+</ol>
+
+<h3 class="u-section-heading">Task Lists</h3>
+<ul class="u-task-list">
+  <li>
+    <div>
+      <strong>Complete application</strong>
+      <p class="u-hint">Required before next steps</p>
+    </div>
+    <span class="u-tag u-tag--ok">Done</span>
+  </li>
+  <li>
+    <div>
+      <strong>Sign agreements</strong>
+      <p class="u-hint">Awaiting signature</p>
+    </div>
+    <span class="u-tag u-tag--warn">Pending</span>
+  </li>
+</ul>
 ```
 
 ## property: Property facts
@@ -406,15 +434,33 @@ Maturity: preview. States: known, partial.
 
 - Use explicit units and missing-value labels.
 - No geocoding or listing provider is included.
+- Self-host dist/ at /design/ or change the sample image URL to your asset mount. Replace the illustrative photo for real listings.
 
 Dependencies: design.css.
 
 Customization: Facts, Address, Units.
 
-Limitations: Browser and assistive-technology verification pending for this local change.
+Limitations: Browser and assistive-technology verification pending for this local change. Photos are AI-generated samples, not real listings.
 
 ```html
-<dl class="u-property-facts"><div><dt>Property type</dt><dd>Residential</dd></div><div><dt>Area</dt><dd>Not provided</dd></div></dl>
+<article class="u-map-card">
+  <figure class="u-property-thumbnail">
+    <img
+      src="/design/gallery/img/house_exterior.jpg"
+      alt="Illustrative house exterior"
+      loading="lazy"
+      width="640"
+      height="400"
+    />
+    <figcaption>AI-generated sample photo</figcaption>
+  </figure>
+  <div class="u-stack">
+    <h3 class="u-section-heading">Courtyard house</h3>
+    <strong>$425,000</strong>
+    <p>3 beds · 2 baths · 1,800 sq ft</p>
+    <p class="u-hint">Fictional property · Sample location</p>
+  </div>
+</article>
 ```
 
 ## context-menu: Context menu
@@ -589,25 +635,23 @@ Limitations: Fixture controllers are examples; application backend, authorizatio
   <a href="index.html" class="u-button u-button--quiet">Edit sample plan</a>
 </div>
 <div class="u-stack">
-  <section class="u-stats" aria-label="At a glance">
-    <div class="u-panel">
-      <dl class="u-stat">
-        <dt>Plan status</dt>
-        <dd>In progress</dd>
-      </dl>
-    </div>
-    <div class="u-panel">
-      <dl class="u-stat">
-        <dt>Sample tasks complete</dt>
-        <dd id="task-count">1 of 3</dd>
-      </dl>
-    </div>
-    <div class="u-panel">
-      <dl class="u-stat">
-        <dt>Personal check-in</dt>
-        <dd id="checkin-display">Not set</dd>
-      </dl>
-    </div>
+  <section class="u-panel u-stats" aria-label="At a glance">
+    <dl class="u-stat">
+      <dt>Plan status</dt>
+      <dd>In progress</dd>
+    </dl>
+    <dl class="u-stat">
+      <dt>Sample tasks</dt>
+      <dd id="task-count">1 of 3</dd>
+    </dl>
+    <dl class="u-stat">
+      <dt>Personal check-in</dt>
+      <dd id="checkin-display">Not set</dd>
+    </dl>
+    <dl class="u-stat">
+      <dt>Next milestone</dt>
+      <dd>Oct 24</dd>
+    </dl>
   </section>
   <div class="u-columns">
     <div class="u-stack">
@@ -705,7 +749,7 @@ Maturity: preview. States: populated, filtered, filtered-empty.
 - Replace fixture copy and persistence with application-owned data and policy.
 - Keep data-u-collection hooks and row headers for the optional controller. Remount after replacing the collection DOM.
 
-Dependencies: design.css, interactions.js, UniformInteractions.mount(document).
+Dependencies: design.css, widgets.css, interactions.js, UniformInteractions.mount(document).
 
 Customization: Content, Data bindings, Composition using documented components.
 
@@ -767,51 +811,110 @@ Limitations: Fixture controllers are examples; application backend, authorizatio
         </thead>
         <tbody>
           <tr data-u-row data-state="ready">
-            <th scope="row">Education certificate</th>
-            <td>Education</td>
+            <th scope="row">
+              <span data-document-title>Education certificate</span>
+              <p class="u-hint">Sample PDF record • No file attached</p>
+            </th>
+            <td>
+              Education
+              <p class="u-hint">Pre-license requirement</p>
+            </td>
             <td><span class="u-tag u-tag--ok">Ready</span></td>
             <td>
-              <details>
-                <summary>File information<span class="u-sr">: Education certificate</span></summary>
-                <dl class="u-facts u-facts--stacked">
-                  <dt>Format</dt>
-                  <dd>PDF</dd>
-                  <dt>Version</dt>
-                  <dd>1</dd>
-                  <dt>Attachment</dt>
-                  <dd>Not supplied</dd>
-                </dl>
-              </details>
+              <button
+                type="button"
+                class="u-button u-button--quiet u-table-detail"
+                data-u-dialog-open="document-details-0"
+                title="
+                File information"
+                hidden
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="20"
+                  height="20"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M12 11v6m0-10v1" /></svg
+                ><span class="u-sr"> File information: Education certificate </span>
+              </button>
             </td>
           </tr>
           <tr data-u-row data-state="review">
-            <th scope="row">Application checklist</th>
-            <td>Application</td>
+            <th scope="row">
+              <span data-document-title>Application checklist</span>
+              <p class="u-hint">Sample internal form</p>
+            </th>
+            <td>
+              Application
+              <p class="u-hint">State documentation</p>
+            </td>
             <td><span class="u-tag u-tag--warn">Needs review</span></td>
             <td>
-              <details>
-                <summary>Review items<span class="u-sr">: Application checklist</span></summary>
-                <ul class="u-hint">
-                  <li>Confirm the document category.</li>
-                  <li>Check that every required item is complete.</li>
-                </ul>
-              </details>
+              <button
+                type="button"
+                class="u-button u-button--quiet u-table-detail"
+                data-u-dialog-open="document-details-1"
+                title="
+                Review items"
+                hidden
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="20"
+                  height="20"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="m4 6 2 2 4-4m-6 9 2 2 4-4m3-4h7m-7 7h7m-7 6h7" /></svg
+                ><span class="u-sr"> Review items: Application checklist </span>
+              </button>
             </td>
           </tr>
           <tr data-u-row data-state="requested">
-            <th scope="row">Firm confirmation</th>
-            <td>Sponsorship</td>
+            <th scope="row">
+              <span data-document-title>Firm confirmation</span>
+              <p class="u-hint">Sample request • Awaiting signature</p>
+            </th>
+            <td>
+              Sponsorship
+              <p class="u-hint">Brokerage verification</p>
+            </td>
             <td><span class="u-tag">Requested</span></td>
             <td>
-              <details>
-                <summary>Request information<span class="u-sr">: Firm confirmation</span></summary>
-                <dl class="u-facts u-facts--stacked">
-                  <dt>Contact</dt>
-                  <dd>Sample firm</dd>
-                  <dt>Next update</dt>
-                  <dd>Written confirmation</dd>
-                </dl>
-              </details>
+              <button
+                type="button"
+                class="u-button u-button--quiet u-table-detail"
+                data-u-dialog-open="document-details-2"
+                title="
+                Request information"
+                hidden
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="20"
+                  height="20"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M21 11a8 8 0 0 1-8 8H5l-3 3V11a8 8 0 0 1 8-8h3a8 8 0 0 1 8 8Z" />
+                  <path d="M7 10h10m-10 4h6" /></svg
+                ><span class="u-sr"> Request information: Firm confirmation </span>
+              </button>
             </td>
           </tr>
         </tbody>
@@ -910,6 +1013,43 @@ Limitations: Fixture controllers are examples; application backend, authorizatio
     </div>
   </div>
 </div>
+
+<dialog id="document-details-0" class="u-dialog" aria-labelledby="document-details-0-title">
+  <h2 id="document-details-0-title" class="u-section-heading">File information — Education certificate</h2>
+  <dl class="u-facts u-facts--stacked">
+    <dt>Format</dt>
+    <dd>PDF</dd>
+    <dt>Version</dt>
+    <dd>1</dd>
+    <dt>Attachment</dt>
+    <dd>Not supplied</dd>
+  </dl>
+  <div class="u-actions">
+    <button type="button" class="u-button" data-u-dialog-close autofocus>Close</button>
+  </div>
+</dialog>
+<dialog id="document-details-1" class="u-dialog" aria-labelledby="document-details-1-title">
+  <h2 id="document-details-1-title" class="u-section-heading">Review items — Application checklist</h2>
+  <ul class="u-hint">
+    <li>Confirm the document category.</li>
+    <li>Check that every required item is complete.</li>
+  </ul>
+  <div class="u-actions">
+    <button type="button" class="u-button" data-u-dialog-close autofocus>Close</button>
+  </div>
+</dialog>
+<dialog id="document-details-2" class="u-dialog" aria-labelledby="document-details-2-title">
+  <h2 id="document-details-2-title" class="u-section-heading">Request information — Firm confirmation</h2>
+  <dl class="u-facts u-facts--stacked">
+    <dt>Contact</dt>
+    <dd>Sample firm</dd>
+    <dt>Next update</dt>
+    <dd>Written confirmation</dd>
+  </dl>
+  <div class="u-actions">
+    <button type="button" class="u-button" data-u-dialog-close autofocus>Close</button>
+  </div>
+</dialog>
 ```
 
 ## component-states: Component state fixtures
@@ -1117,7 +1257,8 @@ Integration:
     "design.css",
     "vendor/maplibre/maplibre-gl.css",
     "map.css",
-    "context-menu.css"
+    "context-menu.css",
+    "widgets.css"
   ],
   "scripts": [
     "maplibre.js",
@@ -1161,98 +1302,6 @@ Integration:
   </div>
 </div>
 <section data-map-preview aria-label="Sample property explorer">
-  <svg class="u-sr" aria-hidden="true" focusable="false">
-    <defs>
-      <linearGradient id="property-photo-sky" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="var(--u-link)" stop-opacity="0.28" />
-        <stop offset="1" stop-color="var(--u-link)" stop-opacity="0.04" />
-      </linearGradient>
-      <symbol id="property-photo-exterior" viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice">
-        <rect width="480" height="300" fill="var(--u-surface)" />
-        <rect width="480" height="300" fill="url(#property-photo-sky)" />
-        <path d="M0 200Q120 150 240 185T480 170V300H0Z" fill="var(--u-line)" opacity="0.5" />
-        <path d="M0 232H480V300H0Z" fill="var(--u-hover)" />
-        <ellipse cx="240" cy="250" rx="170" ry="9" fill="var(--u-bg)" opacity="0.5" />
-        <path d="M130 150H350V248H130Z" fill="var(--u-bg)" />
-        <path d="M290 150H350V248H290Z" fill="var(--u-fg)" opacity="0.06" />
-        <path d="M110 154L240 74L370 154Z" fill="var(--u-muted)" opacity="0.7" />
-        <path d="M240 74L370 154H330L240 98Z" fill="var(--u-fg)" opacity="0.12" />
-        <path d="M300 92H322V122L300 108Z" fill="var(--u-muted)" opacity="0.7" />
-        <path d="M156 176H196V208H156Z M284 176H324V208H284Z" fill="var(--u-accent)" opacity="0.55" />
-        <path d="M218 188H262V248H218Z" fill="var(--u-hover)" />
-        <path d="M384 250V196" stroke="var(--u-muted)" stroke-width="6" stroke-linecap="round" />
-        <circle cx="384" cy="176" r="30" fill="var(--u-ok)" opacity="0.45" />
-        <circle cx="398" cy="190" r="20" fill="var(--u-ok)" opacity="0.3" />
-        <circle cx="86" cy="206" r="24" fill="var(--u-ok)" opacity="0.35" />
-      </symbol>
-      <symbol id="property-photo-apartment" viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice">
-        <rect width="480" height="300" fill="var(--u-surface)" />
-        <rect width="480" height="300" fill="url(#property-photo-sky)" />
-        <path d="M30 120H120V260H30Z M360 90H450V260H360Z" fill="var(--u-line)" opacity="0.55" />
-        <path d="M0 254H480V300H0Z" fill="var(--u-hover)" />
-        <path d="M140 46H340V256H140Z" fill="var(--u-bg)" />
-        <path d="M290 46H340V256H290Z" fill="var(--u-fg)" opacity="0.06" />
-        <path d="M132 40H348V50H132Z" fill="var(--u-muted)" opacity="0.7" />
-        <path
-          d="M164 76H200V106H164Z M222 76H258V106H222Z M164 132H200V162H164Z M280 132H316V162H280Z M222 188H258V218H222Z"
-          fill="var(--u-accent)"
-          opacity="0.55"
-        />
-        <path
-          d="M280 76H316V106H280Z M222 132H258V162H222Z M164 188H200V218H164Z M280 188H316V218H280Z"
-          fill="var(--u-hover)"
-        />
-        <path d="M218 230H262V256H218Z" fill="var(--u-hover)" />
-        <path d="M210 226H270V232H210Z" fill="var(--u-muted)" opacity="0.7" />
-      </symbol>
-      <symbol id="property-photo-interior" viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice">
-        <rect width="480" height="300" fill="var(--u-surface)" />
-        <path d="M0 220H480V300H0Z" fill="var(--u-hover)" />
-        <path d="M0 220H480" stroke="var(--u-line)" stroke-width="4" />
-        <path d="M80 50H220V170H80Z" fill="url(#property-photo-sky)" />
-        <path
-          d="M80 50H220V170H80Z M150 50V170 M80 110H220"
-          fill="none"
-          stroke="var(--u-line)"
-          stroke-width="6"
-        />
-        <path d="M60 170H240V178H60Z" fill="var(--u-muted)" opacity="0.5" />
-        <path d="M352 52V96" stroke="var(--u-muted)" stroke-width="3" />
-        <path d="M330 96H374L364 120H340Z" fill="var(--u-accent)" opacity="0.6" />
-        <ellipse cx="300" cy="258" rx="130" ry="8" fill="var(--u-bg)" opacity="0.5" />
-        <path
-          d="M200 176Q200 160 216 160H384Q400 160 400 176V214H200Z"
-          fill="var(--u-muted)"
-          opacity="0.55"
-        />
-        <path
-          d="M184 206Q184 194 196 194H404Q416 194 416 206V246H184Z"
-          fill="var(--u-muted)"
-          opacity="0.75"
-        />
-        <path d="M200 246V258 M400 246V258" stroke="var(--u-muted)" stroke-width="6" />
-        <rect x="222" y="172" width="44" height="30" rx="8" fill="var(--u-accent)" opacity="0.45" />
-        <path d="M60 230H130V244H60Z" fill="var(--u-bg)" />
-        <circle cx="95" cy="214" r="18" fill="var(--u-ok)" opacity="0.4" />
-      </symbol>
-      <symbol id="property-photo-outdoor" viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice">
-        <rect width="480" height="300" fill="var(--u-surface)" />
-        <rect width="480" height="300" fill="url(#property-photo-sky)" />
-        <circle cx="390" cy="70" r="26" fill="var(--u-accent)" opacity="0.45" />
-        <path d="M0 214H480V300H0Z" fill="var(--u-ok)" opacity="0.22" />
-        <path d="M30 214V140H450V214Z" fill="var(--u-line)" opacity="0.35" />
-        <path d="M30 140H450 M30 160H450" stroke="var(--u-muted)" stroke-width="4" opacity="0.6" />
-        <path d="M150 232H330L362 280H118Z" fill="var(--u-hover)" />
-        <path d="M188 196H292V224H188Z" fill="var(--u-muted)" opacity="0.7" />
-        <path d="M200 224V256 M280 224V256" stroke="var(--u-muted)" stroke-width="6" />
-        <path d="M240 120V196" stroke="var(--u-muted)" stroke-width="4" />
-        <path d="M186 132Q240 96 294 132Z" fill="var(--u-accent)" opacity="0.5" />
-        <path d="M86 218V140" stroke="var(--u-muted)" stroke-width="6" stroke-linecap="round" />
-        <circle cx="86" cy="116" r="40" fill="var(--u-ok)" opacity="0.45" />
-        <circle cx="62" cy="134" r="24" fill="var(--u-ok)" opacity="0.35" />
-      </symbol>
-    </defs>
-  </svg>
   <div class="u-toolbar u-map-toolbar">
     <div class="u-field">
       <label for="property-kind">Property type</label
@@ -1320,10 +1369,8 @@ Integration:
         data-kind="House"
       >
         <figure class="u-property-thumbnail">
-          <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <use href="#property-photo-exterior" />
-          </svg>
-          <figcaption>Exterior · Placeholder</figcaption>
+          <img src="/design/gallery/img/house_exterior.jpg" alt="" loading="lazy" />
+          <figcaption>Exterior · AI-generated sample</figcaption>
         </figure>
         <span class="u-eyebrow">House</span>
         <h2 class="u-section-heading">Courtyard house</h2>
@@ -1361,10 +1408,8 @@ Integration:
         data-kind="Apartment"
       >
         <figure class="u-property-thumbnail">
-          <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <use href="#property-photo-apartment" />
-          </svg>
-          <figcaption>Exterior · Placeholder</figcaption>
+          <img src="/design/gallery/img/apartment_exterior.jpg" alt="" loading="lazy" />
+          <figcaption>Exterior · AI-generated sample</figcaption>
         </figure>
         <span class="u-eyebrow">Apartment</span>
         <h2 class="u-section-heading">Terrace apartment</h2>
@@ -1402,10 +1447,8 @@ Integration:
         data-kind="House"
       >
         <figure class="u-property-thumbnail">
-          <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <use href="#property-photo-exterior" />
-          </svg>
-          <figcaption>Exterior · Placeholder</figcaption>
+          <img src="/design/gallery/img/house_exterior.jpg" alt="" loading="lazy" />
+          <figcaption>Exterior · AI-generated sample</figcaption>
         </figure>
         <span class="u-eyebrow">House</span>
         <h2 class="u-section-heading">Garden house</h2>
@@ -1443,10 +1486,8 @@ Integration:
         data-kind="Apartment"
       >
         <figure class="u-property-thumbnail">
-          <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <use href="#property-photo-apartment" />
-          </svg>
-          <figcaption>Exterior · Placeholder</figcaption>
+          <img src="/design/gallery/img/apartment_exterior.jpg" alt="" loading="lazy" />
+          <figcaption>Exterior · AI-generated sample</figcaption>
         </figure>
         <span class="u-eyebrow">Apartment</span>
         <h2 class="u-section-heading">Courtyard flat</h2>
@@ -1482,10 +1523,8 @@ Integration:
         data-kind="Apartment"
       >
         <figure class="u-property-thumbnail">
-          <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <use href="#property-photo-apartment" />
-          </svg>
-          <figcaption>Exterior · Placeholder</figcaption>
+          <img src="/design/gallery/img/apartment_exterior.jpg" alt="" loading="lazy" />
+          <figcaption>Exterior · AI-generated sample</figcaption>
         </figure>
         <span class="u-eyebrow">Apartment</span>
         <h2 class="u-section-heading">Corner studio</h2>
@@ -1570,7 +1609,6 @@ Integration:
           <span class="u-map-loading-track" aria-hidden="true"></span>
         </div>
       </div>
-      <p class="u-map-caption">OpenFreeMap · Sample properties</p>
       <div
         class="u-map-notice"
         data-map-location-status
@@ -1642,22 +1680,16 @@ Integration:
           aria-label="Property photos. Swipe or use arrow keys to browse three images."
         >
           <figure>
-            <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-              <use data-selection-photo href="#property-photo-exterior" />
-            </svg>
-            <figcaption>Exterior · 1 of 3 · Placeholder</figcaption>
+            <img data-selection-photo src="/design/gallery/img/house_exterior.jpg" alt="" loading="lazy" />
+            <figcaption>Exterior · 1 of 3</figcaption>
           </figure>
           <figure>
-            <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-              <use href="#property-photo-interior" />
-            </svg>
-            <figcaption>Living space · 2 of 3 · Placeholder</figcaption>
+            <img src="/design/gallery/img/modern_interior.jpg" alt="" loading="lazy" />
+            <figcaption>Living space · 2 of 3</figcaption>
           </figure>
           <figure>
-            <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-              <use href="#property-photo-outdoor" />
-            </svg>
-            <figcaption>Outdoor space · 3 of 3 · Placeholder</figcaption>
+            <img src="/design/gallery/img/outdoor_space.jpg" alt="" loading="lazy" />
+            <figcaption>Outdoor space · 3 of 3</figcaption>
           </figure>
         </div>
       </div>
@@ -1708,7 +1740,7 @@ Integration:
     <button type="button" role="menuitem" tabindex="-1" data-u-context-action="save">Save property</button>
     <button type="button" role="menuitem" tabindex="-1" data-u-context-action="copy">Copy price</button>
   </div>
-  <p class="u-hint">Fictional listings with illustrative image placeholders.</p>
+  <p class="u-hint">Fictional listings with illustrative state-of-the-art AI-generated placeholder images.</p>
   <details class="u-panel u-map-guide">
     <summary id="map-contract-title">Pattern reference</summary>
     <div class="u-columns">
@@ -1755,6 +1787,28 @@ Integration:
     </div>
   </details>
 </section>
+
+<dialog id="gallery-modal" class="u-gallery-modal" aria-label="Property photo gallery">
+  <div class="u-gallery-modal-content">
+    <button type="button" class="u-gallery-modal-close" aria-label="Close gallery">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 6L6 18M6 6l12 12" />
+      </svg>
+    </button>
+    <button type="button" class="u-gallery-modal-nav u-gallery-modal-prev" aria-label="Previous image">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M15 18l-6-6 6-6" />
+      </svg>
+    </button>
+    <img id="gallery-image" src="" alt="" />
+    <button type="button" class="u-gallery-modal-nav u-gallery-modal-next" aria-label="Next image">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 18l6-6-6-6" />
+      </svg>
+    </button>
+    <div id="gallery-caption" class="u-gallery-modal-caption"></div>
+  </div>
+</dialog>
 ```
 
 ## application-shell: Application Shell

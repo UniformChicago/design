@@ -115,10 +115,12 @@ test("collection sorting preserves filtering and announces direction", async ({ 
   const sort = page.getByRole("button", { name: "Document" });
   await sort.click();
   await expect(sort.locator("..")).toHaveAttribute("aria-sort", "ascending");
-  await expect(page.locator("[data-u-row] th").first()).toHaveText("Application checklist");
+  await expect(page.locator("[data-u-row] [data-document-title]").first()).toHaveText(
+    "Application checklist",
+  );
   await sort.click();
   await expect(sort.locator("..")).toHaveAttribute("aria-sort", "descending");
-  await expect(page.locator("[data-u-row] th").first()).toHaveText("Firm confirmation");
+  await expect(page.locator("[data-u-row] [data-document-title]").first()).toHaveText("Firm confirmation");
 });
 
 test("theme follows system until explicitly selected and persists", async ({ page }) => {
@@ -521,7 +523,10 @@ test("expanding document details preserves every column position and width", asy
       }),
     );
   const before = await geometry();
-  await page.getByText("File information", { exact: false }).first().click();
+  await page
+    .getByRole("button", { name: /File information/ })
+    .first()
+    .click();
   expect(await geometry()).toEqual(before);
 });
 

@@ -2,6 +2,18 @@
 
 Each release is a `vX.Y.Z` tag with a [GitHub Release](https://github.com/UniformChicago/design/releases): notes from this file, the npm tarball, `SHA256SUMS` and a signed build-provenance attestation. During `0.x`, any release may change markup or class names; read the notes before upgrading.
 
+## v0.3.0 — 2026-10-08
+
+- Add a financial calculator starter with configurable HOA fees, stable mortgage math, filled SVG donut sectors and rounded down-payment labels. Demonstration estimates are not offers of credit.
+- Add optional `widgets.css` for sliders, charts and fullscreen photo viewers; load it after `design.css`. Slider fill updates come from the shared interactions module.
+- Replace oversized demo images with optimized 800px AI-generated sample photos. Ship them in the kit and disclose that they depict fictional properties.
+- Supply portable agent examples using shared `u-*` classes and the documented `/design/` asset mount; keep docs-only layout classes out of packaged snippets.
+- Change shared panel padding from 28px to 20px (16px within the app), reduce table cell padding, and use auto-fitting stat columns so three- and four-stat rows fill their available width.
+- Stop toolbar fields from stretching by default, keep mobile task rows on one row, and use 16px input text to prevent iOS focus zoom. Single-line control heights remain 48px.
+- Remove the redundant `u-map-caption` map header. Preserve provider attribution on the map; consumers using that class must replace it with their own caption.
+- Open document details through compact icon buttons and native dialogs without changing table row heights. Add keyboard result iteration, tighten list rows and improve photo-viewer caption clearance.
+- Restore the changing docs/Playground navigation icons without an active accent border. Keep preview headings accessible without repeating the visible title.
+
 ## v0.2.2 — 2026-10-08
 
 - Give Playground a full-width mobile canvas with compact controls and optional customization. Remove nested preview borders and repeated introductory text on phones.
